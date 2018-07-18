@@ -1,0 +1,45 @@
+{
+  "name": "@studio/schema",
+  "version": "0.0.0",
+  "description": "Well defines plain JavaScript objects",
+  "main": "lib/schema.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "mocha && mochify",
+    "watch": "mocha --watch",
+    "posttest": "npm run lint",
+    "preversion": "npm test",
+    "version": "changes --commits",
+    "postversion": "git push --follow-tags && npm publish"
+  },
+  "keywords": [
+    "schema",
+    "json",
+    "validate",
+    "json",
+    "ndjson"
+  ],
+  "author": "Maximilian Antoni <max@javascript.studio>",
+  "homepage": "https://github.com/javascript-studio/studio-schema",
+  "eslintConfig": {
+    "extends": "@studio"
+  },
+  "devDependencies": {
+    "@sinonjs/referee-sinon": "^4.1.0",
+    "@studio/changes": "^1.5.2",
+    "@studio/eslint-config": "^1.0.2",
+    "eslint": "^5.1.0",
+    "mocha": "^5.2.0",
+    "mochify": "^5.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/javascript-studio/studio-schema.git"
+  },
+  "files": [
+    "lib",
+    "LICENSE",
+    "README.md"
+  ],
+  "license": "MIT"
+}
