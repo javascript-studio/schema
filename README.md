@@ -111,3 +111,6 @@ argument:
   the writer with `JSON.stringify` it will throw if non-optional values are
   missing.
 
+## License
+
+MIT
