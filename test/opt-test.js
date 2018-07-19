@@ -80,8 +80,8 @@ describe('opt', () => {
     const json = schema.write({ age: 41 });
 
     assert.exception(() => {
-      json.age = undefined;
-    }, /TypeError: Expected property "age" to be integer but got undefined/);
+      json.age = '';
+    }, /TypeError: Expected property "age" to be opt\(integer\) but got ""/);
   });
 
   it('fails to initialize writer with undefined', () => {
@@ -90,8 +90,8 @@ describe('opt', () => {
     });
 
     assert.exception(() => {
-      schema.write({ age: undefined });
-    }, /TypeError: Expected property "age" to be integer but got undefined/);
+      schema.write({ age: NaN });
+    }, /TypeError: Expected property "age" to be opt\(integer\) but got NaN/);
   });
 
   it('fails to initialize reader with undefined', () => {
@@ -100,8 +100,8 @@ describe('opt', () => {
     });
 
     assert.exception(() => {
-      schema.read({ age: undefined });
-    }, /TypeError: Expected property "age" to be integer but got undefined/);
+      schema.read({ age: false });
+    }, /TypeError: Expected property "age" to be opt\(integer\) but got false/);
   });
 
   it('fails validator with undefined', () => {
@@ -110,8 +110,19 @@ describe('opt', () => {
     });
 
     assert.exception(() => {
-      schema({ age: undefined });
-    }, /TypeError: Expected property "age" to be integer but got undefined/);
+      schema({ age: true });
+    }, /TypeError: Expected property "age" to be opt\(integer\) but got true/);
+  });
+
+  it('fails validator with custom function', () => {
+    const schema = spec({
+      age: opt(() => false)
+    });
+
+    assert.exception(() => {
+      schema({ age: 41 });
+    // eslint-disable-next-line max-len
+    }, /TypeError: Expected property "age" to be opt\(custom value\) but got 41/);
   });
 
 });
