@@ -67,7 +67,8 @@ const { spec, all, one, opt } = require('@studio/schema');
 - `schema = one(spec1, spec2, ...)`: Defines a specification where one of the
   given specifications has to match.
 - `schema = opt(spec[, default])`: Defines an optional specification. If the
-  value is not defined, `default` is returned as the value.
+  value is not defined, `default` is returned as the value. It is invalid to
+  initialize or assign `undefined` to an optional value.
 
 Note that the `all`, `one` and `opt` methods are also exposed on `spec`.
 
