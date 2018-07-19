@@ -91,7 +91,6 @@ describe('spec string', () => {
 
     refute.exception(() => {
       schema({});
-      schema([]);
     });
     assert.exception(() => {
       schema(null);
@@ -102,6 +101,12 @@ describe('spec string', () => {
     assert.exception(() => {
       schema('test');
     }, /TypeError: Expected object but got "test"/);
+    assert.exception(() => {
+      schema([]);
+    }, /TypeError: Expected object but got \[\]/);
+    assert.exception(() => {
+      schema(/[a-z]+/);
+    }, /TypeError: Expected object but got \/\[a-z\]\+\//);
   });
 
   it('fails on unknown string', () => {
