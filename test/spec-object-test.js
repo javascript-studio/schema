@@ -31,7 +31,7 @@ describe('spec object', () => {
     });
     assert.exception(() => {
       schema({});
-    }, /TypeError: Missing property "some"/);
+    }, /TypeError: Expected property "some" to be string but got undefined/);
     assert.exception(() => {
       schema({ some: 'thing', other: 'thing' });
     }, /TypeError: Invalid property "other"/);
@@ -52,7 +52,7 @@ describe('spec object', () => {
     it('validates given object', () => {
       assert.exception(() => {
         schema.read({});
-      }, /TypeError: Missing property "some"/);
+      }, /TypeError: Expected property "some" to be string but got undefined/);
     });
 
     it('allows to get property value', () => {
@@ -91,6 +91,7 @@ describe('spec object', () => {
       assert.exception(() => {
         delete proxy.some;
       }, /Error: Invalid delete on read-only object/);
+      assert.isTrue(proxy.hasOwnProperty('some'));
     });
 
     it('works with JSON.stringify', () => {
@@ -208,7 +209,7 @@ describe('spec object', () => {
 
       assert.exception(() => {
         return JSON.stringify(proxy);
-      }, /TypeError: Missing property "some"/);
+      }, /TypeError: Expected property "some" to be string but got undefined/);
     });
 
   });
