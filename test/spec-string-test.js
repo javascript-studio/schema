@@ -37,6 +37,12 @@ describe('spec string', () => {
     assert.exception(() => {
       schema('test');
     }, /TypeError: Expected number but got "test"/);
+    assert.exception(() => {
+      schema(Infinity);
+    }, /TypeError: Expected number but got Infinity/);
+    assert.exception(() => {
+      schema(NaN);
+    }, /TypeError: Expected number but got NaN/);
   });
 
   it('validates integer', () => {
@@ -57,6 +63,12 @@ describe('spec string', () => {
     assert.exception(() => {
       schema('test');
     }, /TypeError: Expected integer but got "test"/);
+    assert.exception(() => {
+      schema(Infinity);
+    }, /TypeError: Expected integer but got Infinity/);
+    assert.exception(() => {
+      schema(NaN);
+    }, /TypeError: Expected integer but got NaN/);
   });
 
   it('validates string', () => {
