@@ -76,24 +76,21 @@ Note that the `all`, `one` and `opt` methods are also exposed on `spec`.
 The kind of specification being built depends on the type of the `spec`
 argument:
 
+- `null`: Requires a null value.
 - `boolean`: Defines whether the property must be present:
     - `true`: The property must be present.
     - `false`: The property is optional.
 - `string`: Defines a built-in type. These types are defined:
-    - `"null"`: Requires a null value.
     - `"boolean"`: Requires a boolean primitive.
     - `"number"`: Requires a number primitive.
     - `"integer"`: Requires a number primitive that has no fractions.
     - `"string"`: Requires a string primitive.
     - `"object"`: Requires an object.
-    - `"function"`: Requires a function.
-    - `"regexp"`: Requires a RegExp object.
-    - `"date"`: Requires a Date object.
 - `regexp`: Requires the stringified value to match the regular expression.
   Create a spec that strictly matches only strings like this: `all('string',
   /[a-z]+/)`.
-- `function`: Defines a custom specification. The function receives a value
-  and may throw if the value is not considered valid.
+- `function`: Defines a custom specification. The function is expected to
+  return `false` if the value is not considered valid.
 - `object`: Defines a nested object specification.
 - `array`: Defines a nested array specification. The array must have exactly
   one element with the specification for the array elements.
