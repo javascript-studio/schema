@@ -97,6 +97,10 @@ argument:
 
 ## Schema API
 
+The schema created by `spec` is a function that validates the given value. For
+`object` and `array` specifications, the schema also allows to create proxy
+objects that validate reading from the object and assigning values:
+
 - `reader = schema.read(data)`: Creates a schema compliant reader for the given
   data. If the given data does not match the schema, an exception is thrown.
   The returned reader throws on any property modification or on an attempt to
