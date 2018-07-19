@@ -18,9 +18,7 @@ describe('spec function', () => {
   });
 
   it('does nothing if function returns `true`', () => {
-    const fn = sinon.fake.returns(true);
-
-    const schema = spec(fn);
+    const schema = spec(() => true);
 
     refute.exception(() => {
       schema('something');
@@ -28,19 +26,37 @@ describe('spec function', () => {
   });
 
   it('throws if function returns `false`', () => {
-    const fn = sinon.fake.returns(false);
-
-    const schema = spec(fn);
+    const schema = spec(() => false);
 
     assert.exception(() => {
       schema('something');
-    }, /TypeError: Unexpected "something"/);
+    }, /TypeError: Expected custom value but got "something"/);
   });
 
   it('uses second argument in exception message', () => {
-    const fn = sinon.fake.returns(false);
+    const schema = spec(() => false, 'nothing');
 
-    const schema = spec(fn, 'nothing');
+    assert.exception(() => {
+      schema('something');
+    }, /TypeError: Expected nothing but got "something"/);
+  });
+
+  it('uses function name in exception message', () => {
+    function special() {
+      return false;
+    }
+    const schema = spec(special);
+
+    assert.exception(() => {
+      schema('something');
+    }, /TypeError: Expected special but got "something"/);
+  });
+
+  it('prefers second argument over function name in exception message', () => {
+    function special() {
+      return false;
+    }
+    const schema = spec(special, 'nothing');
 
     assert.exception(() => {
       schema('something');
