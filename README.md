@@ -70,6 +70,8 @@ const { spec, all, one, opt } = require('@studio/schema');
 - `validator = opt(spec[, default])`: Defines an optional specification. If the
   value is not defined, `default` is returned as the value. It is invalid to
   initialize or assign `undefined` to an optional value.
+- `validator = object(spec)`: Defines an object. Can be used to declare
+  reusable object validators.
 - `validator = keyValue(key_spec, value_spec)`: Defines an object specification
   for key-value pairs where `key_spec` and `value_spec` are the specifications
   for the object key and value pairs.
