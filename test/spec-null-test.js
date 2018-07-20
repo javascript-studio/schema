@@ -20,4 +20,13 @@ describe('spec null', () => {
     }, /TypeError: Expected property "test" to be null but got "test"/);
   });
 
+  it('returns given object', () => {
+    const schema = spec({ test: null });
+    const object = { test: null };
+
+    const returned = schema(object);
+
+    assert.same(returned, object);
+  });
+
 });

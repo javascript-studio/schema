@@ -129,4 +129,12 @@ describe('spec string', () => {
     }, /Error: Invalid spec "unknown"/);
   });
 
+  it('returns given object', () => {
+    const schema = spec({ test: 'string' });
+    const object = { test: 'something' };
+
+    const returned = schema(object);
+
+    assert.same(returned, object);
+  });
 });

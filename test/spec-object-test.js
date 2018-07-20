@@ -58,6 +58,15 @@ describe('spec object', () => {
     }, /TypeError: Expected property "some.nested" to be string but got 123/);
   });
 
+  it('returns given object', () => {
+    const schema = spec({});
+    const object = {};
+
+    const returned = schema(object);
+
+    assert.same(returned, object);
+  });
+
   describe('read', () => {
     const schema = spec({ some: 'string' });
 

@@ -103,7 +103,8 @@ argument:
 
 ## Schema API
 
-The schema created by `spec` is a function that validates the given value. For
+The schema created by `spec` is a function that validates the given value,
+throwing a `TypeError` if invalid or returning the given object if valid. For
 `object` and `array` specifications, the schema also allows to create proxy
 objects that validate reading from the object and assigning values:
 

@@ -34,4 +34,13 @@ describe('spec function', () => {
     }, /TypeError: Expected property "test" to be custom value but got "something"/);
   });
 
+  it('returns given object', () => {
+    const schema = spec({ test: () => true });
+    const object = { test: 'something' };
+
+    const returned = schema(object);
+
+    assert.same(returned, object);
+  });
+
 });
