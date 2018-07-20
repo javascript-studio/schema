@@ -73,10 +73,16 @@ describe('spec object', () => {
       }, /TypeError: Expected property "some" to be string but got undefined/);
     });
 
-    it('allows to get property value', () => {
+    it('initializes with a valid object', () => {
       const proxy = schema.read({ some: 'thing' });
 
       assert.equals(proxy.some, 'thing');
+    });
+
+    it('fails to initialize with an unknown property', () => {
+      assert.exception(() => {
+        schema.read({ some: 'thing', unknown: 123 });
+      }, /Error: Invalid property "unknown"/);
     });
 
     it('fails reading an unknown property', () => {
@@ -137,6 +143,86 @@ describe('spec object', () => {
 
   });
 
+  describe('read nested', () => {
+    const schema = spec({ some: { nested: 'string' } });
+
+    it('fails if argument is not object', () => {
+      assert.exception(() => {
+        schema.read({ some: [] });
+      }, /TypeError: Expected property "some" to be object but got \[\]/);
+    });
+
+    it('validates given object', () => {
+      assert.exception(() => {
+        schema.read({ some: {} });
+      // eslint-disable-next-line max-len
+      }, /TypeError: Expected property "some.nested" to be string but got undefined/);
+    });
+
+    it('initializes with a valid object', () => {
+      const proxy = schema.read({ some: { nested: 'thing' } });
+
+      assert.equals(proxy.some.nested, 'thing');
+    });
+
+    it('fails to initialize with an unknown property', () => {
+      assert.exception(() => {
+        schema.read({ some: { nested: 'thing', unknown: 123 } });
+      }, /Error: Invalid property "unknown"/);
+    });
+
+    it('fails reading an unknown property', () => {
+      const proxy = schema.read({ some: { nested: 'thing' } });
+
+      assert.exception(() => {
+        return proxy.some.other;
+      }, /TypeError: Invalid property "other"/);
+    });
+
+    it('fails writing an unknown property', () => {
+      const proxy = schema.read({ some: { nested: 'thing' } });
+
+      assert.exception(() => {
+        proxy.some.other = 'thing';
+      }, /Error: Invalid assignment on read-only object/);
+    });
+
+    it('fails writing a known property', () => {
+      const proxy = schema.read({ some: { nested: 'thing' } });
+
+      assert.exception(() => {
+        proxy.some.nested = 'xyz';
+      }, /Error: Invalid assignment on read-only object/);
+    });
+
+    it('fails deleting a known property', () => {
+      const proxy = schema.read({ some: { nested: 'thing' } });
+
+      assert.exception(() => {
+        delete proxy.some.nested;
+      }, /Error: Invalid delete on read-only object/);
+      assert.isTrue(proxy.some.hasOwnProperty('nested'));
+    });
+
+    it('works with JSON.stringify', () => {
+      const proxy = schema.read({ some: { nested: 'thing' } });
+
+      assert.json(JSON.stringify(proxy), { some: { nested: 'thing' } });
+    });
+
+    it.skip('does not validate again in JSON.stringify', () => {
+      const fake = sinon.fake();
+      const proxy = spec({ some: { nested: fake } })
+        .read({ some: { nested: true } });
+      fake.resetHistory();
+
+      JSON.stringify(proxy);
+
+      refute.called(fake);
+    });
+
+  });
+
   describe('write', () => {
     const schema = spec({ some: 'string' });
 
@@ -158,13 +244,19 @@ describe('spec object', () => {
       });
     });
 
-    it('allows to set property value', () => {
+    it('initializes with a valid object', () => {
       const proxy = schema.write({ some: 'thing' });
 
       assert.equals(proxy.some, 'thing');
     });
 
-    it('fails to set invalid property value', () => {
+    it('fails to initialize with an unknown property', () => {
+      assert.exception(() => {
+        schema.write({ unknown: 123 });
+      }, /Error: Invalid property "unknown"/);
+    });
+
+    it('fails to write an invalid property value', () => {
       const proxy = schema.write({ some: 'thing' });
 
       assert.exception(() => {
@@ -228,6 +320,96 @@ describe('spec object', () => {
       assert.exception(() => {
         return JSON.stringify(proxy);
       }, /TypeError: Expected property "some" to be string but got undefined/);
+    });
+
+  });
+
+  describe('write nested', () => {
+    const schema = spec({ some: { nested: 'string' } });
+
+    it('validates given object', () => {
+      assert.exception(() => {
+        schema.write({ some: { nested: 123 } });
+      }, /Error: Expected property "some.nested" to be string but got 123/);
+    });
+
+    it('does not fail on missing property', () => {
+      refute.exception(() => {
+        schema.write({});
+        schema.write({ some: {} });
+      });
+    });
+
+    it('initialized with a valid object', () => {
+      const proxy = schema.write({ some: { nested: 'thing' } });
+
+      assert.equals(proxy.some.nested, 'thing');
+    });
+
+    it('fails to initialize with an unknown property', () => {
+      assert.exception(() => {
+        schema.write({ some: { unknown: 123 } });
+      }, /Error: Invalid property "unknown"/);
+    });
+
+    it('fails to write an invalid property value', () => {
+      const proxy = schema.write({ some: { nested: 'thing' } });
+
+      assert.exception(() => {
+        proxy.some.nested = true;
+      }, /Error: Expected property "nested" to be string but got true/);
+    });
+
+    it('fails reading an unknown property', () => {
+      const proxy = schema.write({ some: { nested: 'thing' } });
+
+      assert.exception(() => {
+        return proxy.some.other;
+      }, /TypeError: Invalid property "other"/);
+    });
+
+    it('fails writing an unknown property', () => {
+      const proxy = schema.write({ some: { nested: 'thing' } });
+
+      assert.exception(() => {
+        proxy.some.other = 'thing';
+      }, /Error: Invalid property "other"/);
+    });
+
+    it('allows to write a known property', () => {
+      const proxy = schema.write({ some: { nested: 'thing' } });
+
+      refute.exception(() => {
+        proxy.some.nested = 'xyz';
+      });
+
+      assert.equals(proxy.some.nested, 'xyz');
+    });
+
+    it('allows to delete a known property', () => {
+      const proxy = schema.write({ some: { nested: 'thing' } });
+
+      refute.exception(() => {
+        delete proxy.some.nested;
+      });
+
+      refute.defined(proxy.some.nested);
+      assert.isFalse(proxy.some.hasOwnProperty('nested'));
+    });
+
+    it('works with JSON.stringify', () => {
+      const proxy = schema.write({ some: { nested: 'thing' } });
+
+      assert.json(JSON.stringify(proxy), { some: { nested: 'thing' } });
+    });
+
+    it('fails in JSON.stringify if property is missing', () => {
+      const proxy = schema.write({ some: {} });
+
+      assert.exception(() => {
+        return JSON.stringify(proxy);
+      // eslint-disable-next-line max-len
+      }, /TypeError: Expected property "some.nested" to be string but got undefined/);
     });
 
   });
