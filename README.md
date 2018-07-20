@@ -60,8 +60,8 @@ With destructuring:
 const { spec, all, one, opt } = require('@studio/schema');
 ```
 
-- `schema = spec(spec)`: Defines a specification. See below for possible `spec`
-  values.
+- `schema = spec(spec)`: Defines a specification. Must be an object or an
+  array. See below for possible `spec` values.
 - `schema = all(spec1, spec2, ...)`: Defines a specification where all of the
   given specifications have to match.
 - `schema = one(spec1, spec2, ...)`: Defines a specification where one of the

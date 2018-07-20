@@ -7,17 +7,17 @@ const { spec } = require('..');
 describe('spec null', () => {
 
   it('validates null', () => {
-    const schema = spec(null);
+    const schema = spec({ test: null });
 
     refute.exception(() => {
-      schema(null);
+      schema({ test: null });
     });
     assert.exception(() => {
-      schema(undefined);
-    }, /TypeError: Expected null but got undefined/);
+      schema({ test: undefined });
+    }, /TypeError: Expected property "test" to be null but got undefined/);
     assert.exception(() => {
-      schema('test');
-    }, /TypeError: Expected null but got "test"/);
+      schema({ test: 'test' });
+    }, /TypeError: Expected property "test" to be null but got "test"/);
   });
 
 });
