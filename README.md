@@ -70,6 +70,9 @@ const { spec, all, one, opt } = require('@studio/schema');
 - `schema = opt(spec[, default])`: Defines an optional specification. If the
   value is not defined, `default` is returned as the value. It is invalid to
   initialize or assign `undefined` to an optional value.
+- `schema = object(key_spec, value_spec)`: Defines an object specification for
+  key-value pairs where `key_spec` and `value_spec` are the specifications for
+  the object key and value pairs.
 
 Note that the `all`, `one` and `opt` methods are also exposed on `spec`.
 
