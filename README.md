@@ -1,7 +1,8 @@
 # Studio Schema
 
 Define your data structures and work with plain JavaScript objects that throw
-if wrong values or unknown properties are read or assigned.
+if wrong values or unknown properties are read, assigned or deleted. For node
+and browsers with [Proxy][1] support.
 
 ## Usage
 
@@ -116,3 +117,5 @@ objects that validate reading from the object and assigning values:
 ## License
 
 MIT
+
+[1]: https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Proxy
