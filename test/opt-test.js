@@ -7,46 +7,46 @@ const { spec, opt } = require('..');
 describe('opt', () => {
 
   it('does not throw on undefined', () => {
-    const schema = opt('string');
+    const schema = spec({ test: opt('string') });
 
     refute.exception(() => {
-      schema(undefined);
+      schema({});
     });
   });
 
   it('does not throw if given schema is valid', () => {
-    const schema = opt('string');
+    const schema = spec({ test: opt('string') });
 
     refute.exception(() => {
-      schema('');
-      schema('test');
+      schema({ test: '' });
+      schema({ test: 'test' });
     });
   });
 
   it('invokes custom function with value', () => {
     const fake = sinon.fake();
-    const schema = opt(fake);
+    const schema = opt({ test: fake });
 
-    schema('test');
+    schema({ test: 'test' });
 
     assert.calledOnceWith(fake, 'test');
   });
 
   it('fails if value is invalid', () => {
-    const schema = opt('string');
+    const schema = spec({ test: opt('string') });
 
     assert.exception(() => {
-      schema(123);
-    }, /TypeError: Expected string but got 123/);
+      schema({ test: 123 });
+    }, /TypeError: Expected property "test" to be opt\(string\) but got 123/);
     assert.exception(() => {
-      schema(0);
-    }, /TypeError: Expected string but got 0/);
+      schema({ test: 0 });
+    }, /TypeError: Expected property "test" to be opt\(string\) but got 0/);
     assert.exception(() => {
-      schema(false);
-    }, /TypeError: Expected string but got false/);
+      schema({ test: false });
+    }, /TypeError: Expected property "test" to be opt\(string\) but got false/);
     assert.exception(() => {
-      schema(true);
-    }, /TypeError: Expected string but got true/);
+      schema({ test: true });
+    }, /TypeError: Expected property "test" to be opt\(string\) but got true/);
   });
 
   it('does not fail to JSON.stringify a spec with a missing optional', () => {
