@@ -40,6 +40,24 @@ describe('spec object', () => {
     }, /TypeError: Expected property "some" to be string but got 123/);
   });
 
+  it('validates nested objects', () => {
+    const schema = spec({ some: { nested: 'string' } });
+
+    refute.exception(() => {
+      schema({ some: { nested: 'thing' } });
+    });
+    assert.exception(() => {
+      schema({});
+    }, /TypeError: Expected property "some" to be object but got undefined/);
+    assert.exception(() => {
+      schema({ some: {} });
+    // eslint-disable-next-line max-len
+    }, /TypeError: Expected property "some.nested" to be string but got undefined/);
+    assert.exception(() => {
+      schema({ some: { nested: 123 } });
+    }, /TypeError: Expected property "some.nested" to be string but got 123/);
+  });
+
   describe('read', () => {
     const schema = spec({ some: 'string' });
 
