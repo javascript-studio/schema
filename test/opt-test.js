@@ -7,46 +7,46 @@ const { spec, opt } = require('..');
 describe('opt', () => {
 
   it('does not throw on undefined', () => {
-    const schema = spec({ test: opt('string') });
+    const schema = spec(opt('string'));
 
     refute.exception(() => {
-      schema({});
+      schema(undefined);
     });
   });
 
   it('does not throw if given schema is valid', () => {
-    const schema = spec({ test: opt('string') });
+    const schema = spec(opt('string'));
 
     refute.exception(() => {
-      schema({ test: '' });
-      schema({ test: 'test' });
+      schema('');
+      schema('test');
     });
   });
 
   it('invokes custom function with value', () => {
     const fake = sinon.fake();
-    const schema = opt({ test: fake });
+    const schema = opt(fake);
 
-    schema({ test: 'test' });
+    schema('test');
 
     assert.calledOnceWith(fake, 'test');
   });
 
   it('fails if value is invalid', () => {
-    const schema = spec({ test: opt('string') });
+    const schema = spec(opt('string'));
 
     assert.exception(() => {
-      schema({ test: 123 });
-    }, /TypeError: Expected property "test" to be opt\(string\) but got 123/);
+      schema(123);
+    }, /TypeError: Expected opt\(string\) but got 123/);
     assert.exception(() => {
-      schema({ test: 0 });
-    }, /TypeError: Expected property "test" to be opt\(string\) but got 0/);
+      schema(0);
+    }, /TypeError: Expected opt\(string\) but got 0/);
     assert.exception(() => {
-      schema({ test: false });
-    }, /TypeError: Expected property "test" to be opt\(string\) but got false/);
+      schema(false);
+    }, /TypeError: Expected opt\(string\) but got false/);
     assert.exception(() => {
-      schema({ test: true });
-    }, /TypeError: Expected property "test" to be opt\(string\) but got true/);
+      schema(true);
+    }, /TypeError: Expected opt\(string\) but got true/);
   });
 
   it('does not fail to JSON.stringify a spec with a missing optional', () => {
@@ -115,14 +115,11 @@ describe('opt', () => {
   });
 
   it('fails validator with custom function', () => {
-    const schema = spec({
-      age: opt(() => false)
-    });
+    const schema = spec(opt(() => false));
 
     assert.exception(() => {
-      schema({ age: 41 });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "age" to be opt\(custom value\) but got 41/);
+      schema(1);
+    }, /TypeError: Expected opt\(custom value\) but got 1/);
   });
 
 });

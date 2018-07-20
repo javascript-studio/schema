@@ -61,18 +61,18 @@ With destructuring:
 const { spec, all, one, opt } = require('@studio/schema');
 ```
 
-- `schema = spec(spec)`: Defines a specification. Must be an object or an
-  array. See below for possible `spec` values.
-- `schema = all(spec1, spec2, ...)`: Defines a specification where all of the
-  given specifications have to match.
-- `schema = one(spec1, spec2, ...)`: Defines a specification where one of the
-  given specifications has to match.
-- `schema = opt(spec[, default])`: Defines an optional specification. If the
+- `schema = spec(spec)`: Defines a specification. `spec` must be an object, an
+  array, or validator. See below for possible `spec` values.
+- `validator = all(spec1, spec2, ...)`: Defines a specification where all of
+  the given specifications have to match.
+- `validator = one(spec1, spec2, ...)`: Defines a specification where one of
+  the given specifications has to match.
+- `validator = opt(spec[, default])`: Defines an optional specification. If the
   value is not defined, `default` is returned as the value. It is invalid to
   initialize or assign `undefined` to an optional value.
-- `schema = object(key_spec, value_spec)`: Defines an object specification for
-  key-value pairs where `key_spec` and `value_spec` are the specifications for
-  the object key and value pairs.
+- `validator = object(key_spec, value_spec)`: Defines an object specification
+  for key-value pairs where `key_spec` and `value_spec` are the specifications
+    for the object key and value pairs.
 
 Note that the `all`, `one` and `opt` methods are also exposed on `spec`.
 

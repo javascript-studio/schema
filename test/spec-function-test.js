@@ -21,7 +21,7 @@ describe('spec function', () => {
     const schema = spec({ test: () => true });
 
     refute.exception(() => {
-      schema({ test: 'something' });
+      schema({ test: false });
     });
   });
 
@@ -29,12 +29,20 @@ describe('spec function', () => {
     const schema = spec({ test: () => false });
 
     assert.exception(() => {
-      schema({ test: 'something' });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "test" to be custom value but got "something"/);
+      schema({ test: false });
+    }, /TypeError: Expected property "test" to be custom value but got false/);
   });
 
-  it('returns given object', () => {
+  it('returns given object for function', () => {
+    const schema = spec(() => true);
+    const object = {};
+
+    const returned = schema(object);
+
+    assert.same(returned, object);
+  });
+
+  it('returns given object for object with function property', () => {
     const schema = spec({ test: () => true });
     const object = { test: 'something' };
 
