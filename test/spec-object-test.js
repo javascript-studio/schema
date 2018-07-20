@@ -395,6 +395,14 @@ describe('spec object', () => {
       assert.equals(proxy.some.nested, 'xyz');
     });
 
+    it('allows to write an incomplete property', () => {
+      const proxy = schema.write({});
+
+      refute.exception(() => {
+        proxy.some = {};
+      });
+    });
+
     it('allows to delete a known property', () => {
       const proxy = schema.write({ some: { nested: 'thing' } });
 
