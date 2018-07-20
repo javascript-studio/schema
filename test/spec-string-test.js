@@ -6,6 +6,20 @@ const { spec } = require('..');
 
 describe('spec string', () => {
 
+  it('validates null', () => {
+    const schema = spec({ test: 'null' });
+
+    refute.exception(() => {
+      schema({ test: null });
+    });
+    assert.exception(() => {
+      schema({ test: undefined });
+    }, /TypeError: Expected property "test" to be null but got undefined/);
+    assert.exception(() => {
+      schema({ test: 'test' });
+    }, /TypeError: Expected property "test" to be null but got "test"/);
+  });
+
   it('validates boolean', () => {
     const schema = spec({ test: 'boolean' });
 

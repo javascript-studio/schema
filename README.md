@@ -83,6 +83,7 @@ argument:
     - `true`: The property must be present.
     - `false`: The property is optional.
 - `string`: Defines a built-in type. These types are defined:
+    - `"null"`: Same as the `null` spec.
     - `"boolean"`: Requires a boolean primitive.
     - `"number"`: Requires a number primitive.
     - `"integer"`: Requires a number primitive that has no fractions.
