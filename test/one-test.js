@@ -16,30 +16,32 @@ describe('one', () => {
   });
 
   it('does not fail for either of two specs', () => {
-    const schema = one('boolean', 'number');
+    const schema = spec({ test: one('boolean', 'number') });
 
     refute.exception(() => {
-      schema(true);
-      schema(false);
-      schema(0);
-      schema(1);
+      schema({ test: true });
+      schema({ test: false });
+      schema({ test: 0 });
+      schema({ test: 1 });
     });
   });
 
   it('fails if none of two specs', () => {
-    const schema = one('boolean', 'number');
+    const schema = spec({ test: one('boolean', 'number') });
 
     assert.exception(() => {
-      schema('test');
-    }, /TypeError: Expected one of boolean or number but got "test"/);
+      schema({ test: 'test' });
+    // eslint-disable-next-line max-len
+    }, /TypeError: Expected property "test" to be one of boolean or number but got "test"/);
   });
 
   it('fails if none of three specs', () => {
-    const schema = one('boolean', 'number', 'string');
+    const schema = spec({ test: one('boolean', 'number', 'string') });
 
     assert.exception(() => {
-      schema({});
-    }, /TypeError: Expected one of boolean, number or string but got {}/);
+      schema({ test: {} });
+    // eslint-disable-next-line max-len
+    }, /TypeError: Expected property "test" to be one of boolean, number or string but got {}/);
   });
 
   it('fails as part of an object assertion', () => {
@@ -54,49 +56,52 @@ describe('one', () => {
   });
 
   it('fails null or custom test', () => {
-    const schema = one(null, () => false);
+    const schema = spec({ test: one(null, () => false) });
 
     assert.exception(() => {
-      schema('test');
-    }, /TypeError: Expected one of null or custom value but got "test"/);
+      schema({ test: 'test' });
+    // eslint-disable-next-line max-len
+    }, /TypeError: Expected property "test" to be one of null or custom value but got "test"/);
   });
 
   it('passes on null or string test', () => {
-    const schema = one(null, 'string');
+    const schema = spec({ test: one(null, 'string') });
 
     refute.exception(() => {
-      schema(null);
-      schema('test');
+      schema({ test: null });
+      schema({ test: 'test' });
     });
   });
 
   it('passes on custom test', () => {
-    const schema = one(() => true, () => {
-      throw new Error('Unexpected');
+    const schema = spec({
+      test: one(() => true, () => {
+        throw new Error('Unexpected');
+      })
     });
 
     refute.exception(() => {
-      schema(null);
-      schema('test');
-      schema({});
+      schema({ test: null });
+      schema({ test: 'test' });
+      schema({ test: {} });
     });
   });
 
   it('fails objects', () => {
-    const schema = one({ foo: 'string' }, { bar: 'integer' });
+    const schema = spec({ test: one({ foo: 'string' }, { bar: 'integer' }) });
 
     assert.exception(() => {
-      schema({ foo: true });
+      schema({ test: { foo: true } });
     // eslint-disable-next-line max-len
-    }, /TypeError: Expected one of {foo:string} or {bar:integer} but got {"foo":true}/);
+    }, /TypeError: Expected property "test" to be one of {foo:string} or {bar:integer} but got {"foo":true}/);
   });
 
   it('passes objects', () => {
-    const schema = one({ foo: 'string' }, { bar: 'integer' });
+    const schema = spec({ test: one({ foo: 'string' }, { bar: 'integer' }) });
 
     refute.exception(() => {
-      schema({ foo: 'test' });
-      schema({ bar: 1 });
+      schema({ test: { foo: 'test' } });
+      schema({ test: { bar: 1 } });
     });
   });
 
