@@ -32,7 +32,7 @@ describe('one', () => {
     assert.exception(() => {
       schema({ test: 'test' });
     // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "test" to be one of boolean or number but got "test"/);
+    }, /TypeError: Expected property "test" to be one\(boolean, number\) but got "test"/);
   });
 
   it('fails if none of three specs', () => {
@@ -41,7 +41,7 @@ describe('one', () => {
     assert.exception(() => {
       schema({ test: {} });
     // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "test" to be one of boolean, number or string but got {}/);
+    }, /TypeError: Expected property "test" to be one\(boolean, number, string\) but got {}/);
   });
 
   it('fails as part of an object assertion', () => {
@@ -52,7 +52,7 @@ describe('one', () => {
     assert.exception(() => {
       schema({ key: 'test' });
     // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "key" to be one of boolean or integer but got "test"/);
+    }, /TypeError: Expected property "key" to be one\(boolean, integer\) but got "test"/);
   });
 
   it('fails null or custom test', () => {
@@ -61,7 +61,7 @@ describe('one', () => {
     assert.exception(() => {
       schema({ test: 'test' });
     // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "test" to be one of null or custom value but got "test"/);
+    }, /TypeError: Expected property "test" to be one\(null, custom value\) but got "test"/);
   });
 
   it('passes on null or string test', () => {
@@ -93,7 +93,7 @@ describe('one', () => {
     assert.exception(() => {
       schema({ test: { foo: true } });
     // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "test" to be one of {foo:string} or {bar:integer} but got {"foo":true}/);
+    }, /TypeError: Expected property "test" to be one\({foo:string}, {bar:integer}\) but got {"foo":true}/);
   });
 
   it('passes objects', () => {
