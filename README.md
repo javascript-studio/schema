@@ -120,6 +120,8 @@ objects that validate reading from the object and assigning values:
   value is invalid, or on an attempt to read an undefined property. When using
   the writer with `JSON.stringify` it will throw if non-optional values are
   missing.
+- `data = schema.verify(writer)`: Checks if any properties are missing in the
+  given writer and returns the unwrapped data.
 
 ## License
 

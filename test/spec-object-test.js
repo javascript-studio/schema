@@ -2,7 +2,7 @@
 'use strict';
 
 const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
-const { spec } = require('..');
+const { spec, object } = require('..');
 
 describe('spec object', () => {
 
@@ -448,6 +448,60 @@ describe('spec object', () => {
       const proxy = schema.write({});
 
       refute.defined(proxy.some);
+    });
+
+  });
+
+  describe('verify', () => {
+
+    it('throws if top level property is missing', () => {
+      const schema = spec({ some: { nested: 'string' } });
+      const writer = schema.write({});
+
+      assert.exception(() => {
+        schema.verify(writer);
+      }, /TypeError: Expected property "some" to be object but got undefined/);
+
+      writer.some = {};
+      assert.exception(() => {
+        schema.verify(writer);
+      // eslint-disable-next-line max-len
+      }, /TypeError: Expected property "some.nested" to be string but got undefined/);
+    });
+
+    it('returns copy of valid object without proxy', () => {
+      const schema = spec({ some: { nested: 'string' } });
+      const writer = schema.write({ some: { nested: 'thing' } });
+
+      const data = schema.verify(writer);
+
+      assert.equals(data, { some: { nested: 'thing' } });
+      refute.exception(() => {
+        data.allowed = true;
+      });
+    });
+
+    it('works with spec(object(...))', () => {
+      const schema = spec(object({ some: { nested: 'string' } }));
+      const writer = schema.write({});
+
+      assert.exception(() => {
+        schema.verify(writer);
+      }, /TypeError: Expected property "some" to be object but got undefined/);
+
+      writer.some = {};
+      assert.exception(() => {
+        schema.verify(writer);
+      // eslint-disable-next-line max-len
+      }, /TypeError: Expected property "some.nested" to be string but got undefined/);
+
+      writer.some.nested = 'thing';
+      const data = schema.verify(writer);
+
+      assert.equals(data, { some: { nested: 'thing' } });
+      refute.exception(() => {
+        data.allowed = true;
+      });
     });
 
   });
