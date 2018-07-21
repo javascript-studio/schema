@@ -2,7 +2,7 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec, array } = require('..');
+const { spec, array, object } = require('..');
 
 describe('array', () => {
 
@@ -45,6 +45,12 @@ describe('array', () => {
       parent({ children: [{ name: 'foo' }, { name: 42 }] });
     // eslint-disable-next-line max-len
     }, /TypeError: Expected property "children\[1\].name" to be string but got 42/);
+  });
+
+  it('can create array(object({}))', () => {
+    refute.exception(() => {
+      array(object({}));
+    });
   });
 
 });
