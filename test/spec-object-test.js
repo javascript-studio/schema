@@ -216,7 +216,9 @@ describe('spec object', () => {
     it('works with JSON.stringify', () => {
       const proxy = schema.read({ some: { nested: 'thing' } });
 
-      assert.json(JSON.stringify(proxy), { some: { nested: 'thing' } });
+      const json = JSON.stringify(proxy);
+
+      assert.json(json, { some: { nested: 'thing' } });
     });
 
     it.skip('does not validate again in JSON.stringify', () => {
@@ -225,8 +227,9 @@ describe('spec object', () => {
         .read({ some: { nested: true } });
       fake.resetHistory();
 
-      JSON.stringify(proxy);
+      const json = JSON.stringify(proxy);
 
+      assert.json(json, { some: { nested: true } });
       refute.called(fake);
     });
 
