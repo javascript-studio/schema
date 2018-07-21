@@ -1,8 +1,7 @@
 # Studio Schema
 
-Define your data structures and work with plain JavaScript objects that throw
-if wrong values or unknown properties are read, assigned or deleted. For node
-and browsers with [Proxy][1] support.
+Plain JavaScript objects that throw if invalid or unknown properties are read,
+assigned or deleted. For node and browsers with [Proxy][1] support.
 
 ## Usage
 
