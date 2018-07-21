@@ -444,6 +444,12 @@ describe('spec object', () => {
       assert.same(proxy.some, proxy.some);
     });
 
+    it('returns undefined for missing object property without throwing', () => {
+      const proxy = schema.write({});
+
+      refute.defined(proxy.some);
+    });
+
   });
 
 });
