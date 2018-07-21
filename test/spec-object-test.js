@@ -233,6 +233,12 @@ describe('spec object', () => {
       refute.called(fake);
     });
 
+    it('always returns the same nested instance', () => {
+      const proxy = schema.read({ some: { nested: 'thing' } });
+
+      assert.same(proxy.some, proxy.some);
+    });
+
   });
 
   describe('write', () => {
@@ -430,6 +436,12 @@ describe('spec object', () => {
         return JSON.stringify(proxy);
       // eslint-disable-next-line max-len
       }, /TypeError: Expected property "some.nested" to be string but got undefined/);
+    });
+
+    it('always returns the same nested instance', () => {
+      const proxy = schema.write({ some: { nested: 'thing' } });
+
+      assert.same(proxy.some, proxy.some);
     });
 
   });
