@@ -122,4 +122,13 @@ describe('opt', () => {
     }, /TypeError: Expected opt\(custom value\) but got 1/);
   });
 
+
+  it('does not add `verify` or specName to given function', () => {
+    const fn = () => true;
+
+    opt(fn);
+
+    refute.defined(Object.getOwnPropertyDescriptor(fn, 'verify'));
+    refute.defined(Object.getOwnPropertyDescriptor(fn, 'specName'));
+  });
 });

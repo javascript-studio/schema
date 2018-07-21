@@ -6,7 +6,7 @@ const { spec, keyValue, opt, one } = require('..');
 
 describe('keyValue', () => {
 
-  it('throws one argument is not a valid spec', () => {
+  it('requires both arguments to be valid specs', () => {
     assert.exception(() => {
       keyValue();
     }, /Error: Invalid spec undefined/);

@@ -26,11 +26,28 @@ describe('spec function', () => {
   });
 
   it('throws if function returns `false`', () => {
+    const schema = spec(() => false);
+
+    assert.exception(() => {
+      schema(false);
+    }, /TypeError: Expected custom value but got false/);
+  });
+
+  it('throws if function returns `false` in object spec', () => {
     const schema = spec({ test: () => false });
 
     assert.exception(() => {
       schema({ test: false });
     }, /TypeError: Expected property "test" to be custom value but got false/);
+  });
+
+  it('does not add `verify` or specName to given function', () => {
+    const fn = () => true;
+
+    spec(() => true);
+
+    refute.defined(Object.getOwnPropertyDescriptor(fn, 'verify'));
+    refute.defined(Object.getOwnPropertyDescriptor(fn, 'specName'));
   });
 
   it('returns given object for function', () => {

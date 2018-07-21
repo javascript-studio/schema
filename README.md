@@ -72,11 +72,14 @@ const { spec, all, one, opt } = require('@studio/schema');
   initialize or assign `undefined` to an optional value.
 - `validator = object(spec)`: Defines an object. Can be used to declare
   reusable object validators.
+- `validator = array(spec)`: Defines an array. Each element in the array has to
+  match the given `spec`.
 - `validator = keyValue(key_spec, value_spec)`: Defines an object specification
   for key-value pairs where `key_spec` and `value_spec` are the specifications
   for the object key and value pairs.
 
-Note that the `all`, `one` and `opt` methods are also exposed on `spec`.
+Note that `all`, `one` and `opt`, `object`, `array` and `keyValue` are also
+exposed on `spec`.
 
 ## Spec
 
@@ -100,8 +103,6 @@ argument:
 - `function`: Defines a custom specification. The function is expected to
   return `false` if the value is not considered valid.
 - `object`: Defines a nested object specification.
-- `array`: Defines a nested array specification. The array must have exactly
-  one element with the specification for the array elements.
 
 ## Schema API
 
