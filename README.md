@@ -8,23 +8,37 @@ assigned or deleted. For node and browsers with [Proxy][1] support.
 Defining a schema:
 
 ```js
-const { spec, opt } = require('@studio/schema');
+const spec = require('@studio/schema');
 
-const person_schema = spec({
+const personSchema = spec({
   name: 'string',
-  age: opt('integer')
+  age: spec.opt('integer')
 });
 ```
 
-Readers:
+### Schema Validation:
+
+The schema is a function that can be used to validate a given data structure.
+It throws if non optional properties are missing, a value has the wrong type,
+or undeclared properties are present.
 
 ```js
-const person = person_schema.read({ name: 123 }); // throws
-const person = person_schema.read({ name: 'Test', customer: true }); // throws
-const person = person_schema.read({ name: 'Test', age: true }); // throws
-const person = person_schema.read({ name: 'Test', age: 7.5 }); // throws
-const person = person_schema.read({ name: 'Test' }); // ok
-const person = person_schema.read({ name: 'Test', age: 7 }); // ok
+personSchema({ name: 123 }); // throws
+personSchema({ name: 'Test', customer: true }); // throws
+personSchema({ name: 'Test', age: true }); // throws
+personSchema({ name: 'Test', age: 7.5 }); // throws
+
+personSchema({ name: 'Test' }); // ok
+personSchema({ name: 'Test', age: 7 }); // ok
+```
+
+### Readers:
+
+A reader validates a given data structure and returns a `Proxy` that makes the
+data read-only and verifies that only defined properties are accessed.
+
+```js
+const person = personSchema.read({ name: 'Test', age: 7 });
 
 const name = person.name; // ok
 const age = person.age; // ok
@@ -32,11 +46,15 @@ const customer = person.customer; // throws
 person.name = 'Changed'; // throws
 ```
 
-Writers:
+### Writers:
+
+A writer accepts an empty or partial data structure and returns a `Proxy` that
+validates any accessed, assigned or deleted properties. To verify that no non
+optional properties are missing, use `schema.verify(writer)` or
+`JSON.stringify(proxy)`.
 
 ```js
-const person = person_schema.write({ name: 123 }); // throws
-const person = person_schema.write({ name: 'Test' }); // ok
+const person = person_schema.write({ name: 'Test' });
 
 person.customer = true; // throws
 person.name = 'Changed'; // ok
@@ -50,18 +68,17 @@ in two ways:
 
 ```js
 const spec = require('@studio/schema');
-
-// Use spec, spec.all, spec.one and spec.opt
 ```
 
-With destructuring:
+With [destructuring][2]:
 
 ```js
-const { spec, all, one, opt } = require('@studio/schema');
+const { spec, opt, array, one } = require('@studio/schema');
 ```
 
-- `schema = spec(spec)`: Defines a specification. `spec` must be an object, an
-  array, or validator. See below for possible `spec` values.
+- `schema = spec(spec)`: Defines a specification. `spec` must be an object
+  defining a data structure, or a validator. See below for possible `spec`
+  values.
 - `validator = all(spec1, spec2, ...)`: Defines a specification where all of
   the given specifications have to match.
 - `validator = one(spec1, spec2, ...)`: Defines a specification where one of
@@ -118,8 +135,8 @@ objects that validate reading from the object and assigning values:
   If the given data does not match the schema, an exception is thrown. The
   returned writer throws on undefined property modification, if an assigned
   value is invalid, or on an attempt to read an undefined property. When using
-  the writer with `JSON.stringify` it will throw if non-optional values are
-  missing.
+  the writer with `JSON.stringify` or `schema.verify(writer)` it will throw if
+  non-optional values are missing.
 - `data = schema.verify(writer)`: Checks if any properties are missing in the
   given writer and returns the unwrapped data.
 
@@ -127,4 +144,5 @@ objects that validate reading from the object and assigning values:
 
 MIT
 
-[1]: https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+[1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+[2]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
