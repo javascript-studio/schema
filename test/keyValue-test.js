@@ -9,13 +9,22 @@ describe('keyValue', () => {
   it('requires both arguments to be valid specs', () => {
     assert.exception(() => {
       keyValue();
-    }, /Error: Invalid spec undefined/);
+    }, {
+      name: 'Error',
+      message: 'Invalid spec undefined'
+    });
     assert.exception(() => {
       keyValue('string');
-    }, /Error: Invalid spec undefined/);
+    }, {
+      name: 'Error',
+      message: 'Invalid spec undefined'
+    });
     assert.exception(() => {
       keyValue('string', 'unknown');
-    }, /Error: Invalid spec "unknown"/);
+    }, {
+      name: 'Error',
+      message: 'Invalid spec "unknown"'
+    });
   });
 
   it('does not fail for valid objects', () => {
@@ -34,10 +43,18 @@ describe('keyValue', () => {
 
     assert.exception(() => {
       schema([]);
-    }, /TypeError: Expected keyValue\(string, number\) but got \[\]/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected keyValue(string, number) but got []',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema('test');
-    }, /TypeError: Expected keyValue\(string, number\) but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected keyValue(string, number) but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails for invalid keys', () => {
@@ -45,10 +62,18 @@ describe('keyValue', () => {
 
     assert.exception(() => {
       schema({ 0: 'ok' });
-    }, /TypeError: Expected keyValue\(number, string\) but got {"0":"ok"}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected keyValue(number, string) but got {"0":"ok"}',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ abc: 'ok' });
-    }, /TypeError: Expected keyValue\(number, string\) but got {"abc":"ok"}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected keyValue(number, string) but got {"abc":"ok"}',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails for invalid objects', () => {
@@ -56,7 +81,11 @@ describe('keyValue', () => {
 
     assert.exception(() => {
       schema({ foo: true });
-    }, /TypeError: Expected keyValue\(string, number\) but got {"foo":true}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected keyValue(string, number) but got {"foo":true}',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('works within `opt`', () => {
@@ -69,8 +98,11 @@ describe('keyValue', () => {
     });
     assert.exception(() => {
       schema({ foo: '' });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected opt\(keyValue\(string, number\)\) but got {"foo":""}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt(keyValue(string, number)) but got {"foo":""}',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('works within `one`', () => {
@@ -84,12 +116,20 @@ describe('keyValue', () => {
     });
     assert.exception(() => {
       schema('something');
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected one\(boolean, keyValue\(string, number\)\) but got "something"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected one(boolean, keyValue(string, number)) but got '
+        + '"something"',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ foo: '' });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected one\(boolean, keyValue\(string, number\)\) but got {"foo":""}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected one(boolean, keyValue(string, number)) but got '
+        + '{"foo":""}',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('works using `opt`', () => {
@@ -102,8 +142,11 @@ describe('keyValue', () => {
     });
     assert.exception(() => {
       schema({ foo: null });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected keyValue\(string, opt\(number\)\) but got {"foo":null}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected keyValue(string, opt(number)) but got {"foo":null}',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('works using `one`', () => {
@@ -117,8 +160,12 @@ describe('keyValue', () => {
     });
     assert.exception(() => {
       schema({ foo: '' });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected keyValue\(string, one\(boolean, number\)\) but got {"foo":""}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected keyValue(string, one(boolean, number)) but got '
+        + '{"foo":""}',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
 });

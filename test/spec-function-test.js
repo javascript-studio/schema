@@ -30,7 +30,11 @@ describe('spec function', () => {
 
     assert.exception(() => {
       schema(false);
-    }, /TypeError: Expected custom value but got false/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected custom value but got false',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('throws if function returns `false` in object spec', () => {
@@ -38,7 +42,11 @@ describe('spec function', () => {
 
     assert.exception(() => {
       schema({ test: false });
-    }, /TypeError: Expected property "test" to be custom value but got false/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be custom value but got false',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('does not add `verify` or specName to given function', () => {

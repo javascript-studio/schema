@@ -16,7 +16,7 @@ const personSchema = spec({
 });
 ```
 
-### Schema Validation:
+### Schema Validation
 
 The schema is a function that can be used to validate a given data structure.
 It throws if non optional properties are missing, a value has the wrong type,
@@ -32,7 +32,7 @@ personSchema({ name: 'Test' }); // ok
 personSchema({ name: 'Test', age: 7 }); // ok
 ```
 
-### Readers:
+### Readers
 
 A reader validates a given data structure and returns a `Proxy` that makes the
 data read-only and verifies that only defined properties are accessed.
@@ -46,7 +46,7 @@ const customer = person.customer; // throws
 person.name = 'Changed'; // throws
 ```
 
-### Writers:
+### Writers
 
 A writer accepts an empty or partial data structure and returns a `Proxy` that
 validates any accessed, assigned or deleted properties. To verify that no non
@@ -60,6 +60,25 @@ person.customer = true; // throws
 person.name = 'Changed'; // ok
 person.age = 7; // ok
 ```
+
+### Errors
+
+These schema validation errors are thrown:
+
+- `TypeError: Expected ${name} but got ${actual}`: Thrown when a value does not
+  match the expectation.
+- `TypeError: Expected property "${property}" to be ${name} but got ${actual}`:
+  Thrown when a value does not match the expectation, showing the path to the
+  invalid property.
+- `ReferenceError: Invalid property "${property}"`: Thrown when an unspecified
+  property is accessed, showing the path to the invalid property.
+- `Error: Invalid assignment on read-only object`: Thrown when assigning a
+  property on a reader.
+- `Error: Invalid delete on read-only object`: Thrown when deleting a property
+  on a reader.
+
+All schema validation errors have a `code` property with the value
+`SCHEMA_VALIDATION`.
 
 ## API
 
@@ -93,6 +112,7 @@ const { spec, opt, array, one } = require('@studio/schema');
 - `validator = keyValue(key_spec, value_spec)`: Defines an object specification
   for key-value pairs where `key_spec` and `value_spec` are the specifications
   for the object key and value pairs.
+- `SCHEMA_VALIDATION`: The `code` property exposed on schema validation errors.
 
 Note that `all`, `one` and `opt`, `object`, `array` and `keyValue` are also
 exposed on `spec`.

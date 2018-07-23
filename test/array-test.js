@@ -9,10 +9,16 @@ describe('array', () => {
   it('requires object argument', () => {
     assert.exception(() => {
       array(() => {});
-    }, /TypeError: Expected object but got function/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected object but got function'
+    });
     assert.exception(() => {
       array([]);
-    }, /TypeError: Expected object but got \[\]/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected object but got []'
+    });
   });
 
   it('returns array validator', () => {
@@ -30,7 +36,11 @@ describe('array', () => {
     });
     assert.exception(() => {
       schema([{ test: 1.2 }]);
-    }, /TypeError: Expected property "0.test" to be integer but got 1.2/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "0.test" to be integer but got 1.2',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('can be used as child validator', () => {
@@ -43,8 +53,11 @@ describe('array', () => {
     });
     assert.exception(() => {
       parent({ children: [{ name: 'foo' }, { name: 42 }] });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "children\[1\].name" to be string but got 42/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "children[1].name" to be string but got 42',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('can create array(object({}))', () => {

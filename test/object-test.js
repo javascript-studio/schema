@@ -9,10 +9,16 @@ describe('object', () => {
   it('requires object argument', () => {
     assert.exception(() => {
       object(() => {});
-    }, /TypeError: Expected object but got function/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected object but got function'
+    });
     assert.exception(() => {
       object([]);
-    }, /TypeError: Expected object but got \[\]/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected object but got []'
+    });
   });
 
   it('returns object validator', () => {
@@ -30,7 +36,11 @@ describe('object', () => {
     });
     assert.exception(() => {
       schema({ test: 1.2 });
-    }, /TypeError: Expected property "test" to be integer but got 1.2/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be integer but got 1.2',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('can be used as validator', () => {
@@ -43,7 +53,11 @@ describe('object', () => {
     });
     assert.exception(() => {
       person({ name: 42 });
-    }, /TypeError: Expected property "name" to be string but got 42/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "name" to be string but got 42',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('can be used as child validator', () => {
@@ -56,7 +70,11 @@ describe('object', () => {
     });
     assert.exception(() => {
       parent({ child: { name: 42 } });
-    }, /TypeError: Expected property "child.name" to be string but got 42/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "child.name" to be string but got 42',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
 });

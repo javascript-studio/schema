@@ -21,11 +21,19 @@ describe('spec reuse', () => {
     });
     assert.exception(() => {
       person({ name: 1 });
-    }, /TypeError: Expected opt\({name:string}\) but got {"name":1}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt({name:string}) but got {"name":1}',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       parent({ child: { name: 1 } });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "child" to be opt\({name:string}\) but got {"name":1}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "child" to be opt({name:string}) but got '
+        + '{"name":1}',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
 });

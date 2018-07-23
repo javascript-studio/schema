@@ -14,10 +14,18 @@ describe('spec null', () => {
     });
     assert.exception(() => {
       schema({ test: undefined });
-    }, /TypeError: Expected property "test" to be null but got undefined/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be null but got undefined',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: 'test' });
-    }, /TypeError: Expected property "test" to be null but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be null but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('returns given object', () => {

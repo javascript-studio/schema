@@ -14,10 +14,18 @@ describe('spec string', () => {
     });
     assert.exception(() => {
       schema({ test: undefined });
-    }, /TypeError: Expected property "test" to be null but got undefined/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be null but got undefined',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: 'test' });
-    }, /TypeError: Expected property "test" to be null but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be null but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('validates boolean', () => {
@@ -29,10 +37,18 @@ describe('spec string', () => {
     });
     assert.exception(() => {
       schema({ test: 1 });
-    }, /TypeError: Expected property "test" to be boolean but got 1/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be boolean but got 1',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: 'test' });
-    }, /TypeError: Expected property "test" to be boolean but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be boolean but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('validates number', () => {
@@ -47,16 +63,32 @@ describe('spec string', () => {
     });
     assert.exception(() => {
       schema({ test: true });
-    }, /TypeError: Expected property "test" to be number but got true/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be number but got true',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: 'test' });
-    }, /TypeError: Expected property "test" to be number but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be number but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: Infinity });
-    }, /TypeError: Expected property "test" to be number but got Infinity/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be number but got Infinity',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: NaN });
-    }, /TypeError: Expected property "test" to be number but got NaN/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be number but got NaN',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('validates integer', () => {
@@ -70,19 +102,39 @@ describe('spec string', () => {
     });
     assert.exception(() => {
       schema({ test: 1.5 });
-    }, /TypeError: Expected property "test" to be integer but got 1.5/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be integer but got 1.5',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: true });
-    }, /TypeError: Expected property "test" to be integer but got true/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be integer but got true',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: 'test' });
-    }, /TypeError: Expected property "test" to be integer but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be integer but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: Infinity });
-    }, /TypeError: Expected property "test" to be integer but got Infinity/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be integer but got Infinity',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: NaN });
-    }, /TypeError: Expected property "test" to be integer but got NaN/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be integer but got NaN',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('validates string', () => {
@@ -94,10 +146,18 @@ describe('spec string', () => {
     });
     assert.exception(() => {
       schema({ test: true });
-    }, /TypeError: Expected property "test" to be string but got true/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be string but got true',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: 0 });
-    }, /TypeError: Expected property "test" to be string but got 0/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be string but got 0',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('validates object', () => {
@@ -108,25 +168,48 @@ describe('spec string', () => {
     });
     assert.exception(() => {
       schema({ test: null });
-    }, /TypeError: Expected property "test" to be object but got null/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be object but got null',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: true });
-    }, /TypeError: Expected property "test" to be object but got true/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be object but got true',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: 'test' });
-    }, /TypeError: Expected property "test" to be object but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be object but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: [] });
-    }, /TypeError: Expected property "test" to be object but got \[\]/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be object but got []',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema({ test: /[a-z]/ });
-    }, /TypeError: Expected property "test" to be object but got \/\[a-z\]\//);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be object but got /[a-z]/',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails on unknown string', () => {
     assert.exception(() => {
       spec({ test: 'unknown' });
-    }, /Error: Invalid spec "unknown"/);
+    }, {
+      name: 'Error',
+      message: 'Invalid spec "unknown"'
+    });
   });
 
   it('returns given object', () => {

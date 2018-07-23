@@ -9,10 +9,16 @@ describe('one', () => {
   it('throws if less than two arguments are given', () => {
     assert.exception(() => {
       one();
-    }, /Error: Require at least two arguments/);
+    }, {
+      name: 'Error',
+      message: 'Require at least two arguments'
+    });
     assert.exception(() => {
       one('string');
-    }, /Error: Require at least two arguments/);
+    }, {
+      name: 'Error',
+      message: 'Require at least two arguments'
+    });
   });
 
   it('does not fail for either of two specs', () => {
@@ -31,7 +37,11 @@ describe('one', () => {
 
     assert.exception(() => {
       schema('test');
-    }, /TypeError: Expected one\(boolean, number\) but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected one(boolean, number) but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails if none of three specs', () => {
@@ -39,7 +49,11 @@ describe('one', () => {
 
     assert.exception(() => {
       schema({});
-    }, /TypeError: Expected one\(boolean, number, string\) but got {}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected one(boolean, number, string) but got {}',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails as part of an object assertion', () => {
@@ -49,8 +63,12 @@ describe('one', () => {
 
     assert.exception(() => {
       schema({ key: 'test' });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected property "key" to be one\(boolean, integer\) but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "key" to be one(boolean, integer) but got '
+        + '"test"',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails null or custom test', () => {
@@ -58,7 +76,11 @@ describe('one', () => {
 
     assert.exception(() => {
       schema('test');
-    }, /TypeError: Expected one\(null, custom value\) but got "test"/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected one(null, custom value) but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('passes on null or string test', () => {
@@ -87,8 +109,11 @@ describe('one', () => {
 
     assert.exception(() => {
       schema({ foo: true });
-    // eslint-disable-next-line max-len
-    }, /TypeError: Expected one\({foo:string}, {bar:integer}\) but got {"foo":true}/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected one({foo:string}, {bar:integer}) but got {"foo":true}',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('passes objects', () => {

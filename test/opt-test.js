@@ -37,16 +37,32 @@ describe('opt', () => {
 
     assert.exception(() => {
       schema(123);
-    }, /TypeError: Expected opt\(string\) but got 123/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt(string) but got 123',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema(0);
-    }, /TypeError: Expected opt\(string\) but got 0/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt(string) but got 0',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema(false);
-    }, /TypeError: Expected opt\(string\) but got false/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt(string) but got false',
+      code: 'SCHEMA_VALIDATION'
+    });
     assert.exception(() => {
       schema(true);
-    }, /TypeError: Expected opt\(string\) but got true/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt(string) but got true',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('does not fail to JSON.stringify a spec with a missing optional', () => {
@@ -81,7 +97,11 @@ describe('opt', () => {
 
     assert.exception(() => {
       json.age = '';
-    }, /TypeError: Expected property "age" to be opt\(integer\) but got ""/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "age" to be opt(integer) but got ""',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails to initialize writer with undefined', () => {
@@ -91,7 +111,11 @@ describe('opt', () => {
 
     assert.exception(() => {
       schema.write({ age: NaN });
-    }, /TypeError: Expected property "age" to be opt\(integer\) but got NaN/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "age" to be opt(integer) but got NaN',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails to initialize reader with undefined', () => {
@@ -101,7 +125,11 @@ describe('opt', () => {
 
     assert.exception(() => {
       schema.read({ age: false });
-    }, /TypeError: Expected property "age" to be opt\(integer\) but got false/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "age" to be opt(integer) but got false',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails validator with undefined', () => {
@@ -111,7 +139,11 @@ describe('opt', () => {
 
     assert.exception(() => {
       schema({ age: true });
-    }, /TypeError: Expected property "age" to be opt\(integer\) but got true/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "age" to be opt(integer) but got true',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
   it('fails validator with custom function', () => {
@@ -119,7 +151,11 @@ describe('opt', () => {
 
     assert.exception(() => {
       schema(1);
-    }, /TypeError: Expected opt\(custom value\) but got 1/);
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt(custom value) but got 1',
+      code: 'SCHEMA_VALIDATION'
+    });
   });
 
 
