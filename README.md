@@ -133,9 +133,7 @@ argument:
     - `"integer"`: Requires a number primitive that has no fractions.
     - `"string"`: Requires a string primitive.
     - `"object"`: Requires an object.
-- `regexp`: Requires the stringified value to match the regular expression.
-  Create a spec that strictly matches only strings like this: `all('string',
-  /[a-z]+/)`.
+- `regexp`: Requires the value to be a string and match the regular expression.
 - `function`: Defines a custom specification. The function is expected to
   return `false` if the value is not considered valid.
 - `object`: Defines a nested object specification.

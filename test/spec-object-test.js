@@ -6,6 +6,15 @@ const { spec, object } = require('..');
 
 describe('spec object', () => {
 
+  it('fails to define spec with []', () => {
+    assert.exception(() => {
+      spec([]);
+    }, {
+      name: 'TypeError',
+      message: 'Invalid spec []'
+    });
+  });
+
   it('validates empty object', () => {
     const schema = spec({});
 
