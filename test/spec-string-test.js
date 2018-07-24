@@ -28,6 +28,48 @@ describe('spec string', () => {
     });
   });
 
+  it('validates defined', () => {
+    const schema = spec({ test: 'defined' });
+
+    refute.exception(() => {
+      schema({ test: null });
+    });
+    refute.exception(() => {
+      schema({ test: 'test' });
+    });
+    assert.exception(() => {
+      schema({});
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be defined but got undefined',
+      code: 'SCHEMA_VALIDATION'
+    });
+    assert.exception(() => {
+      schema({ test: undefined });
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be defined but got undefined',
+      code: 'SCHEMA_VALIDATION'
+    });
+  });
+
+  it('validates optional', () => {
+    const schema = spec({ test: 'optional' });
+
+    refute.exception(() => {
+      schema({});
+    });
+    refute.exception(() => {
+      schema({ test: undefined });
+    });
+    refute.exception(() => {
+      schema({ test: null });
+    });
+    refute.exception(() => {
+      schema({ test: 'test' });
+    });
+  });
+
   it('validates boolean', () => {
     const schema = spec({ test: 'boolean' });
 
