@@ -26,6 +26,36 @@ describe('array', () => {
     const schema = spec(array({ test: 'integer' }));
 
     refute.exception(() => {
+      schema([]);
+    });
+    assert.exception(() => {
+      schema({});
+    }, {
+      name: 'TypeError',
+      message: 'Expected array but got {}',
+      code: 'SCHEMA_VALIDATION'
+    });
+  });
+
+  it('verifies array as object property', () => {
+    const schema = spec({ test: array({ key: true }) });
+
+    refute.exception(() => {
+      schema({ test: [] });
+    });
+    assert.exception(() => {
+      schema({ test: 42 });
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be array but got 42',
+      code: 'SCHEMA_VALIDATION'
+    });
+  });
+
+  it('verifies array elements', () => {
+    const schema = spec(array({ test: 'integer' }));
+
+    refute.exception(() => {
       schema([{ test: 1 }]);
     });
     assert.exception(() => {
