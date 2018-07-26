@@ -2,22 +2,16 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec, array, object } = require('..');
+const { spec, array, object, one } = require('..');
 
 describe('array', () => {
 
-  it('requires object argument', () => {
-    assert.exception(() => {
-      array(() => {});
-    }, {
-      name: 'TypeError',
-      message: 'Expected object but got function'
-    });
+  it('requires valid spec argument', () => {
     assert.exception(() => {
       array([]);
     }, {
       name: 'TypeError',
-      message: 'Expected object but got []'
+      message: 'Invalid spec []'
     });
   });
 
@@ -63,6 +57,43 @@ describe('array', () => {
   it('can create array(object({}))', () => {
     refute.exception(() => {
       array(object({}));
+    });
+  });
+
+  it('can create array("string")', () => {
+    let arrayOfStrings;
+
+    refute.exception(() => {
+      arrayOfStrings = spec(array('string'));
+    });
+    refute.exception(() => {
+      arrayOfStrings(['foo', '', 'bar', '123']);
+    });
+    assert.exception(() => {
+      arrayOfStrings(['foo', 1]);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "1" to be string but got 1',
+      code: 'SCHEMA_VALIDATION'
+    });
+  });
+
+  it('can create array(one({ foo: true }, { bar: true }))', () => {
+    let arrayOfFooOrBar;
+
+    refute.exception(() => {
+      arrayOfFooOrBar = spec(array(one({ foo: true }, { bar: true })));
+    });
+    refute.exception(() => {
+      arrayOfFooOrBar([{ foo: 1 }, { bar: '!' }, { foo: true }, { bar: null }]);
+    });
+    assert.exception(() => {
+      arrayOfFooOrBar([{ foo: 1 }, { doo: '!' }]);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "1" to be one({foo:true}, {bar:true}) '
+        + 'but got {"doo":"!"}',
+      code: 'SCHEMA_VALIDATION'
     });
   });
 
