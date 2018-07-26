@@ -52,6 +52,20 @@ describe('array', () => {
     });
   });
 
+  it('validates array', () => {
+    const validator = array({ test: 'integer' });
+
+    assert.isTrue(validator([]));
+    assert.isFalse(validator({}));
+  });
+
+  it('validates array as object property', () => {
+    const validator = object({ test: array({ key: true }) });
+
+    assert.isTrue(validator({ test: [] }));
+    assert.isFalse(validator({ test: 42 }));
+  });
+
   it('verifies array elements', () => {
     const schema = spec(array({ test: 'integer' }));
 
