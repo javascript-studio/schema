@@ -1,5 +1,10 @@
 # Changes
 
+## 1.1.1
+
+- 🐛 [`dbef3b5`](https://github.com/javascript-studio/studio-schema/commit/dbef3b5d917bf849339b67e1525acdae85e26645)
+  Do not throw on invalid array validation
+
 ## 1.1.0
 
 - 🍏 [`4cbe70b`](https://github.com/javascript-studio/studio-schema/commit/4cbe70b7638808884ccf9cc5bddcf597241dfc3f)
