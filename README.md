@@ -135,6 +135,7 @@ argument:
     - `"integer"`: Requires a number primitive that has no fractions.
     - `"string"`: Requires a string primitive.
     - `"object"`: Requires an object.
+    - `"array"`: Requires an array.
 - `regexp`: Requires the value to be a string and match the regular expression.
 - `function`: Defines a custom specification. The function is expected to
   return `false` if the value is not considered valid.

@@ -245,6 +245,60 @@ describe('spec string', () => {
     });
   });
 
+  it('validates array', () => {
+    const schema = spec({ test: 'array' });
+
+    refute.exception(() => {
+      schema({ test: [] });
+    });
+    assert.exception(() => {
+      schema({ test: null });
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be array but got null',
+      code: 'SCHEMA_VALIDATION'
+    });
+    assert.exception(() => {
+      schema({ test: true });
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be array but got true',
+      code: 'SCHEMA_VALIDATION'
+    });
+    assert.exception(() => {
+      schema({ test: 'test' });
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be array but got "test"',
+      code: 'SCHEMA_VALIDATION'
+    });
+    assert.exception(() => {
+      schema({ test: {} });
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be array but got {}',
+      code: 'SCHEMA_VALIDATION'
+    });
+    assert.exception(() => {
+      schema({ test: /[a-z]/ });
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be array but got /[a-z]/',
+      code: 'SCHEMA_VALIDATION'
+    });
+    function argumentsTest() {
+      schema({ test: arguments });
+    }
+    assert.exception(() => {
+      argumentsTest(1, 2);
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "test" to be array but got '
+        + '[object Arguments]',
+      code: 'SCHEMA_VALIDATION'
+    });
+  });
+
   it('fails on unknown string', () => {
     assert.exception(() => {
       spec({ test: 'unknown' });
