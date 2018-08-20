@@ -159,7 +159,12 @@ objects that validate reading from the object and assigning values:
   the writer with `JSON.stringify` or `schema.verify(writer)` it will throw if
   non-optional values are missing.
 - `data = schema.verify(writer)`: Checks if any properties are missing in the
-  given writer and returns the unwrapped data.
+  given writer and returns the unwrapped data. Throws if the given object is not
+  a schema writer.
+- `data = schema.raw(reader_or_writer)`: returns the unwrapped data without
+  checking if any properties are missing in the given writer. Throws if the
+  given object is not a schema reader or writer.
+
 
 ## License
 

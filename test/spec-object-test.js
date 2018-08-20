@@ -672,6 +672,68 @@ describe('spec object', () => {
       });
     });
 
+    it('throws if given object is plain object', () => {
+      const schema = spec(object({ some: { nested: 'string' } }));
+
+      assert.exception(() => {
+        schema.verify({});
+      }, {
+        name: 'TypeError',
+        message: 'Not a schema reader or writer'
+      });
+    });
+
+  });
+
+  describe('raw', () => {
+    const schema = spec({ some: { nested: 'string' } });
+
+    it('returns the raw data of the given reader', () => {
+      const reader = schema.read({ some: { nested: 'thing' } });
+
+      const data = schema.raw(reader);
+
+      assert.equals(data, { some: { nested: 'thing' } });
+    });
+
+    it('returns the raw data of the given writer', () => {
+      const writer = schema.write({ some: { nested: 'thing' } });
+
+      const data = schema.raw(writer);
+
+      assert.equals(data, { some: { nested: 'thing' } });
+    });
+
+    it('does not fail to add properties to raw data', () => {
+      const writer = schema.write({ some: { nested: 'thing' } });
+
+      const data = schema.raw(writer);
+
+      refute.exception(() => {
+        data.foo = 1;
+      });
+    });
+
+    it('does not fail if writer object is incomplete', () => {
+      const writer = schema.write({ some: {} });
+
+      let data;
+      refute.exception(() => {
+        data = schema.raw(writer);
+      });
+
+      assert.equals(data, { some: {} });
+    });
+
+    it('throws if given object is plain object', () => {
+      assert.exception(() => {
+        schema.raw({});
+      }, {
+        name: 'TypeError',
+        message: 'Not a schema reader or writer'
+      });
+    });
+
   });
 
 });
