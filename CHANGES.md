@@ -1,5 +1,10 @@
 # Changes
 
+## 1.2.0
+
+- 🍏 [`b3744e9`](https://github.com/javascript-studio/studio-schema/commit/b3744e9fc77bc1224ec836ef0f8f0a8e601ca297)
+  Implement `raw` to return original object
+
 ## 1.1.1
 
 - 🐛 [`dbef3b5`](https://github.com/javascript-studio/studio-schema/commit/dbef3b5d917bf849339b67e1525acdae85e26645)
