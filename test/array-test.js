@@ -93,7 +93,7 @@ describe('array', () => {
       parent({ children: [{ name: 'foo' }, { name: 42 }] });
     }, {
       name: 'TypeError',
-      message: 'Expected property "children[1].name" to be string but got 42',
+      message: 'Expected property "children.1.name" to be string but got 42',
       code: 'SCHEMA_VALIDATION'
     });
   });

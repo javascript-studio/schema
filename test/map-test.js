@@ -2,25 +2,25 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec, keyValue, opt, one } = require('..');
+const { spec, map, opt, one } = require('..');
 
-describe('keyValue', () => {
+describe('map', () => {
 
   it('requires both arguments to be valid specs', () => {
     assert.exception(() => {
-      keyValue();
+      map();
     }, {
       name: 'Error',
       message: 'Invalid spec undefined'
     });
     assert.exception(() => {
-      keyValue('string');
+      map('string');
     }, {
       name: 'Error',
       message: 'Invalid spec undefined'
     });
     assert.exception(() => {
-      keyValue('string', 'unknown');
+      map('string', 'unknown');
     }, {
       name: 'Error',
       message: 'Invalid spec "unknown"'
@@ -28,7 +28,7 @@ describe('keyValue', () => {
   });
 
   it('does not fail for valid objects', () => {
-    const schema = spec(keyValue('string', 'number'));
+    const schema = spec(map('string', 'number'));
 
     refute.exception(() => {
       schema({});
@@ -39,57 +39,69 @@ describe('keyValue', () => {
   });
 
   it('fails for non-objects', () => {
-    const schema = spec(keyValue('string', 'number'));
+    const schema = spec(map('string', 'number'));
 
     assert.exception(() => {
       schema([]);
     }, {
       name: 'TypeError',
-      message: 'Expected keyValue(string, number) but got []',
+      message: 'Expected object but got []',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
       schema('test');
     }, {
       name: 'TypeError',
-      message: 'Expected keyValue(string, number) but got "test"',
+      message: 'Expected object but got "test"',
       code: 'SCHEMA_VALIDATION'
     });
   });
 
   it('fails for invalid keys', () => {
-    const schema = spec(keyValue('number', 'string'));
+    const schema = spec(map(/^[a-z]$/, 'string'));
 
     assert.exception(() => {
       schema({ 0: 'ok' });
     }, {
       name: 'TypeError',
-      message: 'Expected keyValue(number, string) but got {"0":"ok"}',
+      message: 'Expected key "0" to be /^[a-z]$/',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
       schema({ abc: 'ok' });
     }, {
       name: 'TypeError',
-      message: 'Expected keyValue(number, string) but got {"abc":"ok"}',
+      message: 'Expected key "abc" to be /^[a-z]$/',
       code: 'SCHEMA_VALIDATION'
     });
   });
 
   it('fails for invalid objects', () => {
-    const schema = spec(keyValue('string', 'number'));
+    const schema = spec(map('string', 'number'));
 
     assert.exception(() => {
       schema({ foo: true });
     }, {
       name: 'TypeError',
-      message: 'Expected keyValue(string, number) but got {"foo":true}',
+      message: 'Expected property "foo" to be number but got true',
+      code: 'SCHEMA_VALIDATION'
+    });
+  });
+
+  it('validates value object', () => {
+    const schema = spec(map('string', { index: 'number' }));
+
+    assert.exception(() => {
+      schema({ foo: { index: 'invalid' } });
+    }, {
+      name: 'TypeError',
+      message: 'Expected property "foo.index" to be number but got "invalid"',
       code: 'SCHEMA_VALIDATION'
     });
   });
 
   it('works within `opt`', () => {
-    const schema = spec(opt(keyValue('string', 'number')));
+    const schema = spec(opt(map('string', 'number')));
 
     refute.exception(() => {
       schema(undefined);
@@ -100,13 +112,13 @@ describe('keyValue', () => {
       schema({ foo: '' });
     }, {
       name: 'TypeError',
-      message: 'Expected opt(keyValue(string, number)) but got {"foo":""}',
+      message: 'Expected opt(map(string, number)) but got {"foo":""}',
       code: 'SCHEMA_VALIDATION'
     });
   });
 
   it('works within `one`', () => {
-    const schema = spec(one('boolean', keyValue('string', 'number')));
+    const schema = spec(one('boolean', map('string', 'number')));
 
     refute.exception(() => {
       schema(true);
@@ -118,7 +130,7 @@ describe('keyValue', () => {
       schema('something');
     }, {
       name: 'TypeError',
-      message: 'Expected one(boolean, keyValue(string, number)) but got '
+      message: 'Expected one(boolean, map(string, number)) but got '
         + '"something"',
       code: 'SCHEMA_VALIDATION'
     });
@@ -126,14 +138,14 @@ describe('keyValue', () => {
       schema({ foo: '' });
     }, {
       name: 'TypeError',
-      message: 'Expected one(boolean, keyValue(string, number)) but got '
+      message: 'Expected one(boolean, map(string, number)) but got '
         + '{"foo":""}',
       code: 'SCHEMA_VALIDATION'
     });
   });
 
   it('works using `opt`', () => {
-    const schema = spec(keyValue('string', opt('number')));
+    const schema = spec(map('string', opt('number')));
 
     refute.exception(() => {
       schema({});
@@ -144,13 +156,13 @@ describe('keyValue', () => {
       schema({ foo: null });
     }, {
       name: 'TypeError',
-      message: 'Expected keyValue(string, opt(number)) but got {"foo":null}',
+      message: 'Expected property "foo" to be opt(number) but got null',
       code: 'SCHEMA_VALIDATION'
     });
   });
 
   it('works using `one`', () => {
-    const schema = spec(keyValue('string', one('boolean', 'number')));
+    const schema = spec(map('string', one('boolean', 'number')));
 
     refute.exception(() => {
       schema({});
@@ -162,8 +174,7 @@ describe('keyValue', () => {
       schema({ foo: '' });
     }, {
       name: 'TypeError',
-      message: 'Expected keyValue(string, one(boolean, number)) but got '
-        + '{"foo":""}',
+      message: 'Expected property "foo" to be one(boolean, number) but got ""',
       code: 'SCHEMA_VALIDATION'
     });
   });

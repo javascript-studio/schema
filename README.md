@@ -109,13 +109,13 @@ const { spec, opt, array, one } = require('@studio/schema');
   reusable object validators.
 - `validator = array(spec)`: Defines an array. Each element in the array has to
   match the given `spec`.
-- `validator = keyValue(key_spec, value_spec)`: Defines an object specification
-  for key-value pairs where `key_spec` and `value_spec` are the specifications
-  for the object key and value pairs.
+- `validator = map(key_spec, value_spec)`: Defines a map specification for
+  key-value pairs where `key_spec` and `value_spec` are the specifications for
+  the object key and value pairs.
 - `SCHEMA_VALIDATION`: The `code` property exposed on schema validation errors.
 
-Note that `all`, `one` and `opt`, `object`, `array` and `keyValue` are also
-exposed on `spec`.
+Note that `all`, `one` and `opt`, `object`, `array` and `map` are also exposed
+on `spec`.
 
 ## Spec
 
@@ -152,15 +152,24 @@ objects that validate reading from the object and assigning values:
   data. If the given data does not match the schema, an exception is thrown.
   The returned reader throws on any property modification or on an attempt to
   read an undefined property.
-- `writer = schema.write([data])`: Creates a writer with optional initial data.
-  If the given data does not match the schema, an exception is thrown. The
-  returned writer throws on undefined property modification, if an assigned
-  value is invalid, or on an attempt to read an undefined property. When using
-  the writer with `JSON.stringify` or `schema.verify(writer)` it will throw if
-  non-optional values are missing.
+- `writer = schema.write([data[, emitter]])`: Creates a writer with optional
+  initial data and an event emitter. If the given data does not match the
+  schema, an exception is thrown. The returned writer throws on undefined
+  property modification, if an assigned value is invalid, or on an attempt to
+  read an undefined property. When using the writer with `JSON.stringify` or
+  `schema.verify(writer)` it will throw if non-optional values are missing. If
+  `emitter` is specified, these events will be emitted:
+    - `set(property, value)` when a property is assigned a new value
+    - `delete(property)` when a property is deleted
+    - `push(property, ...values)` when `push` is called on an array
+    - `pop(property)` when `pop` is called on an array
+    - `unshift(property, ...values)` when `unshift` is called on an array
+    - `shift(property)` when `shift` is called on an array
+    - `splice(start, delete_count, ...items)` when `splice` is called on an
+      array
 - `data = schema.verify(writer)`: Checks if any properties are missing in the
-  given writer and returns the unwrapped data. Throws if the given object is not
-  a schema writer.
+  given writer and returns the unwrapped data. Throws if the given object is
+  not a schema writer.
 - `data = schema.raw(reader_or_writer)`: returns the unwrapped data without
   checking if any properties are missing in the given writer. Throws if the
   given object is not a schema reader or writer.

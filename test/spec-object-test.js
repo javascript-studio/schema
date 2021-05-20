@@ -1,8 +1,9 @@
 /*eslint-env mocha*/
 'use strict';
 
+const { EventEmitter } = require('events');
 const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
-const { spec, object } = require('..');
+const { spec, object, array, map } = require('..');
 
 describe('spec object', () => {
 
@@ -259,7 +260,7 @@ describe('spec object', () => {
         schema.read({ some: { nested: 'thing', unknown: 123 } });
       }, {
         name: 'Error',
-        message: 'Invalid property "unknown"',
+        message: 'Invalid property "some.unknown"',
         code: 'SCHEMA_VALIDATION'
       });
     });
@@ -501,7 +502,7 @@ describe('spec object', () => {
         schema.write({ some: { unknown: 123 } });
       }, {
         name: 'Error',
-        message: 'Invalid property "unknown"',
+        message: 'Invalid property "some.unknown"',
         code: 'SCHEMA_VALIDATION'
       });
     });
@@ -513,7 +514,7 @@ describe('spec object', () => {
         proxy.some.nested = true;
       }, {
         name: 'Error',
-        message: 'Expected property "nested" to be string but got true',
+        message: 'Expected property "some.nested" to be string but got true',
         code: 'SCHEMA_VALIDATION'
       });
     });
@@ -603,6 +604,321 @@ describe('spec object', () => {
       assert.isUndefined(proxy.some);
     });
 
+  });
+
+  describe('write array', () => {
+    const schema = spec({ array: array('number') });
+
+    it('validates given object', () => {
+      assert.exception(() => {
+        schema.write({ array: [42, 'invalid'] });
+      }, {
+        name: 'Error',
+        message: 'Expected property "array.1" to be number but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+
+    it('initialized with a valid object', () => {
+      const proxy = schema.write({ array: [2, 3, 7] });
+
+      assert.equals(proxy.array, [2, 3, 7]);
+    });
+
+    it('fails to set an invalid property value', () => {
+      const proxy = schema.write({ array: [42] });
+
+      assert.exception(() => {
+        proxy.array[0] = 'invalid';
+      }, {
+        name: 'Error',
+        message: 'Expected property "array.0" to be number but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+
+    it('fails to push an invalid property value', () => {
+      const proxy = schema.write({ array: [42] });
+
+      assert.exception(() => {
+        proxy.array.push('invalid');
+      }, {
+        name: 'Error',
+        message: 'Expected property "array.1" to be number but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+
+    it('pushes a valid property value', () => {
+      const proxy = schema.write({ array: [42] });
+
+      proxy.array.push(7);
+
+      assert.equals(proxy.array, [42, 7]);
+    });
+
+    it('fails to assign nun-numeric property', () => {
+      const proxy = schema.write({ array: [] });
+
+      assert.exception(() => {
+        proxy.array.foo = 42;
+      }, {
+        name: 'Error',
+        message: 'Expected property "array.foo" to be a valid array index',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+
+    it('fails to assign negative index', () => {
+      const proxy = schema.write({ array: [] });
+
+      assert.exception(() => {
+        proxy.array[-1] = 42;
+      }, {
+        name: 'Error',
+        message: 'Expected property "array.-1" to be a valid array index',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+
+    it('fails to set property in array object', () => {
+      const schema = spec({ array: array({ index: 'number' }) });
+
+      const proxy = schema.write({ array: [{ index: 0 }] });
+
+      assert.exception(() => {
+        proxy.array[0].index = 'invalid';
+      }, {
+        name: 'Error',
+        message: 'Expected property "array.0.index" to be number '
+          + 'but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+  });
+
+  describe('write map', () => {
+    const schema = spec({ map: map('string', 'number') });
+
+    it('validates given object', () => {
+      assert.exception(() => {
+        schema.write({ map: { test: 'invalid' } });
+      }, {
+        name: 'Error',
+        message: 'Expected property "map.test" to be number but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+
+    it('initialized with a valid object', () => {
+      const proxy = schema.write({ map: { a: 1, b: 2 } });
+
+      assert.equals(proxy.map, { a: 1, b: 2 });
+    });
+
+    it('fails to set an invalid property value', () => {
+      const proxy = schema.write({ map: { a: 1 } });
+
+      assert.exception(() => {
+        proxy.map.a = 'invalid';
+      }, {
+        name: 'Error',
+        message: 'Expected property "map.a" to be number but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+
+    it('fails to add an invalid property value', () => {
+      const proxy = schema.write({ map: { a: 1 } });
+
+      assert.exception(() => {
+        proxy.map.b = 'invalid';
+      }, {
+        name: 'Error',
+        message: 'Expected property "map.b" to be number but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+
+    it('sets a valid property value', () => {
+      const proxy = schema.write({ map: { a: 1 } });
+
+      proxy.map.a = 2;
+
+      assert.equals(proxy.map, { a: 2 });
+    });
+
+    it('adds a valid property value', () => {
+      const proxy = schema.write({ map: { a: 1 } });
+
+      proxy.map.b = 2;
+
+      assert.equals(proxy.map, { a: 1, b: 2 });
+    });
+
+    it('fails to set property in value object', () => {
+      const schema = spec({ map: map('string', { index: 'number' }) });
+
+      const proxy = schema.write({ map: { test: { index: 0 } } });
+
+      assert.exception(() => {
+        proxy.map.test.index = 'invalid';
+      }, {
+        name: 'Error',
+        message: 'Expected property "map.test.index" to be number '
+          + 'but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+  });
+
+  describe('write emitter', () => {
+    const schema = spec({
+      some: {
+        nested: 'string',
+        array: array('number'),
+        map: map('string', 'number')
+      }
+    });
+    let emitter;
+    let onSet;
+    let onDelete;
+
+    beforeEach(() => {
+      emitter = new EventEmitter();
+      onSet = sinon.fake();
+      onDelete = sinon.fake();
+      emitter.on('set', onSet);
+      emitter.on('delete', onDelete);
+    });
+
+    it('emits "set" event for property set', () => {
+      const proxy = schema.write({}, emitter);
+
+      proxy.some = { nested: 'test' };
+
+      assert.calledOnceWith(onSet, 'some', { nested: 'test' });
+    });
+
+    it('emits "set" event nested for property set', () => {
+      const proxy = schema.write({ some: {} }, emitter);
+
+      proxy.some.nested = 'test';
+
+      assert.calledOnceWith(onSet, 'some.nested', 'test');
+    });
+
+    it('emits "delete" event for nested property delete', () => {
+      const proxy = schema.write({ some: { nested: 'test' } }, emitter);
+
+      delete proxy.some.nested;
+
+      assert.calledOnceWith(onDelete, 'some.nested');
+    });
+
+    it('passes Array.isArray test for wrapped array', () => {
+      const proxy = schema.write({ some: { array: [] } }, emitter);
+
+      assert.isTrue(Array.isArray(proxy.some.array));
+    });
+
+    it('emits "set" event for nested array assign', () => {
+      const proxy = schema.write({ some: { array: [] } }, emitter);
+
+      proxy.some.array[0] = 42;
+
+      assert.calledOnceWith(onSet, 'some.array.0', 42);
+    });
+
+    it('emits "delete" event for nested array delete', () => {
+      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+
+      delete proxy.some.array[2];
+
+      assert.calledOnceWith(onDelete, 'some.array.2');
+    });
+
+    it('emits "push" event for nested array.push', () => {
+      const onPush = sinon.fake();
+      emitter.on('push', onPush);
+      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+
+      proxy.some.array.push(42);
+
+      assert.equals(proxy.some.array, [2, 3, 7, 42]);
+      assert.calledOnceWith(onPush, 'some.array');
+      refute.called(onSet);
+      refute.called(onDelete);
+    });
+
+    it('emits "pop" event for nested array.pop', () => {
+      const onPop = sinon.fake();
+      emitter.on('pop', onPop);
+      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+
+      proxy.some.array.pop();
+
+      assert.equals(proxy.some.array, [2, 3]);
+      assert.calledOnceWith(onPop, 'some.array');
+      refute.called(onSet);
+      refute.called(onDelete);
+    });
+
+    it('emits "shift" event for nested array.shift', () => {
+      const onShift = sinon.fake();
+      emitter.on('shift', onShift);
+      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+
+      proxy.some.array.shift();
+
+      assert.equals(proxy.some.array, [3, 7]);
+      assert.calledOnceWith(onShift, 'some.array');
+      refute.called(onSet);
+    });
+
+    it('emits "unshift" event for nested array.unshift', () => {
+      const onUnshift = sinon.fake();
+      emitter.on('unshift', onUnshift);
+      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+
+      proxy.some.array.unshift(42);
+
+      assert.equals(proxy.some.array, [42, 2, 3, 7]);
+      assert.calledOnceWith(onUnshift, 'some.array');
+      refute.called(onSet);
+    });
+
+    it('emits "splice" event for nested array.splice', () => {
+      const onSplice = sinon.fake();
+      emitter.on('splice', onSplice);
+      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+
+      proxy.some.array.splice(0, 2, 42, 365);
+
+      assert.equals(proxy.some.array, [42, 365, 7]);
+      assert.calledOnceWith(onSplice, 'some.array', 0, 2, 42, 365);
+      refute.called(onSet);
+    });
+
+    it('validates values in array.splice', () => {
+      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+
+      assert.exception(() => {
+        proxy.some.array.splice(0, 2, 'invalid');
+      }, {
+        name: 'TypeError',
+        message: 'Expected argument 3 of some.array.splice to be number '
+          + 'but got "invalid"'
+      });
+    });
+
+    it('emits "set" event for nested map property assign', () => {
+      const proxy = schema.write({ some: { map: {} } }, emitter);
+
+      proxy.some.map.key = 42;
+
+      assert.calledOnceWith(onSet, 'some.map.key', 42);
+    });
   });
 
   describe('verify', () => {
