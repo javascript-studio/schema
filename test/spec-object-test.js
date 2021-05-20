@@ -439,7 +439,7 @@ describe('spec object', () => {
         delete proxy.some;
       });
 
-      refute.defined(proxy.some);
+      assert.isUndefined(proxy.some);
       assert.isFalse(proxy.hasOwnProperty('some'));
     });
 
@@ -567,7 +567,7 @@ describe('spec object', () => {
         delete proxy.some.nested;
       });
 
-      refute.defined(proxy.some.nested);
+      assert.isUndefined(proxy.some.nested);
       assert.isFalse(proxy.some.hasOwnProperty('nested'));
     });
 
@@ -599,7 +599,7 @@ describe('spec object', () => {
     it('returns undefined for missing object property without throwing', () => {
       const proxy = schema.write({});
 
-      refute.defined(proxy.some);
+      assert.isUndefined(proxy.some);
     });
 
   });

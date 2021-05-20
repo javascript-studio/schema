@@ -164,7 +164,7 @@ describe('opt', () => {
 
     opt(fn);
 
-    refute.defined(Object.getOwnPropertyDescriptor(fn, 'verify'));
-    refute.defined(Object.getOwnPropertyDescriptor(fn, 'specName'));
+    assert.isUndefined(Object.getOwnPropertyDescriptor(fn, 'verify'));
+    assert.isUndefined(Object.getOwnPropertyDescriptor(fn, 'specName'));
   });
 });
