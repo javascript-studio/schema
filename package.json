@@ -31,7 +31,7 @@
     "@studio/eslint-config": "^1.0.2",
     "eslint": "^5.1.0",
     "mocha": "^5.2.0",
-    "mochify": "^5.8.0"
+    "mochify": "^7.1.0"
   },
   "repository": {
     "type": "git",
