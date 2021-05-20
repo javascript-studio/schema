@@ -196,7 +196,7 @@ describe('spec object', () => {
         message: 'Invalid delete on read-only object',
         code: 'SCHEMA_VALIDATION'
       });
-      assert.isTrue(proxy.hasOwnProperty('some'));
+      assert.isTrue(Object.prototype.hasOwnProperty.call(proxy, 'some'));
     });
 
     it('works with JSON.stringify', () => {
@@ -310,7 +310,7 @@ describe('spec object', () => {
         message: 'Invalid delete on read-only object',
         code: 'SCHEMA_VALIDATION'
       });
-      assert.isTrue(proxy.some.hasOwnProperty('nested'));
+      assert.isTrue(Object.prototype.hasOwnProperty.call(proxy.some, 'nested'));
     });
 
     it('works with JSON.stringify', () => {
@@ -440,7 +440,7 @@ describe('spec object', () => {
       });
 
       assert.isUndefined(proxy.some);
-      assert.isFalse(proxy.hasOwnProperty('some'));
+      assert.isFalse(Object.prototype.hasOwnProperty.call(proxy, 'some'));
     });
 
     it('works with JSON.stringify', () => {
@@ -568,7 +568,8 @@ describe('spec object', () => {
       });
 
       assert.isUndefined(proxy.some.nested);
-      assert.isFalse(proxy.some.hasOwnProperty('nested'));
+      assert.isFalse(Object.prototype.hasOwnProperty.call(proxy.some,
+        'nested'));
     });
 
     it('works with JSON.stringify', () => {
