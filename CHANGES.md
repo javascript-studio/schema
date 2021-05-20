@@ -1,5 +1,28 @@
 # Changes
 
+## 2.0.0
+
+- 💥 [`b914082`](https://github.com/javascript-studio/studio-schema/commit/b91408203f6cb7ace942a898cb9775ac0e121953)
+  Version 2
+- ✨ [`3240ec0`](https://github.com/javascript-studio/studio-schema/commit/3240ec0dd41988148a4f63db4b435f19d7002acb)
+  Configure GitHub actions
+- ✨ [`32d473e`](https://github.com/javascript-studio/studio-schema/commit/32d473eb88f33ee99fc6af90d4aff7b9e618dbf4)
+  Upgrade Studio Changes
+- ✨ [`e3d72b6`](https://github.com/javascript-studio/studio-schema/commit/e3d72b6ef47d6835f450481dc38faec5a337ceb7)
+  Update eslint config
+- ✨ [`fc07195`](https://github.com/javascript-studio/studio-schema/commit/fc07195bc7a0e276f5831b68c460a67e829a2787)
+  Upgrade eslint to latest
+- ✨ [`d30a00d`](https://github.com/javascript-studio/studio-schema/commit/d30a00dd9632261f05ff0c757f73d11c527b28a4)
+  Upgrade mochify to latest
+- ✨ [`154c5fe`](https://github.com/javascript-studio/studio-schema/commit/154c5feb721d0bdd36ef6c9d41dc09c9aa5e4413)
+  Upgrade referee-sinon to latest
+- ✨ [`669014f`](https://github.com/javascript-studio/studio-schema/commit/669014f060049123876eabb6023e19e867007b13)
+  Use npm 7
+- ✨ [`4aeb227`](https://github.com/javascript-studio/studio-schema/commit/4aeb22724e04cb38b60d1e459280f9855007aefe)
+  Add `.gitignore`
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-20._
+
 ## 1.2.0
 
 - 🍏 [`b3744e9`](https://github.com/javascript-studio/studio-schema/commit/b3744e9fc77bc1224ec836ef0f8f0a8e601ca297)
