@@ -5,10 +5,11 @@
   "main": "lib/schema.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha && mochify",
+    "test": "npm run test:node && npm run test:browser",
+    "test:node": "mocha",
+    "test:browser": "mochify",
     "watch": "mocha --watch",
-    "posttest": "npm run lint",
-    "preversion": "npm test",
+    "preversion": "npm run lint && npm test",
     "version": "changes --commits --footer",
     "postversion": "git push --follow-tags && npm publish"
   },
