@@ -179,4 +179,23 @@ describe('map', () => {
     });
   });
 
+  context('reader', () => {
+    it('serializes to JSON', () => {
+      const mapSpec = spec(map('string', 'integer'));
+
+      const map_reader = mapSpec.read({ test: 42 });
+
+      assert.json(JSON.stringify(map_reader), { test: 42 });
+    });
+  });
+
+  context('writer', () => {
+    it('serializes to JSON', () => {
+      const mapSpec = spec(map('string', 'integer'));
+
+      const map_writer = mapSpec.write({ test: 42 });
+
+      assert.json(JSON.stringify(map_writer), { test: 42 });
+    });
+  });
 });
