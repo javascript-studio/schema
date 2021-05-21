@@ -1,5 +1,12 @@
 # Changes
 
+## 2.0.1
+
+- 🐛 [`3595da0`](https://github.com/javascript-studio/studio-schema/commit/3595da0896934bbb003d519db3a3e3472dfaa51c)
+  Fix nested map writer
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-21._
+
 ## 2.0.0
 
 - 💥 [`b914082`](https://github.com/javascript-studio/studio-schema/commit/b91408203f6cb7ace942a898cb9775ac0e121953)
