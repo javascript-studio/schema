@@ -772,6 +772,29 @@ describe('spec object', () => {
     });
   });
 
+  describe('write map nested', () => {
+    const nested = object({ key: 'number' });
+    const schema = spec({ map: map('string', nested) });
+
+    it('validates given object', () => {
+      assert.exception(() => {
+        schema.write({ map: { test: { key: 'invalid' } } });
+      }, {
+        name: 'Error',
+        message: 'Expected property "map.test.key" to be number '
+          + 'but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      });
+    });
+
+    it('initialized with a valid object', () => {
+      const proxy = schema.write({ map: { a: { key: 1 }, b: { key: 2 } } });
+
+      assert.equals(proxy.map.a.key, 1);
+      assert.equals(proxy.map.b.key, 2);
+    });
+  });
+
   describe('write emitter', () => {
     const schema = spec({
       some: {
