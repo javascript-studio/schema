@@ -141,4 +141,23 @@ describe('array', () => {
     });
   });
 
+  context('reader', () => {
+    it('serializes to JSON', () => {
+      const arraySpec = spec(array({ test: 'integer' }));
+
+      const arr_reader = arraySpec.read([{ test: 42 }]);
+
+      assert.json(JSON.stringify(arr_reader), [{ test: 42 }]);
+    });
+  });
+
+  context('writer', () => {
+    it('serializes to JSON', () => {
+      const arraySpec = spec(array({ test: 'integer' }));
+
+      const arr_writer = arraySpec.write([{ test: 42 }]);
+
+      assert.json(JSON.stringify(arr_writer), [{ test: 42 }]);
+    });
+  });
 });
