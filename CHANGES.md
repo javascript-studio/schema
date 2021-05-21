@@ -1,5 +1,14 @@
 # Changes
 
+## 2.0.3
+
+- 🐛 [`b0294d2`](https://github.com/javascript-studio/studio-schema/commit/b0294d2b44e0e98471cd7a8ce1cff78d27c5a202)
+  Ignore "then" keys in property getter
+- 🐛 [`ce07b07`](https://github.com/javascript-studio/studio-schema/commit/ce07b076ab3d0d88015f89302a5df0ea2fce5f14)
+  Allow to define symbol properties
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-21._
+
 ## 2.0.2
 
 - 🐛 [`06442d1`](https://github.com/javascript-studio/studio-schema/commit/06442d11aa4a04121dc37dbe23f0714c99298705)
