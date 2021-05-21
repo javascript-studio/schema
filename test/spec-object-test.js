@@ -469,6 +469,15 @@ describe('spec object', () => {
       });
     });
 
+    it('allows to define symbol properties on proxy', () => {
+      const proxy = schema.write({ some: 'thing' });
+      const SYMBOL = Symbol('SYMBOL');
+
+      refute.exception(() => {
+        proxy[SYMBOL] = 'test';
+      });
+    });
+
   });
 
   describe('write nested', () => {
