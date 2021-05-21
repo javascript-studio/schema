@@ -478,6 +478,12 @@ describe('spec object', () => {
       });
     });
 
+    it('does not throw when awaiting a proxy', (done) => {
+      const proxy = schema.write({ some: 'thing' });
+
+      Promise.resolve(proxy).then(() => done()).catch(done);
+    });
+
   });
 
   describe('write nested', () => {
