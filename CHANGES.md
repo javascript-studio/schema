@@ -1,5 +1,12 @@
 # Changes
 
+## 2.0.2
+
+- 🐛 [`06442d1`](https://github.com/javascript-studio/studio-schema/commit/06442d11aa4a04121dc37dbe23f0714c99298705)
+  Fix stringifying array and map objects
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-21._
+
 ## 2.0.1
 
 - 🐛 [`3595da0`](https://github.com/javascript-studio/studio-schema/commit/3595da0896934bbb003d519db3a3e3472dfaa51c)
