@@ -2,7 +2,7 @@
   "name": "@studio/schema",
   "version": "2.0.3",
   "description": "Plain JavaScript objects that throw if invalid or unknown properties are read, assigned or deleted",
-  "main": "lib/schema.js",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint .",
     "test": "npm run test:node && npm run test:browser",
