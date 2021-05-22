@@ -898,6 +898,18 @@ describe('spec object', () => {
       refute.called(onDelete);
     });
 
+    it('validates values in array.push', () => {
+      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+
+      assert.exception(() => {
+        proxy.some.array.push(42, 'invalid');
+      }, {
+        name: 'TypeError',
+        message: 'Expected argument 2 of some.array.push to be number '
+          + 'but got "invalid"'
+      });
+    });
+
     it('emits "pop" event for nested array.pop', () => {
       const onPop = sinon.fake();
       emitter.on('pop', onPop);
@@ -933,6 +945,18 @@ describe('spec object', () => {
       assert.equals(proxy.some.array, [42, 2, 3, 7]);
       assert.calledOnceWith(onUnshift, 'some.array');
       refute.called(onSet);
+    });
+
+    it('validates values in array.unshift', () => {
+      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+
+      assert.exception(() => {
+        proxy.some.array.unshift(42, 'invalid');
+      }, {
+        name: 'TypeError',
+        message: 'Expected argument 2 of some.array.unshift to be number '
+          + 'but got "invalid"'
+      });
     });
 
     it('emits "splice" event for nested array.splice', () => {
