@@ -1,6 +1,6 @@
 {
   "name": "@studio/schema",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Plain JavaScript objects that throw if invalid or unknown properties are read, assigned or deleted",
   "main": "index.js",
   "scripts": {

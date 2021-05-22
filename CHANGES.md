@@ -1,5 +1,50 @@
 # Changes
 
+## 2.0.4
+
+- 🐛 [`7bc7a62`](https://github.com/javascript-studio/studio-schema/commit/7bc7a625ffe307b292746423550a47c93c1d1485)
+  Validate arguments in array.push and array.unshift
+- 🐛 [`bfcbf84`](https://github.com/javascript-studio/studio-schema/commit/bfcbf84e4005de61ba223fd0e4bbdaae0b34e841)
+  Do not throw in util.inspect(proxy)
+- ✨ [`70c6fa5`](https://github.com/javascript-studio/studio-schema/commit/70c6fa5f38aee28a092cb974aca5b205f3f035aa)
+  Extract objectVerifyer to own file
+- ✨ [`6fcf7b7`](https://github.com/javascript-studio/studio-schema/commit/6fcf7b73c7add50e7b57bdfe06ccb6cff1dd63b3)
+  Extract schema to own file
+- ✨ [`d95ea19`](https://github.com/javascript-studio/studio-schema/commit/d95ea191990cba1597edf59b94ba4c6d841fd768)
+  Extract object to own file
+- ✨ [`8b69eca`](https://github.com/javascript-studio/studio-schema/commit/8b69eca534f6ebf00cfe2321aa9cb0780305082c)
+  Extract one to own file
+- ✨ [`6795da3`](https://github.com/javascript-studio/studio-schema/commit/6795da3e5ecc6c03821eb6084d704febe571d4bb)
+  Extract opt to own file
+- ✨ [`15a6c02`](https://github.com/javascript-studio/studio-schema/commit/15a6c02495cccdc82526fdabf0b86e0875e12f29)
+  Extract map to own file
+- ✨ [`7eb0767`](https://github.com/javascript-studio/studio-schema/commit/7eb076791f228ad241714c94c9d6681afbc737f6)
+  Extract array and createItemGetter to own file
+- ✨ [`8d052b2`](https://github.com/javascript-studio/studio-schema/commit/8d052b2c024431c5df85ce6540a4bd07ee63126b)
+  Extract specTest and specTests to own file
+- ✨ [`3b93150`](https://github.com/javascript-studio/studio-schema/commit/3b9315010338eb55b6b46c87a764a57aaea7892c)
+  Extract type to own file
+- ✨ [`56bc5c2`](https://github.com/javascript-studio/studio-schema/commit/56bc5c2b4756368c9672c23c1d666ac3533534e5)
+  Extract verifyer to own file
+- ✨ [`4e8d3c3`](https://github.com/javascript-studio/studio-schema/commit/4e8d3c393f51464892da3bcea53b20a8b8e19e59)
+  Extract path to own file
+- ✨ [`7919b91`](https://github.com/javascript-studio/studio-schema/commit/7919b916a9079132fcaead592d9e16da42fd4fda)
+  Extract specName to own file
+- ✨ [`e55cea6`](https://github.com/javascript-studio/studio-schema/commit/e55cea6592efb634ecb3f47699d94cc22436cbd5)
+  Extract fail helpers to own file
+- ✨ [`1cab60f`](https://github.com/javascript-studio/studio-schema/commit/1cab60fd5eb68d6b9fbc1800780870e71f1a9949)
+  Extract constants to own file
+- ✨ [`e8573d7`](https://github.com/javascript-studio/studio-schema/commit/e8573d716abbbd90b64e63c545479a26e97872c5)
+  Extract stringify to own file
+- ✨ [`eb49c3e`](https://github.com/javascript-studio/studio-schema/commit/eb49c3ebf6709cfb63ff62dcfbdf9b7e5280faa0)
+  Extract typeOf to own file
+- ✨ [`6d1a0bc`](https://github.com/javascript-studio/studio-schema/commit/6d1a0bc776fb06fac5d9f4f24bec6135c5a2be6f)
+  Extract lazy to own file
+- ✨ [`a4f656a`](https://github.com/javascript-studio/studio-schema/commit/a4f656a0c2fe4dcc5531ecff17e383af5b9b10b9)
+  Avoid JSON.stringify in verifyWriter
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-22._
+
 ## 2.0.3
 
 - 🐛 [`b0294d2`](https://github.com/javascript-studio/studio-schema/commit/b0294d2b44e0e98471cd7a8ce1cff78d27c5a202)
