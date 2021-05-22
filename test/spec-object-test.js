@@ -1,6 +1,7 @@
 /*eslint-env mocha*/
 'use strict';
 
+const { inspect } = require('util');
 const { EventEmitter } = require('events');
 const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
 const { spec, object, array, map } = require('..');
@@ -482,6 +483,14 @@ describe('spec object', () => {
       const proxy = schema.write({ some: 'thing' });
 
       Promise.resolve(proxy).then(() => done()).catch(done);
+    });
+
+    it('does not throw when calling util.inspcet', () => {
+      const proxy = schema.write({ some: 'thing' });
+
+      refute.exception(() => {
+        inspect(proxy);
+      });
     });
 
   });
