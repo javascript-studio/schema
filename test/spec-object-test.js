@@ -638,7 +638,7 @@ describe('spec object', () => {
         schema.write({ array: [42, 'invalid'] });
       }, {
         name: 'Error',
-        message: 'Expected property "array.1" to be number but got "invalid"',
+        message: 'Expected property "array[1]" to be number but got "invalid"',
         code: 'SCHEMA_VALIDATION'
       });
     });
@@ -656,7 +656,7 @@ describe('spec object', () => {
         proxy.array[0] = 'invalid';
       }, {
         name: 'Error',
-        message: 'Expected property "array.0" to be number but got "invalid"',
+        message: 'Expected property "array[0]" to be number but got "invalid"',
         code: 'SCHEMA_VALIDATION'
       });
     });
@@ -668,7 +668,7 @@ describe('spec object', () => {
         proxy.array.push('invalid');
       }, {
         name: 'Error',
-        message: 'Expected property "array.1" to be number but got "invalid"',
+        message: 'Expected property "array[1]" to be number but got "invalid"',
         code: 'SCHEMA_VALIDATION'
       });
     });
@@ -688,7 +688,7 @@ describe('spec object', () => {
         proxy.array.foo = 42;
       }, {
         name: 'Error',
-        message: 'Expected property "array.foo" to be a valid array index',
+        message: 'Expected property "array[foo]" to be a valid array index',
         code: 'SCHEMA_VALIDATION'
       });
     });
@@ -700,7 +700,7 @@ describe('spec object', () => {
         proxy.array[-1] = 42;
       }, {
         name: 'Error',
-        message: 'Expected property "array.-1" to be a valid array index',
+        message: 'Expected property "array[-1]" to be a valid array index',
         code: 'SCHEMA_VALIDATION'
       });
     });
@@ -874,7 +874,7 @@ describe('spec object', () => {
 
       proxy.some.array[0] = 42;
 
-      assert.calledOnceWith(onSet, 'some.array.0', 42);
+      assert.calledOnceWith(onSet, 'some.array[0]', 42);
     });
 
     it('emits "delete" event for nested array delete', () => {
@@ -882,7 +882,7 @@ describe('spec object', () => {
 
       delete proxy.some.array[2];
 
-      assert.calledOnceWith(onDelete, 'some.array.2');
+      assert.calledOnceWith(onDelete, 'some.array[2]');
     });
 
     it('emits "push" event for nested array.push', () => {
