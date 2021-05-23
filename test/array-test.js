@@ -76,7 +76,7 @@ describe('array', () => {
       schema([{ test: 1.2 }]);
     }, {
       name: 'TypeError',
-      message: 'Expected property "0.test" to be integer but got 1.2',
+      message: 'Expected property "[0].test" to be integer but got 1.2',
       code: 'SCHEMA_VALIDATION'
     });
   });
@@ -93,7 +93,7 @@ describe('array', () => {
       parent({ children: [{ name: 'foo' }, { name: 42 }] });
     }, {
       name: 'TypeError',
-      message: 'Expected property "children.1.name" to be string but got 42',
+      message: 'Expected property "children[1].name" to be string but got 42',
       code: 'SCHEMA_VALIDATION'
     });
   });
@@ -117,7 +117,7 @@ describe('array', () => {
       arrayOfStrings(['foo', 1]);
     }, {
       name: 'TypeError',
-      message: 'Expected property "1" to be string but got 1',
+      message: 'Expected property "[1]" to be string but got 1',
       code: 'SCHEMA_VALIDATION'
     });
   });
@@ -135,7 +135,7 @@ describe('array', () => {
       arrayOfFooOrBar([{ foo: 1 }, { doo: '!' }]);
     }, {
       name: 'TypeError',
-      message: 'Expected property "1" to be one({foo:true}, {bar:true}) '
+      message: 'Expected property "[1]" to be one({foo:true}, {bar:true}) '
         + 'but got {"doo":"!"}',
       code: 'SCHEMA_VALIDATION'
     });

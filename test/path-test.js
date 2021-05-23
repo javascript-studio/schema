@@ -2,7 +2,7 @@
 'use strict';
 
 const { assert } = require('@sinonjs/referee-sinon');
-const { path } = require('../lib/path');
+const { path, arrayPath } = require('../lib/path');
 
 describe('path', () => {
   it('returns key if parent is null', () => {
@@ -15,5 +15,19 @@ describe('path', () => {
     const p = path('parent', 'key');
 
     assert.equals(p, 'parent.key');
+  });
+});
+
+describe('arrayPath', () => {
+  it('returns [index] if parent is null', () => {
+    const p = arrayPath(null, 0);
+
+    assert.equals(p, '[0]');
+  });
+
+  it('returns parent and [index]', () => {
+    const p = arrayPath('parent', 1);
+
+    assert.equals(p, 'parent[1]');
   });
 });
