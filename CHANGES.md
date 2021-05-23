@@ -1,5 +1,12 @@
 # Changes
 
+## 2.0.6
+
+- 🐛 [`afd5ce4`](https://github.com/javascript-studio/studio-schema/commit/afd5ce4acecb8fec3af6070dd6ed6cc91738f9db)
+  Emit objects with all details
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-23._
+
 ## 2.0.5
 
 - 🐛 [`1668bbd`](https://github.com/javascript-studio/studio-schema/commit/1668bbda9ead4cb71dc5529784b6b49c2d2aed7d)
