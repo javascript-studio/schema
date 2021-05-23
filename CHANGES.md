@@ -1,5 +1,14 @@
 # Changes
 
+## 2.0.5
+
+- 🐛 [`1668bbd`](https://github.com/javascript-studio/studio-schema/commit/1668bbda9ead4cb71dc5529784b6b49c2d2aed7d)
+  Fix array path notation
+- ✨ [`34f8f24`](https://github.com/javascript-studio/studio-schema/commit/34f8f247115962f5c0ea5d32d11396fa71e90fe8)
+  Rename path helper to objectPath
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-23._
+
 ## 2.0.4
 
 - 🐛 [`7bc7a62`](https://github.com/javascript-studio/studio-schema/commit/7bc7a625ffe307b292746423550a47c93c1d1485)
