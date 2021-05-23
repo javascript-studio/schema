@@ -3,7 +3,7 @@
 
 const { inspect } = require('util');
 const { EventEmitter } = require('events');
-const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
+const { assert, refute, match, sinon } = require('@sinonjs/referee-sinon');
 const { spec, object, array, map } = require('..');
 
 describe('spec object', () => {
@@ -840,27 +840,50 @@ describe('spec object', () => {
     });
 
     it('emits "set" event for property set', () => {
-      const proxy = schema.write({}, emitter);
+      const obj = {};
+      const proxy = schema.write(obj, emitter);
 
       proxy.some = { nested: 'test' };
 
-      assert.calledOnceWith(onSet, 'some', { nested: 'test' });
+      assert.calledOnceWith(onSet, {
+        type: 'object',
+        object: match.same(obj),
+        key: 'some',
+        value: { nested: 'test' },
+        base: undefined,
+        path: 'some'
+      });
     });
 
     it('emits "set" event nested for property set', () => {
-      const proxy = schema.write({ some: {} }, emitter);
+      const obj = {};
+      const proxy = schema.write({ some: obj }, emitter);
 
       proxy.some.nested = 'test';
 
-      assert.calledOnceWith(onSet, 'some.nested', 'test');
+      assert.calledOnceWith(onSet, {
+        type: 'object',
+        object: match.same(obj),
+        key: 'nested',
+        value: 'test',
+        base: 'some',
+        path: 'some.nested'
+      });
     });
 
     it('emits "delete" event for nested property delete', () => {
-      const proxy = schema.write({ some: { nested: 'test' } }, emitter);
+      const obj = { nested: 'test' };
+      const proxy = schema.write({ some: obj }, emitter);
 
       delete proxy.some.nested;
 
-      assert.calledOnceWith(onDelete, 'some.nested');
+      assert.calledOnceWith(onDelete, {
+        type: 'object',
+        object: match.same(obj),
+        key: 'nested',
+        base: 'some',
+        path: 'some.nested'
+      });
     });
 
     it('passes Array.isArray test for wrapped array', () => {
@@ -870,30 +893,50 @@ describe('spec object', () => {
     });
 
     it('emits "set" event for nested array assign', () => {
-      const proxy = schema.write({ some: { array: [] } }, emitter);
+      const array = [];
+      const proxy = schema.write({ some: { array } }, emitter);
 
       proxy.some.array[0] = 42;
 
-      assert.calledOnceWith(onSet, 'some.array[0]', 42);
+      assert.calledOnceWith(onSet, {
+        type: 'array',
+        array: match.same(array),
+        index: 0,
+        value: 42,
+        base: 'some.array',
+        path: 'some.array[0]'
+      });
     });
 
     it('emits "delete" event for nested array delete', () => {
-      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+      const array = [2, 3, 7];
+      const proxy = schema.write({ some: { array } }, emitter);
 
       delete proxy.some.array[2];
 
-      assert.calledOnceWith(onDelete, 'some.array[2]');
+      assert.calledOnceWith(onDelete, {
+        type: 'array',
+        array: match.same(array),
+        index: 2,
+        base: 'some.array',
+        path: 'some.array[2]'
+      });
     });
 
     it('emits "push" event for nested array.push', () => {
       const onPush = sinon.fake();
       emitter.on('push', onPush);
-      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+      const array = [2, 3, 7];
+      const proxy = schema.write({ some: { array } }, emitter);
 
       proxy.some.array.push(42);
 
       assert.equals(proxy.some.array, [2, 3, 7, 42]);
-      assert.calledOnceWith(onPush, 'some.array');
+      assert.calledOnceWith(onPush, {
+        array: match.same(array),
+        base: 'some.array',
+        values: [42]
+      });
       refute.called(onSet);
       refute.called(onDelete);
     });
@@ -913,12 +956,16 @@ describe('spec object', () => {
     it('emits "pop" event for nested array.pop', () => {
       const onPop = sinon.fake();
       emitter.on('pop', onPop);
-      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+      const array = [2, 3, 7];
+      const proxy = schema.write({ some: { array } }, emitter);
 
       proxy.some.array.pop();
 
       assert.equals(proxy.some.array, [2, 3]);
-      assert.calledOnceWith(onPop, 'some.array');
+      assert.calledOnceWith(onPop, {
+        array: match.same(array),
+        base: 'some.array'
+      });
       refute.called(onSet);
       refute.called(onDelete);
     });
@@ -926,24 +973,33 @@ describe('spec object', () => {
     it('emits "shift" event for nested array.shift', () => {
       const onShift = sinon.fake();
       emitter.on('shift', onShift);
-      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+      const array = [2, 3, 7];
+      const proxy = schema.write({ some: { array } }, emitter);
 
       proxy.some.array.shift();
 
       assert.equals(proxy.some.array, [3, 7]);
-      assert.calledOnceWith(onShift, 'some.array');
+      assert.calledOnceWith(onShift, {
+        array: match.same(array),
+        base: 'some.array'
+      });
       refute.called(onSet);
     });
 
     it('emits "unshift" event for nested array.unshift', () => {
       const onUnshift = sinon.fake();
       emitter.on('unshift', onUnshift);
-      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+      const array = [2, 3, 7];
+      const proxy = schema.write({ some: { array } }, emitter);
 
       proxy.some.array.unshift(42);
 
       assert.equals(proxy.some.array, [42, 2, 3, 7]);
-      assert.calledOnceWith(onUnshift, 'some.array');
+      assert.calledOnceWith(onUnshift, {
+        array: match.same(array),
+        base: 'some.array',
+        values: [42]
+      });
       refute.called(onSet);
     });
 
@@ -962,12 +1018,19 @@ describe('spec object', () => {
     it('emits "splice" event for nested array.splice', () => {
       const onSplice = sinon.fake();
       emitter.on('splice', onSplice);
-      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+      const array = [2, 3, 7];
+      const proxy = schema.write({ some: { array } }, emitter);
 
       proxy.some.array.splice(0, 2, 42, 365);
 
       assert.equals(proxy.some.array, [42, 365, 7]);
-      assert.calledOnceWith(onSplice, 'some.array', 0, 2, 42, 365);
+      assert.calledOnceWith(onSplice, {
+        array: match.same(array),
+        base: 'some.array',
+        start: 0,
+        delete_count: 2,
+        values: [42, 365]
+      });
       refute.called(onSet);
     });
 

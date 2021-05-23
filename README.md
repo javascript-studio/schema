@@ -159,14 +159,13 @@ objects that validate reading from the object and assigning values:
   read an undefined property. When using the writer with `JSON.stringify` or
   `schema.verify(writer)` it will throw if non-optional values are missing. If
   `emitter` is specified, these events will be emitted:
-    - `set(property, value)` when a property is assigned a new value
-    - `delete(property)` when a property is deleted
-    - `push(property, ...values)` when `push` is called on an array
-    - `pop(property)` when `pop` is called on an array
-    - `unshift(property, ...values)` when `unshift` is called on an array
-    - `shift(property)` when `shift` is called on an array
-    - `splice(start, delete_count, ...items)` when `splice` is called on an
-      array
+    - `set` when a property is assigned a new value
+    - `delete` when a property is deleted
+    - `push` when `push` is called on an array
+    - `pop` when `pop` is called on an array
+    - `unshift` when `unshift` is called on an array
+    - `shift` when `shift` is called on an array
+    - `splice` when `splice` is called on an array
 - `data = schema.verify(writer)`: Checks if any properties are missing in the
   given writer and returns the unwrapped data. Throws if the given object is
   not a schema writer.
