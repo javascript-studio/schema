@@ -145,6 +145,14 @@ describe('array', () => {
     });
   });
 
+  it('returns validated array', () => {
+    const arrayOfStrings = schema(array('string'));
+
+    const arr = arrayOfStrings(['foo', 'bar']);
+
+    assert.equals(arr, ['foo', 'bar']);
+  });
+
   context('reader', () => {
     it('serializes to JSON', () => {
       const arraySchema = schema(array({ test: 'integer' }));
