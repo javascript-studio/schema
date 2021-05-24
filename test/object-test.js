@@ -2,7 +2,7 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec, object } = require('..');
+const { schema, object } = require('..');
 
 describe('object', () => {
 
@@ -29,13 +29,13 @@ describe('object', () => {
   });
 
   it('verifies object', () => {
-    const schema = spec(object({ test: 'integer' }));
+    const objectSchema = schema(object({ test: 'integer' }));
 
     refute.exception(() => {
-      schema({ test: 1 });
+      objectSchema({ test: 1 });
     });
     assert.exception(() => {
-      schema({ test: 1.2 });
+      objectSchema({ test: 1.2 });
     }, {
       name: 'TypeError',
       message: 'Expected property "test" to be integer but got 1.2',
@@ -46,7 +46,7 @@ describe('object', () => {
   it('can be used as validator', () => {
     const named = object({ name: 'string' });
 
-    const person = spec(named);
+    const person = schema(named);
 
     refute.exception(() => {
       person({ name: 'test' });
@@ -63,7 +63,7 @@ describe('object', () => {
   it('can be used as child validator', () => {
     const child = object({ name: 'string' });
 
-    const parent = spec({ child });
+    const parent = schema({ child });
 
     refute.exception(() => {
       parent({ child: { name: 'test' } });

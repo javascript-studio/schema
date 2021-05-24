@@ -2,35 +2,35 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec } = require('..');
+const { schema } = require('..');
 
 describe('spec boolean', () => {
 
   describe('true', () => {
-    const schema = spec({ test: true });
+    const trueSchema = schema({ test: true });
 
     it('requires the property to be present', () => {
       refute.exception(() => {
-        schema({ test: false });
+        trueSchema({ test: false });
       });
       refute.exception(() => {
-        schema({ test: true });
+        trueSchema({ test: true });
       });
       refute.exception(() => {
-        schema({ test: 42 });
+        trueSchema({ test: 42 });
       });
       refute.exception(() => {
-        schema({ test: null });
+        trueSchema({ test: null });
       });
       assert.exception(() => {
-        schema({});
+        trueSchema({});
       }, {
         name: 'TypeError',
         message: 'Expected property "test" to be defined but got undefined',
         code: 'SCHEMA_VALIDATION'
       });
       assert.exception(() => {
-        schema({ test: undefined });
+        trueSchema({ test: undefined });
       }, {
         name: 'TypeError',
         message: 'Expected property "test" to be defined but got undefined',
@@ -40,13 +40,13 @@ describe('spec boolean', () => {
 
     it('reader', () => {
       refute.exception(() => {
-        schema.read({ test: false });
+        trueSchema.read({ test: false });
       });
       refute.exception(() => {
-        schema.read({ test: 'thing' });
+        trueSchema.read({ test: 'thing' });
       });
       assert.exception(() => {
-        schema.read({});
+        trueSchema.read({});
       }, {
         name: 'TypeError',
         message: 'Expected property "test" to be defined but got undefined',
@@ -56,10 +56,10 @@ describe('spec boolean', () => {
 
     it('writer', () => {
       refute.exception(() => {
-        schema.verify(schema.write({ test: 42 }));
+        trueSchema.verify(trueSchema.write({ test: 42 }));
       });
       assert.exception(() => {
-        schema.verify(schema.write({}));
+        trueSchema.verify(trueSchema.write({}));
       }, {
         name: 'TypeError',
         message: 'Expected property "test" to be defined but got undefined',
@@ -70,47 +70,47 @@ describe('spec boolean', () => {
   });
 
   describe('false', () => {
-    const schema = spec({ test: false });
+    const falseSchema = schema({ test: false });
 
     it('does not require the property to be present', () => {
       refute.exception(() => {
-        schema({ test: false });
+        falseSchema({ test: false });
       });
       refute.exception(() => {
-        schema({ test: true });
+        falseSchema({ test: true });
       });
       refute.exception(() => {
-        schema({ test: 42 });
+        falseSchema({ test: 42 });
       });
       refute.exception(() => {
-        schema({ test: null });
+        falseSchema({ test: null });
       });
       refute.exception(() => {
-        schema({});
+        falseSchema({});
       });
       refute.exception(() => {
-        schema({ test: undefined });
+        falseSchema({ test: undefined });
       });
     });
 
     it('reader', () => {
       refute.exception(() => {
-        schema.read({ test: false });
+        falseSchema.read({ test: false });
       });
       refute.exception(() => {
-        schema.read({ test: 'thing' });
+        falseSchema.read({ test: 'thing' });
       });
       refute.exception(() => {
-        schema.read({});
+        falseSchema.read({});
       });
     });
 
     it('writer', () => {
       refute.exception(() => {
-        schema.verify(schema.write({}));
+        falseSchema.verify(falseSchema.write({}));
       });
       refute.exception(() => {
-        schema.verify(schema.write({ test: 42 }));
+        falseSchema.verify(falseSchema.write({ test: 42 }));
       });
     });
   });

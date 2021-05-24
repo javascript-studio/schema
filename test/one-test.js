@@ -2,7 +2,7 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec, one } = require('..');
+const { schema, one } = require('..');
 
 describe('one', () => {
 
@@ -22,21 +22,21 @@ describe('one', () => {
   });
 
   it('does not fail for either of two specs', () => {
-    const schema = spec(one('boolean', 'number'));
+    const oneSchema = schema(one('boolean', 'number'));
 
     refute.exception(() => {
-      schema(true);
-      schema(false);
-      schema(0);
-      schema(1);
+      oneSchema(true);
+      oneSchema(false);
+      oneSchema(0);
+      oneSchema(1);
     });
   });
 
   it('fails if none of two specs', () => {
-    const schema = spec(one('boolean', 'number'));
+    const oneSchema = schema(one('boolean', 'number'));
 
     assert.exception(() => {
-      schema('test');
+      oneSchema('test');
     }, {
       name: 'TypeError',
       message: 'Expected one(boolean, number) but got "test"',
@@ -45,10 +45,10 @@ describe('one', () => {
   });
 
   it('fails if none of three specs', () => {
-    const schema = spec(one('boolean', 'number', 'string'));
+    const oneSchema = schema(one('boolean', 'number', 'string'));
 
     assert.exception(() => {
-      schema({});
+      oneSchema({});
     }, {
       name: 'TypeError',
       message: 'Expected one(boolean, number, string) but got {}',
@@ -57,12 +57,12 @@ describe('one', () => {
   });
 
   it('fails as part of an object assertion', () => {
-    const schema = spec({
+    const oneSchema = schema({
       key: one('boolean', 'integer')
     });
 
     assert.exception(() => {
-      schema({ key: 'test' });
+      oneSchema({ key: 'test' });
     }, {
       name: 'TypeError',
       message: 'Expected property "key" to be one(boolean, integer) but got '
@@ -72,10 +72,10 @@ describe('one', () => {
   });
 
   it('fails null or custom test', () => {
-    const schema = spec(one(null, () => false));
+    const oneSchema = schema(one(null, () => false));
 
     assert.exception(() => {
-      schema('test');
+      oneSchema('test');
     }, {
       name: 'TypeError',
       message: 'Expected one(null, custom value) but got "test"',
@@ -84,31 +84,31 @@ describe('one', () => {
   });
 
   it('passes on null or string test', () => {
-    const schema = spec(one(null, 'string'));
+    const oneSchema = schema(one(null, 'string'));
 
     refute.exception(() => {
-      schema(null);
-      schema('test');
+      oneSchema(null);
+      oneSchema('test');
     });
   });
 
   it('passes on custom test', () => {
-    const schema = spec(one(() => true, () => {
+    const oneSchema = schema(one(() => true, () => {
       throw new Error('Unexpected');
     }));
 
     refute.exception(() => {
-      schema(null);
-      schema('test');
-      schema({});
+      oneSchema(null);
+      oneSchema('test');
+      oneSchema({});
     });
   });
 
   it('fails objects', () => {
-    const schema = spec(one({ foo: 'string' }, { bar: 'integer' }));
+    const oneSchema = schema(one({ foo: 'string' }, { bar: 'integer' }));
 
     assert.exception(() => {
-      schema({ foo: true });
+      oneSchema({ foo: true });
     }, {
       name: 'TypeError',
       message: 'Expected one({foo:string}, {bar:integer}) but got {"foo":true}',
@@ -117,11 +117,11 @@ describe('one', () => {
   });
 
   it('passes objects', () => {
-    const schema = spec(one({ foo: 'string' }, { bar: 'integer' }));
+    const oneSchema = schema(one({ foo: 'string' }, { bar: 'integer' }));
 
     refute.exception(() => {
-      schema({ foo: 'test' });
-      schema({ bar: 1 });
+      oneSchema({ foo: 'test' });
+      oneSchema({ bar: 1 });
     });
   });
 

@@ -4,13 +4,13 @@
 const { inspect } = require('util');
 const { EventEmitter } = require('events');
 const { assert, refute, match, sinon } = require('@sinonjs/referee-sinon');
-const { spec, object, array, map } = require('..');
+const { schema, object, array, map } = require('..');
 
 describe('spec object', () => {
 
-  it('fails to define spec with []', () => {
+  it('fails to define schema with []', () => {
     assert.exception(() => {
-      spec([]);
+      schema([]);
     }, {
       name: 'TypeError',
       message: 'Invalid spec []'
@@ -18,27 +18,27 @@ describe('spec object', () => {
   });
 
   it('validates empty object', () => {
-    const schema = spec({});
+    const objectSchema = schema({});
 
     refute.exception(() => {
-      schema({});
+      objectSchema({});
     });
     assert.exception(() => {
-      schema([]);
+      objectSchema([]);
     }, {
       name: 'TypeError',
       message: 'Expected object but got []',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema('test');
+      objectSchema('test');
     }, {
       name: 'TypeError',
       message: 'Expected object but got "test"',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema({ some: 'thing' });
+      objectSchema({ some: 'thing' });
     }, {
       name: 'ReferenceError',
       message: 'Invalid property "some"',
@@ -47,27 +47,27 @@ describe('spec object', () => {
   });
 
   it('validates object property', () => {
-    const schema = spec({ some: 'string' });
+    const objectSchema = schema({ some: 'string' });
 
     refute.exception(() => {
-      schema({ some: 'thing' });
+      objectSchema({ some: 'thing' });
     });
     assert.exception(() => {
-      schema({});
+      objectSchema({});
     }, {
       name: 'TypeError',
       message: 'Expected property "some" to be string but got undefined',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema({ some: 'thing', other: 'thing' });
+      objectSchema({ some: 'thing', other: 'thing' });
     }, {
       name: 'ReferenceError',
       message: 'Invalid property "other"',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema({ some: 123 });
+      objectSchema({ some: 123 });
     }, {
       name: 'TypeError',
       message: 'Expected property "some" to be string but got 123',
@@ -76,27 +76,27 @@ describe('spec object', () => {
   });
 
   it('validates nested objects', () => {
-    const schema = spec({ some: { nested: 'string' } });
+    const objectSchema = schema({ some: { nested: 'string' } });
 
     refute.exception(() => {
-      schema({ some: { nested: 'thing' } });
+      objectSchema({ some: { nested: 'thing' } });
     });
     assert.exception(() => {
-      schema({});
+      objectSchema({});
     }, {
       name: 'TypeError',
       message: 'Expected property "some" to be object but got undefined',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema({ some: {} });
+      objectSchema({ some: {} });
     }, {
       name: 'TypeError',
       message: 'Expected property "some.nested" to be string but got undefined',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema({ some: { nested: 123 } });
+      objectSchema({ some: { nested: 123 } });
     }, {
       name: 'TypeError',
       message: 'Expected property "some.nested" to be string but got 123',
@@ -105,20 +105,20 @@ describe('spec object', () => {
   });
 
   it('returns given object', () => {
-    const schema = spec({});
+    const objectSchema = schema({});
     const object = {};
 
-    const returned = schema(object);
+    const returned = objectSchema(object);
 
     assert.same(returned, object);
   });
 
   describe('read', () => {
-    const schema = spec({ some: 'string' });
+    const objectSchema = schema({ some: 'string' });
 
     it('fails if argument is not object', () => {
       assert.exception(() => {
-        schema.read([]);
+        objectSchema.read([]);
       }, {
         name: 'TypeError',
         message: 'Expected object but got []',
@@ -128,7 +128,7 @@ describe('spec object', () => {
 
     it('validates given object', () => {
       assert.exception(() => {
-        schema.read({});
+        objectSchema.read({});
       }, {
         name: 'TypeError',
         message: 'Expected property "some" to be string but got undefined',
@@ -137,14 +137,14 @@ describe('spec object', () => {
     });
 
     it('initializes with a valid object', () => {
-      const proxy = schema.read({ some: 'thing' });
+      const proxy = objectSchema.read({ some: 'thing' });
 
       assert.equals(proxy.some, 'thing');
     });
 
     it('fails to initialize with an unknown property', () => {
       assert.exception(() => {
-        schema.read({ some: 'thing', unknown: 123 });
+        objectSchema.read({ some: 'thing', unknown: 123 });
       }, {
         name: 'Error',
         message: 'Invalid property "unknown"',
@@ -153,7 +153,7 @@ describe('spec object', () => {
     });
 
     it('fails reading an unknown property', () => {
-      const proxy = schema.read({ some: 'thing' });
+      const proxy = objectSchema.read({ some: 'thing' });
 
       assert.exception(() => {
         return proxy.other;
@@ -165,7 +165,7 @@ describe('spec object', () => {
     });
 
     it('fails writing an unknown property', () => {
-      const proxy = schema.read({ some: 'thing' });
+      const proxy = objectSchema.read({ some: 'thing' });
 
       assert.exception(() => {
         proxy.other = 'thing';
@@ -177,7 +177,7 @@ describe('spec object', () => {
     });
 
     it('fails writing a known property', () => {
-      const proxy = schema.read({ some: 'thing' });
+      const proxy = objectSchema.read({ some: 'thing' });
 
       assert.exception(() => {
         proxy.some = 'xyz';
@@ -189,7 +189,7 @@ describe('spec object', () => {
     });
 
     it('fails deleting a known property', () => {
-      const proxy = schema.read({ some: 'thing' });
+      const proxy = objectSchema.read({ some: 'thing' });
 
       assert.exception(() => {
         delete proxy.some;
@@ -202,13 +202,13 @@ describe('spec object', () => {
     });
 
     it('works with JSON.stringify', () => {
-      const proxy = schema.read({ some: 'thing' });
+      const proxy = objectSchema.read({ some: 'thing' });
 
       assert.json(JSON.stringify(proxy), { some: 'thing' });
     });
 
     it('works with JSON.stringify and additional args', () => {
-      const proxy = schema.read({ some: 'thing' });
+      const proxy = objectSchema.read({ some: 'thing' });
 
       assert.equals(JSON.stringify(proxy, null, '  '),
         '{\n  "some": "thing"\n}');
@@ -216,7 +216,7 @@ describe('spec object', () => {
 
     it('does not validate again in JSON.stringify', () => {
       const fake = sinon.fake();
-      const proxy = spec({ some: fake }).read({ some: true });
+      const proxy = schema({ some: fake }).read({ some: true });
       fake.resetHistory();
 
       JSON.stringify(proxy);
@@ -227,11 +227,11 @@ describe('spec object', () => {
   });
 
   describe('read nested', () => {
-    const schema = spec({ some: { nested: 'string' } });
+    const objectSchema = schema({ some: { nested: 'string' } });
 
     it('fails if argument is not object', () => {
       assert.exception(() => {
-        schema.read({ some: [] });
+        objectSchema.read({ some: [] });
       }, {
         name: 'TypeError',
         message: 'Expected property "some" to be object but got []',
@@ -241,7 +241,7 @@ describe('spec object', () => {
 
     it('validates given object', () => {
       assert.exception(() => {
-        schema.read({ some: {} });
+        objectSchema.read({ some: {} });
       }, {
         name: 'TypeError',
         message: 'Expected property "some.nested" to be string but got '
@@ -251,14 +251,14 @@ describe('spec object', () => {
     });
 
     it('initializes with a valid object', () => {
-      const proxy = schema.read({ some: { nested: 'thing' } });
+      const proxy = objectSchema.read({ some: { nested: 'thing' } });
 
       assert.equals(proxy.some.nested, 'thing');
     });
 
     it('fails to initialize with an unknown property', () => {
       assert.exception(() => {
-        schema.read({ some: { nested: 'thing', unknown: 123 } });
+        objectSchema.read({ some: { nested: 'thing', unknown: 123 } });
       }, {
         name: 'Error',
         message: 'Invalid property "some.unknown"',
@@ -267,7 +267,7 @@ describe('spec object', () => {
     });
 
     it('fails reading an unknown property', () => {
-      const proxy = schema.read({ some: { nested: 'thing' } });
+      const proxy = objectSchema.read({ some: { nested: 'thing' } });
 
       assert.exception(() => {
         return proxy.some.other;
@@ -279,7 +279,7 @@ describe('spec object', () => {
     });
 
     it('fails writing an unknown property', () => {
-      const proxy = schema.read({ some: { nested: 'thing' } });
+      const proxy = objectSchema.read({ some: { nested: 'thing' } });
 
       assert.exception(() => {
         proxy.some.other = 'thing';
@@ -291,7 +291,7 @@ describe('spec object', () => {
     });
 
     it('fails writing a known property', () => {
-      const proxy = schema.read({ some: { nested: 'thing' } });
+      const proxy = objectSchema.read({ some: { nested: 'thing' } });
 
       assert.exception(() => {
         proxy.some.nested = 'xyz';
@@ -303,7 +303,7 @@ describe('spec object', () => {
     });
 
     it('fails deleting a known property', () => {
-      const proxy = schema.read({ some: { nested: 'thing' } });
+      const proxy = objectSchema.read({ some: { nested: 'thing' } });
 
       assert.exception(() => {
         delete proxy.some.nested;
@@ -316,7 +316,7 @@ describe('spec object', () => {
     });
 
     it('works with JSON.stringify', () => {
-      const proxy = schema.read({ some: { nested: 'thing' } });
+      const proxy = objectSchema.read({ some: { nested: 'thing' } });
 
       const json = JSON.stringify(proxy);
 
@@ -325,7 +325,7 @@ describe('spec object', () => {
 
     it.skip('does not validate again in JSON.stringify', () => {
       const fake = sinon.fake();
-      const proxy = spec({ some: { nested: fake } })
+      const proxy = schema({ some: { nested: fake } })
         .read({ some: { nested: true } });
       fake.resetHistory();
 
@@ -336,7 +336,7 @@ describe('spec object', () => {
     });
 
     it('always returns the same nested instance', () => {
-      const proxy = schema.read({ some: { nested: 'thing' } });
+      const proxy = objectSchema.read({ some: { nested: 'thing' } });
 
       assert.same(proxy.some, proxy.some);
     });
@@ -344,11 +344,11 @@ describe('spec object', () => {
   });
 
   describe('write', () => {
-    const schema = spec({ some: 'string' });
+    const objectSchema = schema({ some: 'string' });
 
     it('fails if argument is not object', () => {
       assert.exception(() => {
-        schema.write([]);
+        objectSchema.write([]);
       }, {
         name: 'TypeError',
         message: 'Expected object but got []',
@@ -358,7 +358,7 @@ describe('spec object', () => {
 
     it('validates given object', () => {
       assert.exception(() => {
-        schema.write({ some: 123 });
+        objectSchema.write({ some: 123 });
       }, {
         name: 'Error',
         message: 'Expected property "some" to be string but got 123',
@@ -368,19 +368,19 @@ describe('spec object', () => {
 
     it('does not fail on missing property', () => {
       refute.exception(() => {
-        schema.write({});
+        objectSchema.write({});
       });
     });
 
     it('initializes with a valid object', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       assert.equals(proxy.some, 'thing');
     });
 
     it('fails to initialize with an unknown property', () => {
       assert.exception(() => {
-        schema.write({ unknown: 123 });
+        objectSchema.write({ unknown: 123 });
       }, {
         name: 'Error',
         message: 'Invalid property "unknown"',
@@ -389,7 +389,7 @@ describe('spec object', () => {
     });
 
     it('fails to write an invalid property value', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       assert.exception(() => {
         proxy.some = true;
@@ -401,7 +401,7 @@ describe('spec object', () => {
     });
 
     it('fails reading an unknown property', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       assert.exception(() => {
         return proxy.other;
@@ -413,7 +413,7 @@ describe('spec object', () => {
     });
 
     it('fails writing an unknown property', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       assert.exception(() => {
         proxy.other = 'thing';
@@ -425,7 +425,7 @@ describe('spec object', () => {
     });
 
     it('allows to write a known property', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       refute.exception(() => {
         proxy.some = 'xyz';
@@ -435,7 +435,7 @@ describe('spec object', () => {
     });
 
     it('allows to delete a known property', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       refute.exception(() => {
         delete proxy.some;
@@ -446,20 +446,20 @@ describe('spec object', () => {
     });
 
     it('works with JSON.stringify', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       assert.json(JSON.stringify(proxy), { some: 'thing' });
     });
 
     it('works with JSON.stringify and additional args', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       assert.equals(JSON.stringify(proxy, null, '  '),
         '{\n  "some": "thing"\n}');
     });
 
     it('fails in JSON.stringify if property is missing', () => {
-      const proxy = schema.write({});
+      const proxy = objectSchema.write({});
 
       assert.exception(() => {
         return JSON.stringify(proxy);
@@ -471,7 +471,7 @@ describe('spec object', () => {
     });
 
     it('allows to define symbol properties on proxy', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
       const SYMBOL = Symbol('SYMBOL');
 
       refute.exception(() => {
@@ -480,13 +480,13 @@ describe('spec object', () => {
     });
 
     it('does not throw when awaiting a proxy', (done) => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       Promise.resolve(proxy).then(() => done()).catch(done);
     });
 
     it('does not throw when calling util.inspcet', () => {
-      const proxy = schema.write({ some: 'thing' });
+      const proxy = objectSchema.write({ some: 'thing' });
 
       refute.exception(() => {
         inspect(proxy);
@@ -496,11 +496,11 @@ describe('spec object', () => {
   });
 
   describe('write nested', () => {
-    const schema = spec({ some: { nested: 'string' } });
+    const objectSchema = schema({ some: { nested: 'string' } });
 
     it('validates given object', () => {
       assert.exception(() => {
-        schema.write({ some: { nested: 123 } });
+        objectSchema.write({ some: { nested: 123 } });
       }, {
         name: 'Error',
         message: 'Expected property "some.nested" to be string but got 123',
@@ -510,20 +510,20 @@ describe('spec object', () => {
 
     it('does not fail on missing property', () => {
       refute.exception(() => {
-        schema.write({});
-        schema.write({ some: {} });
+        objectSchema.write({});
+        objectSchema.write({ some: {} });
       });
     });
 
     it('initialized with a valid object', () => {
-      const proxy = schema.write({ some: { nested: 'thing' } });
+      const proxy = objectSchema.write({ some: { nested: 'thing' } });
 
       assert.equals(proxy.some.nested, 'thing');
     });
 
     it('fails to initialize with an unknown property', () => {
       assert.exception(() => {
-        schema.write({ some: { unknown: 123 } });
+        objectSchema.write({ some: { unknown: 123 } });
       }, {
         name: 'Error',
         message: 'Invalid property "some.unknown"',
@@ -532,7 +532,7 @@ describe('spec object', () => {
     });
 
     it('fails to write an invalid property value', () => {
-      const proxy = schema.write({ some: { nested: 'thing' } });
+      const proxy = objectSchema.write({ some: { nested: 'thing' } });
 
       assert.exception(() => {
         proxy.some.nested = true;
@@ -544,7 +544,7 @@ describe('spec object', () => {
     });
 
     it('fails reading an unknown property', () => {
-      const proxy = schema.write({ some: { nested: 'thing' } });
+      const proxy = objectSchema.write({ some: { nested: 'thing' } });
 
       assert.exception(() => {
         return proxy.some.other;
@@ -556,7 +556,7 @@ describe('spec object', () => {
     });
 
     it('fails writing an unknown property', () => {
-      const proxy = schema.write({ some: { nested: 'thing' } });
+      const proxy = objectSchema.write({ some: { nested: 'thing' } });
 
       assert.exception(() => {
         proxy.some.other = 'thing';
@@ -568,7 +568,7 @@ describe('spec object', () => {
     });
 
     it('allows to write a known property', () => {
-      const proxy = schema.write({ some: { nested: 'thing' } });
+      const proxy = objectSchema.write({ some: { nested: 'thing' } });
 
       refute.exception(() => {
         proxy.some.nested = 'xyz';
@@ -578,7 +578,7 @@ describe('spec object', () => {
     });
 
     it('allows to write an incomplete property', () => {
-      const proxy = schema.write({});
+      const proxy = objectSchema.write({});
 
       refute.exception(() => {
         proxy.some = {};
@@ -586,7 +586,7 @@ describe('spec object', () => {
     });
 
     it('allows to delete a known property', () => {
-      const proxy = schema.write({ some: { nested: 'thing' } });
+      const proxy = objectSchema.write({ some: { nested: 'thing' } });
 
       refute.exception(() => {
         delete proxy.some.nested;
@@ -598,13 +598,13 @@ describe('spec object', () => {
     });
 
     it('works with JSON.stringify', () => {
-      const proxy = schema.write({ some: { nested: 'thing' } });
+      const proxy = objectSchema.write({ some: { nested: 'thing' } });
 
       assert.json(JSON.stringify(proxy), { some: { nested: 'thing' } });
     });
 
     it('fails in JSON.stringify if property is missing', () => {
-      const proxy = schema.write({ some: {} });
+      const proxy = objectSchema.write({ some: {} });
 
       assert.exception(() => {
         return JSON.stringify(proxy);
@@ -617,13 +617,13 @@ describe('spec object', () => {
     });
 
     it('always returns the same nested instance', () => {
-      const proxy = schema.write({ some: { nested: 'thing' } });
+      const proxy = objectSchema.write({ some: { nested: 'thing' } });
 
       assert.same(proxy.some, proxy.some);
     });
 
     it('returns undefined for missing object property without throwing', () => {
-      const proxy = schema.write({});
+      const proxy = objectSchema.write({});
 
       assert.isUndefined(proxy.some);
     });
@@ -631,11 +631,11 @@ describe('spec object', () => {
   });
 
   describe('write array', () => {
-    const schema = spec({ array: array('number') });
+    const objectSchema = schema({ array: array('number') });
 
     it('validates given object', () => {
       assert.exception(() => {
-        schema.write({ array: [42, 'invalid'] });
+        objectSchema.write({ array: [42, 'invalid'] });
       }, {
         name: 'Error',
         message: 'Expected property "array[1]" to be number but got "invalid"',
@@ -644,13 +644,13 @@ describe('spec object', () => {
     });
 
     it('initialized with a valid object', () => {
-      const proxy = schema.write({ array: [2, 3, 7] });
+      const proxy = objectSchema.write({ array: [2, 3, 7] });
 
       assert.equals(proxy.array, [2, 3, 7]);
     });
 
     it('fails to set an invalid property value', () => {
-      const proxy = schema.write({ array: [42] });
+      const proxy = objectSchema.write({ array: [42] });
 
       assert.exception(() => {
         proxy.array[0] = 'invalid';
@@ -662,7 +662,7 @@ describe('spec object', () => {
     });
 
     it('fails to push an invalid property value', () => {
-      const proxy = schema.write({ array: [42] });
+      const proxy = objectSchema.write({ array: [42] });
 
       assert.exception(() => {
         proxy.array.push('invalid');
@@ -674,7 +674,7 @@ describe('spec object', () => {
     });
 
     it('pushes a valid property value', () => {
-      const proxy = schema.write({ array: [42] });
+      const proxy = objectSchema.write({ array: [42] });
 
       proxy.array.push(7);
 
@@ -682,7 +682,7 @@ describe('spec object', () => {
     });
 
     it('fails to assign nun-numeric property', () => {
-      const proxy = schema.write({ array: [] });
+      const proxy = objectSchema.write({ array: [] });
 
       assert.exception(() => {
         proxy.array.foo = 42;
@@ -694,7 +694,7 @@ describe('spec object', () => {
     });
 
     it('fails to assign negative index', () => {
-      const proxy = schema.write({ array: [] });
+      const proxy = objectSchema.write({ array: [] });
 
       assert.exception(() => {
         proxy.array[-1] = 42;
@@ -706,9 +706,9 @@ describe('spec object', () => {
     });
 
     it('fails to set property in array object', () => {
-      const schema = spec({ array: array({ index: 'number' }) });
+      const objectSchema = schema({ array: array({ index: 'number' }) });
 
-      const proxy = schema.write({ array: [{ index: 0 }] });
+      const proxy = objectSchema.write({ array: [{ index: 0 }] });
 
       assert.exception(() => {
         proxy.array[0].index = 'invalid';
@@ -722,11 +722,11 @@ describe('spec object', () => {
   });
 
   describe('write map', () => {
-    const schema = spec({ map: map('string', 'number') });
+    const objectSchema = schema({ map: map('string', 'number') });
 
     it('validates given object', () => {
       assert.exception(() => {
-        schema.write({ map: { test: 'invalid' } });
+        objectSchema.write({ map: { test: 'invalid' } });
       }, {
         name: 'Error',
         message: 'Expected property "map.test" to be number but got "invalid"',
@@ -735,13 +735,13 @@ describe('spec object', () => {
     });
 
     it('initialized with a valid object', () => {
-      const proxy = schema.write({ map: { a: 1, b: 2 } });
+      const proxy = objectSchema.write({ map: { a: 1, b: 2 } });
 
       assert.equals(proxy.map, { a: 1, b: 2 });
     });
 
     it('fails to set an invalid property value', () => {
-      const proxy = schema.write({ map: { a: 1 } });
+      const proxy = objectSchema.write({ map: { a: 1 } });
 
       assert.exception(() => {
         proxy.map.a = 'invalid';
@@ -753,7 +753,7 @@ describe('spec object', () => {
     });
 
     it('fails to add an invalid property value', () => {
-      const proxy = schema.write({ map: { a: 1 } });
+      const proxy = objectSchema.write({ map: { a: 1 } });
 
       assert.exception(() => {
         proxy.map.b = 'invalid';
@@ -765,7 +765,7 @@ describe('spec object', () => {
     });
 
     it('sets a valid property value', () => {
-      const proxy = schema.write({ map: { a: 1 } });
+      const proxy = objectSchema.write({ map: { a: 1 } });
 
       proxy.map.a = 2;
 
@@ -773,7 +773,7 @@ describe('spec object', () => {
     });
 
     it('adds a valid property value', () => {
-      const proxy = schema.write({ map: { a: 1 } });
+      const proxy = objectSchema.write({ map: { a: 1 } });
 
       proxy.map.b = 2;
 
@@ -781,9 +781,9 @@ describe('spec object', () => {
     });
 
     it('fails to set property in value object', () => {
-      const schema = spec({ map: map('string', { index: 'number' }) });
+      const objectSchema = schema({ map: map('string', { index: 'number' }) });
 
-      const proxy = schema.write({ map: { test: { index: 0 } } });
+      const proxy = objectSchema.write({ map: { test: { index: 0 } } });
 
       assert.exception(() => {
         proxy.map.test.index = 'invalid';
@@ -798,11 +798,11 @@ describe('spec object', () => {
 
   describe('write map nested', () => {
     const nested = object({ key: 'number' });
-    const schema = spec({ map: map('string', nested) });
+    const objectSchema = schema({ map: map('string', nested) });
 
     it('validates given object', () => {
       assert.exception(() => {
-        schema.write({ map: { test: { key: 'invalid' } } });
+        objectSchema.write({ map: { test: { key: 'invalid' } } });
       }, {
         name: 'Error',
         message: 'Expected property "map.test.key" to be number '
@@ -812,7 +812,9 @@ describe('spec object', () => {
     });
 
     it('initialized with a valid object', () => {
-      const proxy = schema.write({ map: { a: { key: 1 }, b: { key: 2 } } });
+      const proxy = objectSchema.write({
+        map: { a: { key: 1 }, b: { key: 2 } }
+      });
 
       assert.equals(proxy.map.a.key, 1);
       assert.equals(proxy.map.b.key, 2);
@@ -820,7 +822,7 @@ describe('spec object', () => {
   });
 
   describe('write emitter', () => {
-    const schema = spec({
+    const objectSchema = schema({
       some: {
         nested: 'string',
         array: array('number'),
@@ -841,7 +843,7 @@ describe('spec object', () => {
 
     it('emits "set" event for property set', () => {
       const obj = {};
-      const proxy = schema.write(obj, emitter);
+      const proxy = objectSchema.write(obj, emitter);
 
       proxy.some = { nested: 'test' };
 
@@ -857,7 +859,7 @@ describe('spec object', () => {
 
     it('emits "set" event nested for property set', () => {
       const obj = {};
-      const proxy = schema.write({ some: obj }, emitter);
+      const proxy = objectSchema.write({ some: obj }, emitter);
 
       proxy.some.nested = 'test';
 
@@ -873,7 +875,7 @@ describe('spec object', () => {
 
     it('emits "delete" event for nested property delete', () => {
       const obj = { nested: 'test' };
-      const proxy = schema.write({ some: obj }, emitter);
+      const proxy = objectSchema.write({ some: obj }, emitter);
 
       delete proxy.some.nested;
 
@@ -887,14 +889,14 @@ describe('spec object', () => {
     });
 
     it('passes Array.isArray test for wrapped array', () => {
-      const proxy = schema.write({ some: { array: [] } }, emitter);
+      const proxy = objectSchema.write({ some: { array: [] } }, emitter);
 
       assert.isTrue(Array.isArray(proxy.some.array));
     });
 
     it('emits "set" event for nested array assign', () => {
       const array = [];
-      const proxy = schema.write({ some: { array } }, emitter);
+      const proxy = objectSchema.write({ some: { array } }, emitter);
 
       proxy.some.array[0] = 42;
 
@@ -910,7 +912,7 @@ describe('spec object', () => {
 
     it('emits "delete" event for nested array delete', () => {
       const array = [2, 3, 7];
-      const proxy = schema.write({ some: { array } }, emitter);
+      const proxy = objectSchema.write({ some: { array } }, emitter);
 
       delete proxy.some.array[2];
 
@@ -927,7 +929,7 @@ describe('spec object', () => {
       const onPush = sinon.fake();
       emitter.on('push', onPush);
       const array = [2, 3, 7];
-      const proxy = schema.write({ some: { array } }, emitter);
+      const proxy = objectSchema.write({ some: { array } }, emitter);
 
       proxy.some.array.push(42);
 
@@ -942,7 +944,7 @@ describe('spec object', () => {
     });
 
     it('validates values in array.push', () => {
-      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+      const proxy = objectSchema.write({ some: { array: [2, 3, 7] } }, emitter);
 
       assert.exception(() => {
         proxy.some.array.push(42, 'invalid');
@@ -957,7 +959,7 @@ describe('spec object', () => {
       const onPop = sinon.fake();
       emitter.on('pop', onPop);
       const array = [2, 3, 7];
-      const proxy = schema.write({ some: { array } }, emitter);
+      const proxy = objectSchema.write({ some: { array } }, emitter);
 
       proxy.some.array.pop();
 
@@ -974,7 +976,7 @@ describe('spec object', () => {
       const onShift = sinon.fake();
       emitter.on('shift', onShift);
       const array = [2, 3, 7];
-      const proxy = schema.write({ some: { array } }, emitter);
+      const proxy = objectSchema.write({ some: { array } }, emitter);
 
       proxy.some.array.shift();
 
@@ -990,7 +992,7 @@ describe('spec object', () => {
       const onUnshift = sinon.fake();
       emitter.on('unshift', onUnshift);
       const array = [2, 3, 7];
-      const proxy = schema.write({ some: { array } }, emitter);
+      const proxy = objectSchema.write({ some: { array } }, emitter);
 
       proxy.some.array.unshift(42);
 
@@ -1004,7 +1006,7 @@ describe('spec object', () => {
     });
 
     it('validates values in array.unshift', () => {
-      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+      const proxy = objectSchema.write({ some: { array: [2, 3, 7] } }, emitter);
 
       assert.exception(() => {
         proxy.some.array.unshift(42, 'invalid');
@@ -1019,7 +1021,7 @@ describe('spec object', () => {
       const onSplice = sinon.fake();
       emitter.on('splice', onSplice);
       const array = [2, 3, 7];
-      const proxy = schema.write({ some: { array } }, emitter);
+      const proxy = objectSchema.write({ some: { array } }, emitter);
 
       proxy.some.array.splice(0, 2, 42, 365);
 
@@ -1035,7 +1037,7 @@ describe('spec object', () => {
     });
 
     it('validates values in array.splice', () => {
-      const proxy = schema.write({ some: { array: [2, 3, 7] } }, emitter);
+      const proxy = objectSchema.write({ some: { array: [2, 3, 7] } }, emitter);
 
       assert.exception(() => {
         proxy.some.array.splice(0, 2, 'invalid');
@@ -1047,7 +1049,7 @@ describe('spec object', () => {
     });
 
     it('emits "set" event for nested map property assign', () => {
-      const proxy = schema.write({ some: { map: {} } }, emitter);
+      const proxy = objectSchema.write({ some: { map: {} } }, emitter);
 
       proxy.some.map.key = 42;
 
@@ -1058,11 +1060,11 @@ describe('spec object', () => {
   describe('verify', () => {
 
     it('throws if top level property is missing', () => {
-      const schema = spec({ some: { nested: 'string' } });
-      const writer = schema.write({});
+      const objectSchema = schema({ some: { nested: 'string' } });
+      const writer = objectSchema.write({});
 
       assert.exception(() => {
-        schema.verify(writer);
+        objectSchema.verify(writer);
       }, {
         name: 'TypeError',
         message: 'Expected property "some" to be object but got undefined',
@@ -1071,7 +1073,7 @@ describe('spec object', () => {
 
       writer.some = {};
       assert.exception(() => {
-        schema.verify(writer);
+        objectSchema.verify(writer);
       }, {
         name: 'TypeError',
         message: 'Expected property "some.nested" to be string but got '
@@ -1081,10 +1083,10 @@ describe('spec object', () => {
     });
 
     it('returns copy of valid object without proxy', () => {
-      const schema = spec({ some: { nested: 'string' } });
-      const writer = schema.write({ some: { nested: 'thing' } });
+      const objectSchema = schema({ some: { nested: 'string' } });
+      const writer = objectSchema.write({ some: { nested: 'thing' } });
 
-      const data = schema.verify(writer);
+      const data = objectSchema.verify(writer);
 
       assert.equals(data, { some: { nested: 'thing' } });
       refute.exception(() => {
@@ -1092,12 +1094,12 @@ describe('spec object', () => {
       });
     });
 
-    it('works with spec(object(...))', () => {
-      const schema = spec(object({ some: { nested: 'string' } }));
-      const writer = schema.write({});
+    it('works with schema(object(...))', () => {
+      const objectSchema = schema(object({ some: { nested: 'string' } }));
+      const writer = objectSchema.write({});
 
       assert.exception(() => {
-        schema.verify(writer);
+        objectSchema.verify(writer);
       }, {
         name: 'TypeError',
         message: 'Expected property "some" to be object but got undefined',
@@ -1106,7 +1108,7 @@ describe('spec object', () => {
 
       writer.some = {};
       assert.exception(() => {
-        schema.verify(writer);
+        objectSchema.verify(writer);
       }, {
         name: 'TypeError',
         message: 'Expected property "some.nested" to be string but got '
@@ -1115,7 +1117,7 @@ describe('spec object', () => {
       });
 
       writer.some.nested = 'thing';
-      const data = schema.verify(writer);
+      const data = objectSchema.verify(writer);
 
       assert.equals(data, { some: { nested: 'thing' } });
       refute.exception(() => {
@@ -1124,10 +1126,10 @@ describe('spec object', () => {
     });
 
     it('throws if given object is plain object', () => {
-      const schema = spec(object({ some: { nested: 'string' } }));
+      const objectSchema = schema(object({ some: { nested: 'string' } }));
 
       assert.exception(() => {
-        schema.verify({});
+        objectSchema.verify({});
       }, {
         name: 'TypeError',
         message: 'Not a schema reader or writer'
@@ -1137,28 +1139,28 @@ describe('spec object', () => {
   });
 
   describe('raw', () => {
-    const schema = spec({ some: { nested: 'string' } });
+    const objectSchema = schema({ some: { nested: 'string' } });
 
     it('returns the raw data of the given reader', () => {
-      const reader = schema.read({ some: { nested: 'thing' } });
+      const reader = objectSchema.read({ some: { nested: 'thing' } });
 
-      const data = schema.raw(reader);
+      const data = objectSchema.raw(reader);
 
       assert.equals(data, { some: { nested: 'thing' } });
     });
 
     it('returns the raw data of the given writer', () => {
-      const writer = schema.write({ some: { nested: 'thing' } });
+      const writer = objectSchema.write({ some: { nested: 'thing' } });
 
-      const data = schema.raw(writer);
+      const data = objectSchema.raw(writer);
 
       assert.equals(data, { some: { nested: 'thing' } });
     });
 
     it('does not fail to add properties to raw data', () => {
-      const writer = schema.write({ some: { nested: 'thing' } });
+      const writer = objectSchema.write({ some: { nested: 'thing' } });
 
-      const data = schema.raw(writer);
+      const data = objectSchema.raw(writer);
 
       refute.exception(() => {
         data.foo = 1;
@@ -1166,11 +1168,11 @@ describe('spec object', () => {
     });
 
     it('does not fail if writer object is incomplete', () => {
-      const writer = schema.write({ some: {} });
+      const writer = objectSchema.write({ some: {} });
 
       let data;
       refute.exception(() => {
-        data = schema.raw(writer);
+        data = objectSchema.raw(writer);
       });
 
       assert.equals(data, { some: {} });
@@ -1178,7 +1180,7 @@ describe('spec object', () => {
 
     it('throws if given object is plain object', () => {
       assert.exception(() => {
-        schema.raw({});
+        objectSchema.raw({});
       }, {
         name: 'TypeError',
         message: 'Not a schema reader or writer'
