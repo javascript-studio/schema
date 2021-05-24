@@ -1,7 +1,7 @@
 # Studio Schema
 
-Plain JavaScript objects that throw if invalid or unknown properties are read,
-assigned or deleted. For node and browsers with [Proxy][1] support.
+Plain JavaScript objects with runtime type guarantees. For node and browsers
+with [Proxy][1] support.
 
 ## Usage
 
