@@ -139,6 +139,7 @@ argument:
 - `function`: Defines a custom specification. The function is expected to
   return `false` if the value is not considered valid.
 - `object`: Defines a nested object specification.
+- `array`: Defines a nested array specification.
 
 ## Schema API
 
