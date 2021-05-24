@@ -8,18 +8,22 @@ describe('array', () => {
 
   it('requires valid spec argument', () => {
     assert.exception(() => {
-      array([]);
+      array('unknown');
     }, {
       name: 'TypeError',
-      message: 'Invalid spec []'
+      message: 'Invalid spec "unknown"'
     });
   });
 
   it('returns array validator', () => {
     const validator = array({ test: 'integer' });
 
+    assert.isTrue(validator([]));
     assert.isTrue(validator([{ test: 1 }]));
+    assert.isTrue(validator([{ test: 1 }, { test: 2 }]));
+    assert.isFalse(validator({ test: 1 }));
     assert.isFalse(validator([{ test: 1.2 }]));
+    assert.isFalse(validator([{ test: 1 }, { test: 1.2 }]));
   });
 
   it('verifies array', () => {
