@@ -161,6 +161,25 @@ describe('array', () => {
 
       assert.json(JSON.stringify(arr_reader), [{ test: 42 }]);
     });
+
+    it('returns length', () => {
+      const arraySchema = schema(array({ key: 'string' }));
+
+      const arr = arraySchema.read([{ key: 'foo' }, { key: 'bar' }]);
+
+      assert.equals(arr.length, 2);
+    });
+
+    it('can be used with for-of loop', () => {
+      const arraySchema = schema(array({ key: 'string' }));
+
+      const arr = arraySchema.read([{ key: 'foo' }, { key: 'bar' }]);
+      const keys = [];
+      for (const entry of arr) {
+        keys.push(entry.key);
+      }
+      assert.equals(keys, ['foo', 'bar']);
+    });
   });
 
   context('writer', () => {
@@ -170,6 +189,25 @@ describe('array', () => {
       const arr_writer = arraySchema.write([{ test: 42 }]);
 
       assert.json(JSON.stringify(arr_writer), [{ test: 42 }]);
+    });
+
+    it('returns length', () => {
+      const arraySchema = schema(array({ key: 'string' }));
+
+      const arr = arraySchema.write([{ key: 'foo' }, { key: 'bar' }]);
+
+      assert.equals(arr.length, 2);
+    });
+
+    it('can be used with for-of loop', () => {
+      const arraySchema = schema(array({ key: 'string' }));
+
+      const arr = arraySchema.write([{ key: 'foo' }, { key: 'bar' }]);
+      const keys = [];
+      for (const entry of arr) {
+        keys.push(entry.key);
+      }
+      assert.equals(keys, ['foo', 'bar']);
     });
   });
 });
