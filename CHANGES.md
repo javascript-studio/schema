@@ -1,5 +1,20 @@
 # Changes
 
+## 3.0.0
+
+- 💥 [`a5444c9`](https://github.com/javascript-studio/studio-schema/commit/a5444c9ae6c0f251822e43d5df4d129d2034407b)
+  Rename spec to schema
+- 🍏 [`6728c20`](https://github.com/javascript-studio/studio-schema/commit/6728c20f9b796cc8b098665befe6f53fca984a46)
+  Support array specs
+- 📚 [`3e3c8e1`](https://github.com/javascript-studio/studio-schema/commit/3e3c8e139c80a03947394abff0152aadea9e309d)
+  Change project description
+- ✨ [`76d369f`](https://github.com/javascript-studio/studio-schema/commit/76d369f9f0b20ecd106d68b293ce122a2e27b28f)
+  Prefer type utility
+- ✨ [`53099c7`](https://github.com/javascript-studio/studio-schema/commit/53099c7fc22fc8d56891d9f19c42647207e7fad0)
+  Cleanup
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-24._
+
 ## 2.0.6
 
 - 🐛 [`afd5ce4`](https://github.com/javascript-studio/studio-schema/commit/afd5ce4acecb8fec3af6070dd6ed6cc91738f9db)
