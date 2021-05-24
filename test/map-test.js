@@ -2,7 +2,7 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec, map, opt, one } = require('..');
+const { schema, map, opt, one } = require('..');
 
 describe('map', () => {
 
@@ -28,28 +28,28 @@ describe('map', () => {
   });
 
   it('does not fail for valid objects', () => {
-    const schema = spec(map('string', 'number'));
+    const mapSchema = schema(map('string', 'number'));
 
     refute.exception(() => {
-      schema({});
-      schema({ 0: 0 });
-      schema({ foo: 1 });
-      schema({ bar: 2 });
+      mapSchema({});
+      mapSchema({ 0: 0 });
+      mapSchema({ foo: 1 });
+      mapSchema({ bar: 2 });
     });
   });
 
   it('fails for non-objects', () => {
-    const schema = spec(map('string', 'number'));
+    const mapSchema = schema(map('string', 'number'));
 
     assert.exception(() => {
-      schema([]);
+      mapSchema([]);
     }, {
       name: 'TypeError',
       message: 'Expected object but got []',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema('test');
+      mapSchema('test');
     }, {
       name: 'TypeError',
       message: 'Expected object but got "test"',
@@ -58,17 +58,17 @@ describe('map', () => {
   });
 
   it('fails for invalid keys', () => {
-    const schema = spec(map(/^[a-z]$/, 'string'));
+    const mapSchema = schema(map(/^[a-z]$/, 'string'));
 
     assert.exception(() => {
-      schema({ 0: 'ok' });
+      mapSchema({ 0: 'ok' });
     }, {
       name: 'TypeError',
       message: 'Expected key "0" to be /^[a-z]$/',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema({ abc: 'ok' });
+      mapSchema({ abc: 'ok' });
     }, {
       name: 'TypeError',
       message: 'Expected key "abc" to be /^[a-z]$/',
@@ -77,10 +77,10 @@ describe('map', () => {
   });
 
   it('fails for invalid objects', () => {
-    const schema = spec(map('string', 'number'));
+    const mapSchema = schema(map('string', 'number'));
 
     assert.exception(() => {
-      schema({ foo: true });
+      mapSchema({ foo: true });
     }, {
       name: 'TypeError',
       message: 'Expected property "foo" to be number but got true',
@@ -89,10 +89,10 @@ describe('map', () => {
   });
 
   it('validates value object', () => {
-    const schema = spec(map('string', { index: 'number' }));
+    const mapSchema = schema(map('string', { index: 'number' }));
 
     assert.exception(() => {
-      schema({ foo: { index: 'invalid' } });
+      mapSchema({ foo: { index: 'invalid' } });
     }, {
       name: 'TypeError',
       message: 'Expected property "foo.index" to be number but got "invalid"',
@@ -101,15 +101,15 @@ describe('map', () => {
   });
 
   it('works within `opt`', () => {
-    const schema = spec(opt(map('string', 'number')));
+    const mapSchema = schema(opt(map('string', 'number')));
 
     refute.exception(() => {
-      schema(undefined);
-      schema({});
-      schema({ foo: 0 });
+      mapSchema(undefined);
+      mapSchema({});
+      mapSchema({ foo: 0 });
     });
     assert.exception(() => {
-      schema({ foo: '' });
+      mapSchema({ foo: '' });
     }, {
       name: 'TypeError',
       message: 'Expected opt(map(string, number)) but got {"foo":""}',
@@ -118,16 +118,16 @@ describe('map', () => {
   });
 
   it('works within `one`', () => {
-    const schema = spec(one('boolean', map('string', 'number')));
+    const mapSchema = schema(one('boolean', map('string', 'number')));
 
     refute.exception(() => {
-      schema(true);
-      schema(false);
-      schema({});
-      schema({ foo: 0 });
+      mapSchema(true);
+      mapSchema(false);
+      mapSchema({});
+      mapSchema({ foo: 0 });
     });
     assert.exception(() => {
-      schema('something');
+      mapSchema('something');
     }, {
       name: 'TypeError',
       message: 'Expected one(boolean, map(string, number)) but got '
@@ -135,7 +135,7 @@ describe('map', () => {
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema({ foo: '' });
+      mapSchema({ foo: '' });
     }, {
       name: 'TypeError',
       message: 'Expected one(boolean, map(string, number)) but got '
@@ -145,15 +145,15 @@ describe('map', () => {
   });
 
   it('works using `opt`', () => {
-    const schema = spec(map('string', opt('number')));
+    const mapSchema = schema(map('string', opt('number')));
 
     refute.exception(() => {
-      schema({});
-      schema({ foo: undefined });
-      schema({ foo: 1 });
+      mapSchema({});
+      mapSchema({ foo: undefined });
+      mapSchema({ foo: 1 });
     });
     assert.exception(() => {
-      schema({ foo: null });
+      mapSchema({ foo: null });
     }, {
       name: 'TypeError',
       message: 'Expected property "foo" to be opt(number) but got null',
@@ -162,16 +162,16 @@ describe('map', () => {
   });
 
   it('works using `one`', () => {
-    const schema = spec(map('string', one('boolean', 'number')));
+    const mapSchema = schema(map('string', one('boolean', 'number')));
 
     refute.exception(() => {
-      schema({});
-      schema({ foo: 0 });
-      schema({ foo: true });
-      schema({ foo: false });
+      mapSchema({});
+      mapSchema({ foo: 0 });
+      mapSchema({ foo: true });
+      mapSchema({ foo: false });
     });
     assert.exception(() => {
-      schema({ foo: '' });
+      mapSchema({ foo: '' });
     }, {
       name: 'TypeError',
       message: 'Expected property "foo" to be one(boolean, number) but got ""',
@@ -181,9 +181,9 @@ describe('map', () => {
 
   context('reader', () => {
     it('serializes to JSON', () => {
-      const mapSpec = spec(map('string', 'integer'));
+      const mapSchema = schema(map('string', 'integer'));
 
-      const map_reader = mapSpec.read({ test: 42 });
+      const map_reader = mapSchema.read({ test: 42 });
 
       assert.json(JSON.stringify(map_reader), { test: 42 });
     });
@@ -191,9 +191,9 @@ describe('map', () => {
 
   context('writer', () => {
     it('serializes to JSON', () => {
-      const mapSpec = spec(map('string', 'integer'));
+      const mapSchema = schema(map('string', 'integer'));
 
-      const map_writer = mapSpec.write({ test: 42 });
+      const map_writer = mapSchema.write({ test: 42 });
 
       assert.json(JSON.stringify(map_writer), { test: 42 });
     });

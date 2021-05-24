@@ -8,9 +8,9 @@ assigned or deleted. For node and browsers with [Proxy][1] support.
 Defining a schema:
 
 ```js
-const spec = require('@studio/schema');
+const schema = require('@studio/schema');
 
-const personSchema = spec({
+const personSchema = schema({
   name: 'string',
   age: spec.opt('integer')
 });
@@ -82,25 +82,24 @@ All schema validation errors have a `code` property with the value
 
 ## API
 
-This module exports the `spec` function exposing the API, so you can require it
-in two ways:
+This module exports the `schema` function exposing the API, so you can require
+it in two ways:
 
 ```js
-const spec = require('@studio/schema');
+const schema = require('@studio/schema');
 ```
 
 With [destructuring][2]:
 
 ```js
-const { spec, opt, array, one } = require('@studio/schema');
+const { schema, opt, array, one } = require('@studio/schema');
 ```
 
-- `schema = spec(spec)`: Defines a specification. `spec` must be an object
-  defining a data structure, or a validator. See below for possible `spec`
-  values.
-- `validator = all(spec1, spec2, ...)`: Defines a specification where all of
+- `my_schema = schema(spec)`: Defines a specification. `spec` must be an object
+  defining a data structure, or a validator. See below for possible values.
+- `validator = all(spec_1, spec_2, ...)`: Defines a specification where all of
   the given specifications have to match.
-- `validator = one(spec1, spec2, ...)`: Defines a specification where one of
+- `validator = one(spec_1, spec_2, ...)`: Defines a specification where one of
   the given specifications has to match.
 - `validator = opt(spec[, default])`: Defines an optional specification. If the
   value is not defined, `default` is returned as the value. It is invalid to
@@ -114,8 +113,8 @@ const { spec, opt, array, one } = require('@studio/schema');
   the object key and value pairs.
 - `SCHEMA_VALIDATION`: The `code` property exposed on schema validation errors.
 
-Note that `all`, `one` and `opt`, `object`, `array` and `map` are also exposed
-on `spec`.
+Note that `all`, `one`, `opt`, `object`, `array` and `map` are also exposed on
+`spec`.
 
 ## Spec
 
@@ -148,17 +147,17 @@ throwing a `TypeError` if invalid or returning the given object if valid. For
 `object` and `array` specifications, the schema also allows to create proxy
 objects that validate reading from the object and assigning values:
 
-- `reader = schema.read(data)`: Creates a schema compliant reader for the given
-  data. If the given data does not match the schema, an exception is thrown.
-  The returned reader throws on any property modification or on an attempt to
-  read an undefined property.
-- `writer = schema.write([data[, emitter]])`: Creates a writer with optional
+- `reader = smy_chema.read(data)`: Creates a schema compliant reader for the
+  given data. If the given data does not match the schema, an exception is
+  thrown. The returned reader throws on any property modification or on an
+  attempt to read an undefined property.
+- `writer = smy_chema.write([data[, emitter]])`: Creates a writer with optional
   initial data and an event emitter. If the given data does not match the
   schema, an exception is thrown. The returned writer throws on undefined
   property modification, if an assigned value is invalid, or on an attempt to
   read an undefined property. When using the writer with `JSON.stringify` or
-  `schema.verify(writer)` it will throw if non-optional values are missing. If
-  `emitter` is specified, these events will be emitted:
+  `my_schema.verify(writer)` it will throw if non-optional values are missing.
+  If `emitter` is specified, these events will be emitted:
     - `set` when a property is assigned a new value
     - `delete` when a property is deleted
     - `push` when `push` is called on an array
@@ -166,13 +165,12 @@ objects that validate reading from the object and assigning values:
     - `unshift` when `unshift` is called on an array
     - `shift` when `shift` is called on an array
     - `splice` when `splice` is called on an array
-- `data = schema.verify(writer)`: Checks if any properties are missing in the
-  given writer and returns the unwrapped data. Throws if the given object is
-  not a schema writer.
-- `data = schema.raw(reader_or_writer)`: returns the unwrapped data without
+- `data = my_schema.verify(writer)`: Checks if any properties are missing in
+  the given writer and returns the unwrapped data. Throws if the given object
+  is not a schema writer.
+- `data = my_schema.raw(reader_or_writer)`: returns the unwrapped data without
   checking if any properties are missing in the given writer. Throws if the
   given object is not a schema reader or writer.
-
 
 ## License
 

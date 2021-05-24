@@ -2,7 +2,7 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec, array, object, one } = require('..');
+const { schema, array, object, one } = require('..');
 
 describe('array', () => {
 
@@ -23,13 +23,13 @@ describe('array', () => {
   });
 
   it('verifies array', () => {
-    const schema = spec(array({ test: 'integer' }));
+    const verify = schema(array({ test: 'integer' }));
 
     refute.exception(() => {
-      schema([]);
+      verify([]);
     });
     assert.exception(() => {
-      schema({});
+      verify({});
     }, {
       name: 'TypeError',
       message: 'Expected array but got {}',
@@ -38,13 +38,13 @@ describe('array', () => {
   });
 
   it('verifies array as object property', () => {
-    const schema = spec({ test: array({ key: true }) });
+    const verify = schema({ test: array({ key: true }) });
 
     refute.exception(() => {
-      schema({ test: [] });
+      verify({ test: [] });
     });
     assert.exception(() => {
-      schema({ test: 42 });
+      verify({ test: 42 });
     }, {
       name: 'TypeError',
       message: 'Expected property "test" to be array but got 42',
@@ -67,13 +67,13 @@ describe('array', () => {
   });
 
   it('verifies array elements', () => {
-    const schema = spec(array({ test: 'integer' }));
+    const verify = schema(array({ test: 'integer' }));
 
     refute.exception(() => {
-      schema([{ test: 1 }]);
+      verify([{ test: 1 }]);
     });
     assert.exception(() => {
-      schema([{ test: 1.2 }]);
+      verify([{ test: 1.2 }]);
     }, {
       name: 'TypeError',
       message: 'Expected property "[0].test" to be integer but got 1.2',
@@ -84,13 +84,13 @@ describe('array', () => {
   it('can be used as child validator', () => {
     const children = array({ name: 'string' });
 
-    const parent = spec({ children });
+    const verify = schema({ children });
 
     refute.exception(() => {
-      parent({ children: [{ name: 'foo' }, { name: 'bar' }] });
+      verify({ children: [{ name: 'foo' }, { name: 'bar' }] });
     });
     assert.exception(() => {
-      parent({ children: [{ name: 'foo' }, { name: 42 }] });
+      verify({ children: [{ name: 'foo' }, { name: 42 }] });
     }, {
       name: 'TypeError',
       message: 'Expected property "children[1].name" to be string but got 42',
@@ -108,7 +108,7 @@ describe('array', () => {
     let arrayOfStrings;
 
     refute.exception(() => {
-      arrayOfStrings = spec(array('string'));
+      arrayOfStrings = schema(array('string'));
     });
     refute.exception(() => {
       arrayOfStrings(['foo', '', 'bar', '123']);
@@ -126,7 +126,7 @@ describe('array', () => {
     let arrayOfFooOrBar;
 
     refute.exception(() => {
-      arrayOfFooOrBar = spec(array(one({ foo: true }, { bar: true })));
+      arrayOfFooOrBar = schema(array(one({ foo: true }, { bar: true })));
     });
     refute.exception(() => {
       arrayOfFooOrBar([{ foo: 1 }, { bar: '!' }, { foo: true }, { bar: null }]);
@@ -143,9 +143,9 @@ describe('array', () => {
 
   context('reader', () => {
     it('serializes to JSON', () => {
-      const arraySpec = spec(array({ test: 'integer' }));
+      const arraySchema = schema(array({ test: 'integer' }));
 
-      const arr_reader = arraySpec.read([{ test: 42 }]);
+      const arr_reader = arraySchema.read([{ test: 42 }]);
 
       assert.json(JSON.stringify(arr_reader), [{ test: 42 }]);
     });
@@ -153,9 +153,9 @@ describe('array', () => {
 
   context('writer', () => {
     it('serializes to JSON', () => {
-      const arraySpec = spec(array({ test: 'integer' }));
+      const arraySchema = schema(array({ test: 'integer' }));
 
-      const arr_writer = arraySpec.write([{ test: 42 }]);
+      const arr_writer = arraySchema.write([{ test: 42 }]);
 
       assert.json(JSON.stringify(arr_writer), [{ test: 42 }]);
     });

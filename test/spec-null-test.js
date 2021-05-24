@@ -2,25 +2,25 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec } = require('..');
+const { schema } = require('..');
 
 describe('spec null', () => {
 
   it('validates null', () => {
-    const schema = spec({ test: null });
+    const nullSchema = schema({ test: null });
 
     refute.exception(() => {
-      schema({ test: null });
+      nullSchema({ test: null });
     });
     assert.exception(() => {
-      schema({ test: undefined });
+      nullSchema({ test: undefined });
     }, {
       name: 'TypeError',
       message: 'Expected property "test" to be null but got undefined',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema({ test: 'test' });
+      nullSchema({ test: 'test' });
     }, {
       name: 'TypeError',
       message: 'Expected property "test" to be null but got "test"',
@@ -29,10 +29,10 @@ describe('spec null', () => {
   });
 
   it('returns given object', () => {
-    const schema = spec({ test: null });
+    const nullSchema = schema({ test: null });
     const object = { test: null };
 
-    const returned = schema(object);
+    const returned = nullSchema(object);
 
     assert.same(returned, object);
   });

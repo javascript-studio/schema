@@ -2,62 +2,62 @@
 'use strict';
 
 const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
-const { spec, opt } = require('..');
+const { schema, opt } = require('..');
 
 describe('opt', () => {
 
   it('does not throw on undefined', () => {
-    const schema = spec(opt('string'));
+    const optSchema = schema(opt('string'));
 
     refute.exception(() => {
-      schema(undefined);
+      optSchema(undefined);
     });
   });
 
   it('does not throw if given schema is valid', () => {
-    const schema = spec(opt('string'));
+    const optSchema = schema(opt('string'));
 
     refute.exception(() => {
-      schema('');
-      schema('test');
+      optSchema('');
+      optSchema('test');
     });
   });
 
   it('invokes custom function with value', () => {
     const fake = sinon.fake();
-    const schema = opt(fake);
+    const optSchema = opt(fake);
 
-    schema('test');
+    optSchema('test');
 
     assert.calledOnceWith(fake, 'test');
   });
 
   it('fails if value is invalid', () => {
-    const schema = spec(opt('string'));
+    const optSchema = schema(opt('string'));
 
     assert.exception(() => {
-      schema(123);
+      optSchema(123);
     }, {
       name: 'TypeError',
       message: 'Expected opt(string) but got 123',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema(0);
+      optSchema(0);
     }, {
       name: 'TypeError',
       message: 'Expected opt(string) but got 0',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema(false);
+      optSchema(false);
     }, {
       name: 'TypeError',
       message: 'Expected opt(string) but got false',
       code: 'SCHEMA_VALIDATION'
     });
     assert.exception(() => {
-      schema(true);
+      optSchema(true);
     }, {
       name: 'TypeError',
       message: 'Expected opt(string) but got true',
@@ -65,23 +65,23 @@ describe('opt', () => {
     });
   });
 
-  it('does not fail to JSON.stringify a spec with a missing optional', () => {
-    const schema = spec({
+  it('does not fail to JSON.stringify a schema with a missing optional', () => {
+    const optSchema = schema({
       name: 'string',
       age: opt('integer')
     });
 
-    const json = schema.write({ name: 'Max' });
+    const json = optSchema.write({ name: 'Max' });
 
     assert.json(JSON.stringify(json), { name: 'Max' });
   });
 
   it('does not fail to delete', () => {
-    const schema = spec({
+    const optSchema = schema({
       age: opt('integer')
     });
 
-    const json = schema.write({ age: 41 });
+    const json = optSchema.write({ age: 41 });
 
     refute.exception(() => {
       delete json.age;
@@ -89,11 +89,11 @@ describe('opt', () => {
   });
 
   it('fails to assign undefined', () => {
-    const schema = spec({
+    const optSchema = schema({
       age: opt('integer')
     });
 
-    const json = schema.write({ age: 41 });
+    const json = optSchema.write({ age: 41 });
 
     assert.exception(() => {
       json.age = '';
@@ -105,12 +105,12 @@ describe('opt', () => {
   });
 
   it('fails to initialize writer with undefined', () => {
-    const schema = spec({
+    const optSchema = schema({
       age: opt('integer')
     });
 
     assert.exception(() => {
-      schema.write({ age: NaN });
+      optSchema.write({ age: NaN });
     }, {
       name: 'TypeError',
       message: 'Expected property "age" to be opt(integer) but got NaN',
@@ -119,12 +119,12 @@ describe('opt', () => {
   });
 
   it('fails to initialize reader with undefined', () => {
-    const schema = spec({
+    const optSchema = schema({
       age: opt('integer')
     });
 
     assert.exception(() => {
-      schema.read({ age: false });
+      optSchema.read({ age: false });
     }, {
       name: 'TypeError',
       message: 'Expected property "age" to be opt(integer) but got false',
@@ -133,12 +133,12 @@ describe('opt', () => {
   });
 
   it('fails validator with undefined', () => {
-    const schema = spec({
+    const optSchema = schema({
       age: opt('integer')
     });
 
     assert.exception(() => {
-      schema({ age: true });
+      optSchema({ age: true });
     }, {
       name: 'TypeError',
       message: 'Expected property "age" to be opt(integer) but got true',
@@ -147,10 +147,10 @@ describe('opt', () => {
   });
 
   it('fails validator with custom function', () => {
-    const schema = spec(opt(() => false));
+    const optSchema = schema(opt(() => false));
 
     assert.exception(() => {
-      schema(1);
+      optSchema(1);
     }, {
       name: 'TypeError',
       message: 'Expected opt(custom value) but got 1',

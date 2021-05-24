@@ -2,34 +2,34 @@
 'use strict';
 
 const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
-const { spec } = require('..');
+const { schema } = require('..');
 
 describe('spec function', () => {
 
   it('calls function with argument', () => {
     const fn = sinon.fake();
 
-    const schema = spec({ test: fn });
+    const funcSchema = schema({ test: fn });
 
     refute.exception(() => {
-      schema({ test: 'something' });
+      funcSchema({ test: 'something' });
     });
     assert.calledOnceWith(fn, 'something');
   });
 
   it('does nothing if function returns `true`', () => {
-    const schema = spec({ test: () => true });
+    const funcSchema = schema({ test: () => true });
 
     refute.exception(() => {
-      schema({ test: false });
+      funcSchema({ test: false });
     });
   });
 
   it('throws if function returns `false`', () => {
-    const schema = spec(() => false);
+    const funcSchema = schema(() => false);
 
     assert.exception(() => {
-      schema(false);
+      funcSchema(false);
     }, {
       name: 'TypeError',
       message: 'Expected custom value but got false',
@@ -37,11 +37,11 @@ describe('spec function', () => {
     });
   });
 
-  it('throws if function returns `false` in object spec', () => {
-    const schema = spec({ test: () => false });
+  it('throws if function returns `false` in object schema', () => {
+    const funcSchema = schema({ test: () => false });
 
     assert.exception(() => {
-      schema({ test: false });
+      funcSchema({ test: false });
     }, {
       name: 'TypeError',
       message: 'Expected property "test" to be custom value but got false',
@@ -52,26 +52,26 @@ describe('spec function', () => {
   it('does not add `verify` or specName to given function', () => {
     const fn = () => true;
 
-    spec(() => true);
+    schema(() => true);
 
     assert.isUndefined(Object.getOwnPropertyDescriptor(fn, 'verify'));
     assert.isUndefined(Object.getOwnPropertyDescriptor(fn, 'specName'));
   });
 
   it('returns given object for function', () => {
-    const schema = spec(() => true);
+    const funcSchema = schema(() => true);
     const object = {};
 
-    const returned = schema(object);
+    const returned = funcSchema(object);
 
     assert.same(returned, object);
   });
 
   it('returns given object for object with function property', () => {
-    const schema = spec({ test: () => true });
+    const funcSchema = schema({ test: () => true });
     const object = { test: 'something' };
 
-    const returned = schema(object);
+    const returned = funcSchema(object);
 
     assert.same(returned, object);
   });

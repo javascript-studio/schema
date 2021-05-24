@@ -2,7 +2,7 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { spec, opt } = require('../');
+const { schema, opt } = require('../');
 
 describe('spec reuse', () => {
 
@@ -11,8 +11,8 @@ describe('spec reuse', () => {
       name: 'string'
     });
 
-    const person = spec(child);
-    const parent = spec({ child });
+    const person = schema(child);
+    const parent = schema({ child });
 
     refute.exception(() => {
       person({ name: 'test' });

@@ -8,7 +8,7 @@ const { array } = require('./lib/array');
 const { map } = require('./lib/map');
 const { schema } = require('./lib/schema');
 
-schema.spec = schema;
+schema.schema = schema;
 
 schema.opt = opt;
 
