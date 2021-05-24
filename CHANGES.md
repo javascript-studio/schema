@@ -1,5 +1,14 @@
 # Changes
 
+## 3.0.1
+
+- 🐛 [`52e2945`](https://github.com/javascript-studio/studio-schema/commit/52e29452fdafaf476b3caf949e4e213a3b32ffbd)
+  Fix accessing array.length
+- 🐛 [`ec44741`](https://github.com/javascript-studio/studio-schema/commit/ec44741b93f6acd96353d22fa8435099ad56100d)
+  Fix array return value
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-24._
+
 ## 3.0.0
 
 - 💥 [`a5444c9`](https://github.com/javascript-studio/studio-schema/commit/a5444c9ae6c0f251822e43d5df4d129d2034407b)
