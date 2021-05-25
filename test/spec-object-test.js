@@ -747,6 +747,17 @@ describe('spec object', () => {
         code: 'SCHEMA_VALIDATION'
       });
     });
+
+    it('uses toJSON representation of given object on assignment', () => {
+      const objectSchema = schema(array({ index: 'number' }));
+      const original = [{ index: 1 }];
+      const reader = objectSchema.read(original);
+      const writer = objectSchema.write([{ index: 2 }]);
+
+      writer[0] = reader[0];
+
+      assert.same(objectSchema.raw(writer)[0], original[0]);
+    });
   });
 
   describe('write map', () => {
@@ -828,6 +839,17 @@ describe('spec object', () => {
       const proxy = objectSchema.write(original);
 
       assert.same(proxy.toJSON(), original);
+    });
+
+    it('uses toJSON representation of given object on assignment', () => {
+      const objectSchema = schema({ map: map('string', { index: 'number' }) });
+      const original = { map: { a: { index: 1 } } };
+      const reader = objectSchema.read(original);
+      const writer = objectSchema.write({ map: { a: { index: 2 } } });
+
+      writer.map.a = reader.map.a;
+
+      assert.same(objectSchema.raw(writer).map.a, original.map.a);
     });
   });
 
