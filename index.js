@@ -1,6 +1,7 @@
 'use strict';
 
 const { SCHEMA_VALIDATION } = require('./lib/constants');
+const { literal } = require('./lib/literal');
 const { opt } = require('./lib/opt');
 const { one } = require('./lib/one');
 const { object } = require('./lib/object');
@@ -9,6 +10,8 @@ const { map } = require('./lib/map');
 const { schema } = require('./lib/schema');
 
 schema.schema = schema;
+
+schema.literal = literal;
 
 schema.opt = opt;
 
