@@ -201,6 +201,13 @@ describe('spec object', () => {
       assert.isTrue(Object.prototype.hasOwnProperty.call(proxy, 'some'));
     });
 
+    it('returns original object for toJSON', () => {
+      const original = { some: 'thing' };
+      const proxy = objectSchema.read(original);
+
+      assert.same(proxy.toJSON(), original);
+    });
+
     it('works with JSON.stringify', () => {
       const proxy = objectSchema.read({ some: 'thing' });
 
@@ -315,6 +322,13 @@ describe('spec object', () => {
       assert.isTrue(Object.prototype.hasOwnProperty.call(proxy.some, 'nested'));
     });
 
+    it('returns original object for toJSON', () => {
+      const original = { some: { nested: 'thing' } };
+      const proxy = objectSchema.read(original);
+
+      assert.same(proxy.toJSON(), original);
+    });
+
     it('works with JSON.stringify', () => {
       const proxy = objectSchema.read({ some: { nested: 'thing' } });
 
@@ -323,7 +337,7 @@ describe('spec object', () => {
       assert.json(json, { some: { nested: 'thing' } });
     });
 
-    it.skip('does not validate again in JSON.stringify', () => {
+    it('does not validate again in JSON.stringify', () => {
       const fake = sinon.fake();
       const proxy = schema({ some: { nested: fake } })
         .read({ some: { nested: true } });
@@ -443,6 +457,13 @@ describe('spec object', () => {
 
       assert.isUndefined(proxy.some);
       assert.isFalse(Object.prototype.hasOwnProperty.call(proxy, 'some'));
+    });
+
+    it('returns original object for toJSON', () => {
+      const original = { some: 'thing' };
+      const proxy = objectSchema.write(original);
+
+      assert.same(proxy.toJSON(), original);
     });
 
     it('works with JSON.stringify', () => {
@@ -595,6 +616,13 @@ describe('spec object', () => {
       assert.isUndefined(proxy.some.nested);
       assert.isFalse(Object.prototype.hasOwnProperty.call(proxy.some,
         'nested'));
+    });
+
+    it('returns original object for toJSON', () => {
+      const original = { some: { nested: 'thing' } };
+      const proxy = objectSchema.write(original);
+
+      assert.same(proxy.toJSON(), original);
     });
 
     it('works with JSON.stringify', () => {
@@ -793,6 +821,13 @@ describe('spec object', () => {
           + 'but got "invalid"',
         code: 'SCHEMA_VALIDATION'
       });
+    });
+
+    it('returns original object for toJSON', () => {
+      const original = { map: { a: 1 } };
+      const proxy = objectSchema.write(original);
+
+      assert.same(proxy.toJSON(), original);
     });
   });
 

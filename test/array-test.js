@@ -154,6 +154,15 @@ describe('array', () => {
   });
 
   context('reader', () => {
+    it('returns original object for toJSON', () => {
+      const arraySchema = schema(array({ test: 'integer' }));
+      const arr = [{ test: 42 }];
+
+      const arr_reader = arraySchema.read(arr);
+
+      assert.same(arr_reader.toJSON(), arr);
+    });
+
     it('serializes to JSON', () => {
       const arraySchema = schema(array({ test: 'integer' }));
 
@@ -183,6 +192,15 @@ describe('array', () => {
   });
 
   context('writer', () => {
+    it('returns original object for toJSON', () => {
+      const arraySchema = schema(array({ test: 'integer' }));
+      const arr = [{ test: 42 }];
+
+      const arr_reader = arraySchema.write(arr);
+
+      assert.same(arr_reader.toJSON(), arr);
+    });
+
     it('serializes to JSON', () => {
       const arraySchema = schema(array({ test: 'integer' }));
 
