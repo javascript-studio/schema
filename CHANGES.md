@@ -1,5 +1,14 @@
 # Changes
 
+## 3.1.0
+
+- 🍏 [`86a1a52`](https://github.com/javascript-studio/studio-schema/commit/86a1a52a9e56a0ac0a0766ad105a72848c3d6438)
+  Add literal validator
+- 📚 [`d3275a0`](https://github.com/javascript-studio/studio-schema/commit/d3275a0a46385e1ddd0bab102a36544544a32f4b)
+  Document literal API and improve wording
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-25._
+
 ## 3.0.1
 
 - 🐛 [`52e2945`](https://github.com/javascript-studio/studio-schema/commit/52e29452fdafaf476b3caf949e4e213a3b32ffbd)
