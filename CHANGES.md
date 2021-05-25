@@ -1,5 +1,14 @@
 # Changes
 
+## 3.2.0
+
+- 🍏 [`b790b41`](https://github.com/javascript-studio/studio-schema/commit/b790b417e1ece06bbfe121e984c031fef4285197)
+  Invoke `toJSON` on assigned values
+- 🍏 [`857780f`](https://github.com/javascript-studio/studio-schema/commit/857780f74de31807a4ff2059ebcb057a1e698768)
+  Return original object in `toJSON`
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-05-25._
+
 ## 3.1.0
 
 - 🍏 [`86a1a52`](https://github.com/javascript-studio/studio-schema/commit/86a1a52a9e56a0ac0a0766ad105a72848c3d6438)
