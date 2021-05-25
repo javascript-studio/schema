@@ -92,22 +92,27 @@ const schema = require('@studio/schema');
 With [destructuring][2]:
 
 ```js
-const { schema, opt, array, one } = require('@studio/schema');
+const { schema, opt, one } = require('@studio/schema');
 ```
 
 - `my_schema = schema(spec)`: Defines a specification. `spec` must be an object
   defining a data structure, or a validator. See below for possible values.
-- `validator = all(spec_1, spec_2, ...)`: Defines a specification where all of
+- `validator = literal(value_1, value_2, ...)`: Defines a validator that
+  matches against a list of primitive values. Can be used to define constants
+  or enumerations.
+- `validator = all(spec_1, spec_2, ...)`: Defines a validator where all of
   the given specifications have to match.
-- `validator = one(spec_1, spec_2, ...)`: Defines a specification where one of
+- `validator = one(spec_1, spec_2, ...)`: Defines a validator where one of
   the given specifications has to match.
-- `validator = opt(spec[, default])`: Defines an optional specification. If the
+- `validator = opt(spec[, default])`: Defines an optional validator. If the
   value is not defined, `default` is returned as the value. It is invalid to
   initialize or assign `undefined` to an optional value.
-- `validator = object(spec)`: Defines an object. Can be used to declare
-  reusable object validators.
+- `validator = object(spec)`: Defines an object validator. Can be used to
+  declare reusable object validators that can be referenced from multiple
+  schemas.
 - `validator = array(spec)`: Defines an array. Each element in the array has to
-  match the given `spec`.
+  match the given `spec` Can be used to declare reusable array validators that
+  can be referenced from multiple schemas.
 - `validator = map(key_spec, value_spec)`: Defines a map specification for
   key-value pairs where `key_spec` and `value_spec` are the specifications for
   the object key and value pairs.
