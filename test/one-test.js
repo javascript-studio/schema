@@ -2,7 +2,7 @@
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
-const { schema, one } = require('..');
+const { schema, object, one } = require('..');
 
 describe('one', () => {
 
@@ -121,6 +121,29 @@ describe('one', () => {
 
     refute.exception(() => {
       oneSchema({ foo: 'test' });
+      oneSchema({ bar: 1 });
+    });
+  });
+
+  it('fails validator', () => {
+    const validator = object({ bar: 'integer' });
+    const oneSchema = schema(one(null, validator));
+
+    assert.exception(() => {
+      oneSchema({ foo: true });
+    }, {
+      name: 'TypeError',
+      message: 'Expected one(null, object({bar:integer})) but got {"foo":true}',
+      code: 'SCHEMA_VALIDATION'
+    });
+  });
+
+  it('passes validator', () => {
+    const validator = object({ bar: 'integer' });
+    const oneSchema = schema(one(null, validator));
+
+    refute.exception(() => {
+      oneSchema(null);
       oneSchema({ bar: 1 });
     });
   });
