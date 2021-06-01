@@ -513,7 +513,6 @@ describe('spec object', () => {
         inspect(proxy);
       });
     });
-
   });
 
   describe('write nested', () => {
@@ -1224,15 +1223,16 @@ describe('spec object', () => {
       });
     });
 
-    it('does not fail if writer object is incomplete', () => {
+    it('throws if writer object is incomplete', () => {
       const writer = objectSchema.write({ some: {} });
 
-      let data;
-      refute.exception(() => {
-        data = objectSchema.raw(writer);
+      assert.exception(() => {
+        objectSchema.raw(writer);
+      }, {
+        name: 'TypeError',
+        message: 'Expected property "some.nested" to be string but got '
+          + 'undefined'
       });
-
-      assert.equals(data, { some: {} });
     });
 
     it('throws if given object is plain object', () => {
