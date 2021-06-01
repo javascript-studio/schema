@@ -189,6 +189,18 @@ describe('array', () => {
       }
       assert.equals(keys, ['foo', 'bar']);
     });
+
+    it('uses toJSON representation of given object when initializing', () => {
+      const arraySchema = schema(array('string'));
+      const original = ['a', 'b'];
+      const writer = arraySchema.write(original);
+      const reader = arraySchema.read(writer);
+
+      const raw = reader.toJSON();
+
+      refute.same(raw, writer);
+      assert.same(raw, original);
+    });
   });
 
   context('writer', () => {
@@ -226,6 +238,18 @@ describe('array', () => {
         keys.push(entry.key);
       }
       assert.equals(keys, ['foo', 'bar']);
+    });
+
+    it('uses toJSON representation of given object when initializing', () => {
+      const arraySchema = schema(array('string'));
+      const original = ['a', 'b'];
+      const reader = arraySchema.read(original);
+      const writer = arraySchema.write(reader);
+
+      const raw = writer.toJSON();
+
+      refute.same(raw, reader);
+      assert.same(raw, original);
     });
   });
 });

@@ -187,6 +187,18 @@ describe('map', () => {
 
       assert.json(JSON.stringify(map_reader), { test: 42 });
     });
+
+    it('uses toJSON representation of given object when initializing', () => {
+      const mapSchema = schema(map('string', 'integer'));
+      const original = { is: 42 };
+      const writer = mapSchema.write(original);
+      const reader = mapSchema.read(writer);
+
+      const raw = reader.toJSON();
+
+      refute.same(raw, writer);
+      assert.same(raw, original);
+    });
   });
 
   context('writer', () => {
@@ -196,6 +208,18 @@ describe('map', () => {
       const map_writer = mapSchema.write({ test: 42 });
 
       assert.json(JSON.stringify(map_writer), { test: 42 });
+    });
+
+    it('uses toJSON representation of given object when initializing', () => {
+      const mapSchema = schema(map('string', 'integer'));
+      const original = { is: 42 };
+      const reader = mapSchema.read(original);
+      const writer = mapSchema.write(reader);
+
+      const raw = writer.toJSON();
+
+      refute.same(raw, reader);
+      assert.same(raw, original);
     });
   });
 });

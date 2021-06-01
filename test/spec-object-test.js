@@ -231,6 +231,16 @@ describe('spec object', () => {
       refute.called(fake);
     });
 
+    it('uses toJSON representation of given object when initializing', () => {
+      const original = { some: 'thing' };
+      const writer = objectSchema.write(original);
+      const reader = objectSchema.read(writer);
+
+      const raw = reader.toJSON();
+
+      refute.same(raw, writer);
+      assert.same(raw, original);
+    });
   });
 
   describe('read nested', () => {
@@ -512,6 +522,17 @@ describe('spec object', () => {
       refute.exception(() => {
         inspect(proxy);
       });
+    });
+
+    it('uses toJSON representation of given object when initializing', () => {
+      const original = { some: 'thing' };
+      const reader = objectSchema.read(original);
+      const writer = objectSchema.write(reader);
+
+      const raw = writer.toJSON();
+
+      refute.same(raw, reader);
+      assert.same(raw, original);
     });
   });
 
