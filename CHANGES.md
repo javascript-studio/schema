@@ -1,5 +1,18 @@
 # Changes
 
+## 3.3.0
+
+- 🍏 [`7937230`](https://github.com/javascript-studio/studio-schema/commit/7937230b8a82f247083e4f061da86340c3ee5433)
+  Unwrap object, array and map values
+- ✨ [`93b0f11`](https://github.com/javascript-studio/studio-schema/commit/93b0f11987c7ffcfb4cdc7b69eac16b382213268)
+  Move raw and unwrap helpers to own file
+- ✨ [`c074fc8`](https://github.com/javascript-studio/studio-schema/commit/c074fc80c4523b936b335cf96e44f3046f73809d)
+  Remove raw symbol
+- ✨ [`e5963c5`](https://github.com/javascript-studio/studio-schema/commit/e5963c56bdf68aa75688ff72741de9c62c7546ef)
+  Upgrade mocha and mochify
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-06-01._
+
 ## 3.2.0
 
 - 🍏 [`b790b41`](https://github.com/javascript-studio/studio-schema/commit/b790b417e1ece06bbfe121e984c031fef4285197)
