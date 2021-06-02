@@ -1,5 +1,16 @@
 # Changes
 
+## 3.4.0
+
+- 🍏 [`b6485e9`](https://github.com/javascript-studio/studio-schema/commit/b6485e9d421184cf82afcd0d0d2641da8c43c45e)
+  Do not throw in `toJSON`
+- 🐛 [`9c806e6`](https://github.com/javascript-studio/studio-schema/commit/9c806e6b01fcc9eacf267fd8f3dbe27a2712bef8)
+  Fix `specname` generation
+- ✨ [`904db4b`](https://github.com/javascript-studio/studio-schema/commit/904db4b9665bee95ed8e7d8abf22d57050d8c44d)
+  Add unit tests for one
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-06-02._
+
 ## 3.3.0
 
 - 🍏 [`7937230`](https://github.com/javascript-studio/studio-schema/commit/7937230b8a82f247083e4f061da86340c3ee5433)
