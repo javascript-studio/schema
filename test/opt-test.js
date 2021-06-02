@@ -2,15 +2,119 @@
 'use strict';
 
 const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
-const { schema, opt } = require('..');
+const { schema, array, opt } = require('..');
 
 describe('opt', () => {
 
-  it('does not throw on undefined', () => {
+  it('works with undefined or string', () => {
     const optSchema = schema(opt('string'));
 
     refute.exception(() => {
       optSchema(undefined);
+    });
+    refute.exception(() => {
+      optSchema('');
+    });
+    refute.exception(() => {
+      optSchema('test');
+    });
+  });
+
+  it('works with undefined or boolean', () => {
+    const optSchema = schema(opt('boolean'));
+
+    refute.exception(() => {
+      optSchema(undefined);
+    });
+    refute.exception(() => {
+      optSchema(true);
+    });
+    refute.exception(() => {
+      optSchema(false);
+    });
+  });
+
+  it('works with undefined or number', () => {
+    const optSchema = schema(opt('number'));
+
+    refute.exception(() => {
+      optSchema(undefined);
+    });
+    refute.exception(() => {
+      optSchema(0);
+    });
+    refute.exception(() => {
+      optSchema(1);
+    });
+    refute.exception(() => {
+      optSchema(42);
+    });
+  });
+
+  it('works with undefined or array of objects', () => {
+    const optSchema = schema(opt([{ yesno: 'boolean' }]));
+
+    refute.exception(() => {
+      optSchema(undefined);
+    });
+    refute.exception(() => {
+      optSchema([]);
+    });
+    refute.exception(() => {
+      optSchema([{ yesno: true }]);
+    });
+    refute.exception(() => {
+      optSchema([{ yesno: false }]);
+    });
+  });
+
+  it('with object', () => {
+    const optSchema = schema(opt({ yesno: 'boolean' }));
+
+    refute.exception(() => {
+      optSchema({ yesno: false });
+    }, {
+    });
+    assert.exception(() => {
+      optSchema({ yesno: 42 });
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt({yesno:boolean}) but got {"yesno":42}',
+      code: 'SCHEMA_VALIDATION'
+    });
+  });
+
+  it('with array of strings', () => {
+    const optSchema = schema(opt(array('string')));
+
+    refute.exception(() => {
+      optSchema([]);
+    }, {
+    });
+    assert.exception(() => {
+      optSchema([42]);
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt([string]) but got [42]',
+      code: 'SCHEMA_VALIDATION'
+    });
+  });
+
+  it('with array of strings (with [] instead of array())', () => {
+    const optSchema = schema(opt(['string']));
+
+    refute.exception(() => {
+      optSchema([]);
+    });
+    refute.exception(() => {
+      optSchema(['test']);
+    });
+    assert.exception(() => {
+      optSchema([42]);
+    }, {
+      name: 'TypeError',
+      message: 'Expected opt([string]) but got [42]',
+      code: 'SCHEMA_VALIDATION'
     });
   });
 

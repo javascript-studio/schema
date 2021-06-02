@@ -133,7 +133,7 @@ describe('one', () => {
       oneSchema({ foo: true });
     }, {
       name: 'TypeError',
-      message: 'Expected one(null, object({bar:integer})) but got {"foo":true}',
+      message: 'Expected one(null, {bar:integer}) but got {"foo":true}',
       code: 'SCHEMA_VALIDATION'
     });
   });
