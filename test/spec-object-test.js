@@ -489,15 +489,11 @@ describe('spec object', () => {
         '{\n  "some": "thing"\n}');
     });
 
-    it('fails in JSON.stringify if property is missing', () => {
+    it('does not throw in JSON.stringify if property is missing', () => {
       const proxy = objectSchema.write({});
 
-      assert.exception(() => {
+      refute.exception(() => {
         return JSON.stringify(proxy);
-      }, {
-        name: 'TypeError',
-        message: 'Expected property "some" to be string but got undefined',
-        code: 'SCHEMA_VALIDATION'
       });
     });
 
@@ -651,16 +647,11 @@ describe('spec object', () => {
       assert.json(JSON.stringify(proxy), { some: { nested: 'thing' } });
     });
 
-    it('fails in JSON.stringify if property is missing', () => {
+    it('does not throw in JSON.stringify if property is missing', () => {
       const proxy = objectSchema.write({ some: {} });
 
-      assert.exception(() => {
+      refute.exception(() => {
         return JSON.stringify(proxy);
-      }, {
-        name: 'TypeError',
-        message: 'Expected property "some.nested" to be string but got '
-          + 'undefined',
-        code: 'SCHEMA_VALIDATION'
       });
     });
 
@@ -1161,11 +1152,12 @@ describe('spec object', () => {
 
     it('returns copy of valid object without proxy', () => {
       const objectSchema = schema({ some: { nested: 'string' } });
-      const writer = objectSchema.write({ some: { nested: 'thing' } });
+      const original = { some: { nested: 'thing' } };
+      const writer = objectSchema.write(original);
 
       const data = objectSchema.verify(writer);
 
-      assert.equals(data, { some: { nested: 'thing' } });
+      assert.same(data, original);
       refute.exception(() => {
         data.allowed = true;
       });
@@ -1244,15 +1236,11 @@ describe('spec object', () => {
       });
     });
 
-    it('throws if writer object is incomplete', () => {
+    it('does not throw if writer object is incomplete', () => {
       const writer = objectSchema.write({ some: {} });
 
-      assert.exception(() => {
+      refute.exception(() => {
         objectSchema.raw(writer);
-      }, {
-        name: 'TypeError',
-        message: 'Expected property "some.nested" to be string but got '
-          + 'undefined'
       });
     });
 
