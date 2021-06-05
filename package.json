@@ -26,7 +26,7 @@
     "proxy"
   ],
   "author": "Maximilian Antoni <max@javascript.studio>",
-  "homepage": "https://github.com/javascript-studio/studio-schema",
+  "homepage": "https://github.com/javascript-studio/schema",
   "eslintConfig": {
     "extends": "@studio"
   },
