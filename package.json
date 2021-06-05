@@ -12,8 +12,8 @@
     "preversion": "npm run lint && npm run prettier:check && npm test",
     "version": "changes --commits --footer",
     "postversion": "git push --follow-tags && npm publish",
-    "prettier:check": "prettier --check .",
-    "prettier:write": "prettier --write .",
+    "prettier:check": "prettier --check *.{js,json,md}",
+    "prettier:write": "prettier --write *.{js,json,md}",
     "prepare": "husky install"
   },
   "keywords": [
