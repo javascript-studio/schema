@@ -31,7 +31,7 @@
     "@sinonjs/referee-sinon": "^9.0.2",
     "@studio/changes": "^2.2.0",
     "@studio/eslint-config": "^2.0.0",
-    "eslint": "^7.26.0",
+    "eslint": "^7.28.0",
     "mocha": "^8.4.0",
     "mochify": "^8.0.0"
   },
