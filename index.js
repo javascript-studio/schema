@@ -1,6 +1,11 @@
 'use strict';
 
 const { SCHEMA_VALIDATION } = require('./lib/constants');
+const { defined } = require('./lib/defined');
+const { boolean } = require('./lib/boolean');
+const { number } = require('./lib/number');
+const { integer } = require('./lib/integer');
+const { string } = require('./lib/string');
 const { literal } = require('./lib/literal');
 const { opt } = require('./lib/opt');
 const { one } = require('./lib/one');
@@ -10,6 +15,16 @@ const { map } = require('./lib/map');
 const { schema } = require('./lib/schema');
 
 schema.schema = schema;
+
+schema.defined = defined;
+
+schema.boolean = boolean;
+
+schema.number = number;
+
+schema.integer = integer;
+
+schema.string = string;
 
 schema.literal = literal;
 
