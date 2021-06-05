@@ -8,7 +8,7 @@
     "test": "npm run test:node && npm run test:browser",
     "test:node": "mocha './{,!(node_modules)/**}/*.test.js'",
     "test:browser": "mochify './{,!(node_modules)/**}/*.test.js'",
-    "watch": "npm test -- --watch",
+    "watch": "npm run test:node -- --watch",
     "preversion": "npm run lint && npm run prettier:check && npm test",
     "version": "changes --commits --footer",
     "postversion": "git push --follow-tags && npm publish",
