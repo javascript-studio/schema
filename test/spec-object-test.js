@@ -1,4 +1,3 @@
-/*eslint-env mocha*/
 'use strict';
 
 const { inspect } = require('util');
@@ -106,11 +105,11 @@ describe('spec object', () => {
 
   it('returns given object', () => {
     const objectSchema = schema({});
-    const object = {};
+    const obj = {};
 
-    const returned = objectSchema(object);
+    const returned = objectSchema(obj);
 
-    assert.same(returned, object);
+    assert.same(returned, obj);
   });
 
   describe('read', () => {
@@ -745,9 +744,9 @@ describe('spec object', () => {
     });
 
     it('fails to set property in array object', () => {
-      const objectSchema = schema({ array: array({ index: 'number' }) });
+      const localObjectSchema = schema({ array: array({ index: 'number' }) });
 
-      const proxy = objectSchema.write({ array: [{ index: 0 }] });
+      const proxy = localObjectSchema.write({ array: [{ index: 0 }] });
 
       assert.exception(() => {
         proxy.array[0].index = 'invalid';
@@ -760,14 +759,14 @@ describe('spec object', () => {
     });
 
     it('uses toJSON representation of given object on assignment', () => {
-      const objectSchema = schema(array({ index: 'number' }));
+      const localObjectSchema = schema(array({ index: 'number' }));
       const original = [{ index: 1 }];
-      const reader = objectSchema.read(original);
-      const writer = objectSchema.write([{ index: 2 }]);
+      const reader = localObjectSchema.read(original);
+      const writer = localObjectSchema.write([{ index: 2 }]);
 
       writer[0] = reader[0];
 
-      assert.same(objectSchema.raw(writer)[0], original[0]);
+      assert.same(localObjectSchema.raw(writer)[0], original[0]);
     });
   });
 
@@ -831,9 +830,9 @@ describe('spec object', () => {
     });
 
     it('fails to set property in value object', () => {
-      const objectSchema = schema({ map: map('string', { index: 'number' }) });
+      const localObjectSchema = schema({ map: map('string', { index: 'number' }) });
 
-      const proxy = objectSchema.write({ map: { test: { index: 0 } } });
+      const proxy = localObjectSchema.write({ map: { test: { index: 0 } } });
 
       assert.exception(() => {
         proxy.map.test.index = 'invalid';
@@ -853,14 +852,14 @@ describe('spec object', () => {
     });
 
     it('uses toJSON representation of given object on assignment', () => {
-      const objectSchema = schema({ map: map('string', { index: 'number' }) });
+      const localObjectSchema = schema({ map: map('string', { index: 'number' }) });
       const original = { map: { a: { index: 1 } } };
-      const reader = objectSchema.read(original);
-      const writer = objectSchema.write({ map: { a: { index: 2 } } });
+      const reader = localObjectSchema.read(original);
+      const writer = localObjectSchema.write({ map: { a: { index: 2 } } });
 
       writer.map.a = reader.map.a;
 
-      assert.same(objectSchema.raw(writer).map.a, original.map.a);
+      assert.same(localObjectSchema.raw(writer).map.a, original.map.a);
     });
   });
 
@@ -963,14 +962,14 @@ describe('spec object', () => {
     });
 
     it('emits "set" event for nested array assign', () => {
-      const array = [];
-      const proxy = objectSchema.write({ some: { array } }, emitter);
+      const original = [];
+      const proxy = objectSchema.write({ some: { array: original } }, emitter);
 
       proxy.some.array[0] = 42;
 
       assert.calledOnceWith(onSet, {
         type: 'array',
-        array: match.same(array),
+        array: match.same(original),
         index: 0,
         value: 42,
         base: 'some.array',
@@ -979,14 +978,14 @@ describe('spec object', () => {
     });
 
     it('emits "delete" event for nested array delete', () => {
-      const array = [2, 3, 7];
-      const proxy = objectSchema.write({ some: { array } }, emitter);
+      const original = [2, 3, 7];
+      const proxy = objectSchema.write({ some: { array: original } }, emitter);
 
       delete proxy.some.array[2];
 
       assert.calledOnceWith(onDelete, {
         type: 'array',
-        array: match.same(array),
+        array: match.same(original),
         index: 2,
         base: 'some.array',
         path: 'some.array[2]'
@@ -996,14 +995,14 @@ describe('spec object', () => {
     it('emits "push" event for nested array.push', () => {
       const onPush = sinon.fake();
       emitter.on('push', onPush);
-      const array = [2, 3, 7];
-      const proxy = objectSchema.write({ some: { array } }, emitter);
+      const original = [2, 3, 7];
+      const proxy = objectSchema.write({ some: { array: original } }, emitter);
 
       proxy.some.array.push(42);
 
       assert.equals(proxy.some.array, [2, 3, 7, 42]);
       assert.calledOnceWith(onPush, {
-        array: match.same(array),
+        array: match.same(original),
         base: 'some.array',
         values: [42]
       });
@@ -1026,14 +1025,14 @@ describe('spec object', () => {
     it('emits "pop" event for nested array.pop', () => {
       const onPop = sinon.fake();
       emitter.on('pop', onPop);
-      const array = [2, 3, 7];
-      const proxy = objectSchema.write({ some: { array } }, emitter);
+      const original = [2, 3, 7];
+      const proxy = objectSchema.write({ some: { array: original } }, emitter);
 
       proxy.some.array.pop();
 
       assert.equals(proxy.some.array, [2, 3]);
       assert.calledOnceWith(onPop, {
-        array: match.same(array),
+        array: match.same(original),
         base: 'some.array'
       });
       refute.called(onSet);
@@ -1043,14 +1042,14 @@ describe('spec object', () => {
     it('emits "shift" event for nested array.shift', () => {
       const onShift = sinon.fake();
       emitter.on('shift', onShift);
-      const array = [2, 3, 7];
-      const proxy = objectSchema.write({ some: { array } }, emitter);
+      const original = [2, 3, 7];
+      const proxy = objectSchema.write({ some: { array: original } }, emitter);
 
       proxy.some.array.shift();
 
       assert.equals(proxy.some.array, [3, 7]);
       assert.calledOnceWith(onShift, {
-        array: match.same(array),
+        array: match.same(original),
         base: 'some.array'
       });
       refute.called(onSet);
@@ -1059,14 +1058,14 @@ describe('spec object', () => {
     it('emits "unshift" event for nested array.unshift', () => {
       const onUnshift = sinon.fake();
       emitter.on('unshift', onUnshift);
-      const array = [2, 3, 7];
-      const proxy = objectSchema.write({ some: { array } }, emitter);
+      const original = [2, 3, 7];
+      const proxy = objectSchema.write({ some: { array: original } }, emitter);
 
       proxy.some.array.unshift(42);
 
       assert.equals(proxy.some.array, [42, 2, 3, 7]);
       assert.calledOnceWith(onUnshift, {
-        array: match.same(array),
+        array: match.same(original),
         base: 'some.array',
         values: [42]
       });
@@ -1088,14 +1087,14 @@ describe('spec object', () => {
     it('emits "splice" event for nested array.splice', () => {
       const onSplice = sinon.fake();
       emitter.on('splice', onSplice);
-      const array = [2, 3, 7];
-      const proxy = objectSchema.write({ some: { array } }, emitter);
+      const original = [2, 3, 7];
+      const proxy = objectSchema.write({ some: { array: original } }, emitter);
 
       proxy.some.array.splice(0, 2, 42, 365);
 
       assert.equals(proxy.some.array, [42, 365, 7]);
       assert.calledOnceWith(onSplice, {
-        array: match.same(array),
+        array: match.same(original),
         base: 'some.array',
         start: 0,
         delete_count: 2,
