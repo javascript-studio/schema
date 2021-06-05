@@ -15,12 +15,15 @@ describe('raw', () => {
   });
 
   it('throws if given object does not have a toJSON function', () => {
-    assert.exception(() => {
-      raw({});
-    }, {
-      name: 'Error',
-      message: 'Argument is not a schema reader or writer'
-    });
+    assert.exception(
+      () => {
+        raw({});
+      },
+      {
+        name: 'Error',
+        message: 'Argument is not a schema reader or writer'
+      }
+    );
   });
 });
 

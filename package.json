@@ -9,9 +9,11 @@
     "test:node": "mocha",
     "test:browser": "mochify",
     "watch": "mocha --watch",
-    "preversion": "npm run lint && npm test",
+    "preversion": "npm run lint && npm run prettier:check && npm test",
     "version": "changes --commits --footer",
-    "postversion": "git push --follow-tags && npm publish"
+    "postversion": "git push --follow-tags && npm publish",
+    "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write ."
   },
   "keywords": [
     "schema",
@@ -33,7 +35,8 @@
     "@studio/eslint-config": "^2.0.0",
     "eslint": "^7.28.0",
     "mocha": "^8.4.0",
-    "mochify": "^8.0.0"
+    "mochify": "^8.0.0",
+    "prettier": "^2.3.0"
   },
   "repository": {
     "type": "git",
