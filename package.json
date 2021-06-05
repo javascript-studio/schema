@@ -47,9 +47,10 @@
     "url": "https://github.com/javascript-studio/studio-schema.git"
   },
   "files": [
-    "lib",
-    "LICENSE",
-    "README.md"
+    "CHANGES.md",
+    "**/*.js",
+    "!lib/*.test.js",
+    "!test/**"
   ],
   "license": "MIT"
 }
