@@ -13,7 +13,8 @@
     "version": "changes --commits --footer",
     "postversion": "git push --follow-tags && npm publish",
     "prettier:check": "prettier --check .",
-    "prettier:write": "prettier --write ."
+    "prettier:write": "prettier --write .",
+    "prepare": "husky install"
   },
   "keywords": [
     "schema",
@@ -34,6 +35,8 @@
     "@studio/changes": "^2.2.0",
     "@studio/eslint-config": "^2.0.0",
     "eslint": "^7.28.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
     "mocha": "^8.4.0",
     "mochify": "^8.0.0",
     "prettier": "^2.3.0"
