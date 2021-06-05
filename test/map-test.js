@@ -5,26 +5,34 @@ const { assert, refute } = require('@sinonjs/referee-sinon');
 const { schema, map, opt, one } = require('..');
 
 describe('map', () => {
-
   it('requires both arguments to be valid specs', () => {
-    assert.exception(() => {
-      map();
-    }, {
-      name: 'Error',
-      message: 'Invalid spec undefined'
-    });
-    assert.exception(() => {
-      map('string');
-    }, {
-      name: 'Error',
-      message: 'Invalid spec undefined'
-    });
-    assert.exception(() => {
-      map('string', 'unknown');
-    }, {
-      name: 'Error',
-      message: 'Invalid spec "unknown"'
-    });
+    assert.exception(
+      () => {
+        map();
+      },
+      {
+        name: 'Error',
+        message: 'Invalid spec undefined'
+      }
+    );
+    assert.exception(
+      () => {
+        map('string');
+      },
+      {
+        name: 'Error',
+        message: 'Invalid spec undefined'
+      }
+    );
+    assert.exception(
+      () => {
+        map('string', 'unknown');
+      },
+      {
+        name: 'Error',
+        message: 'Invalid spec "unknown"'
+      }
+    );
   });
 
   it('does not fail for valid objects', () => {
@@ -41,63 +49,81 @@ describe('map', () => {
   it('fails for non-objects', () => {
     const mapSchema = schema(map('string', 'number'));
 
-    assert.exception(() => {
-      mapSchema([]);
-    }, {
-      name: 'TypeError',
-      message: 'Expected object but got []',
-      code: 'SCHEMA_VALIDATION'
-    });
-    assert.exception(() => {
-      mapSchema('test');
-    }, {
-      name: 'TypeError',
-      message: 'Expected object but got "test"',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        mapSchema([]);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected object but got []',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
+    assert.exception(
+      () => {
+        mapSchema('test');
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected object but got "test"',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('fails for invalid keys', () => {
     const mapSchema = schema(map(/^[a-z]$/, 'string'));
 
-    assert.exception(() => {
-      mapSchema({ 0: 'ok' });
-    }, {
-      name: 'TypeError',
-      message: 'Expected key "0" to be /^[a-z]$/',
-      code: 'SCHEMA_VALIDATION'
-    });
-    assert.exception(() => {
-      mapSchema({ abc: 'ok' });
-    }, {
-      name: 'TypeError',
-      message: 'Expected key "abc" to be /^[a-z]$/',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        mapSchema({ 0: 'ok' });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected key "0" to be /^[a-z]$/',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
+    assert.exception(
+      () => {
+        mapSchema({ abc: 'ok' });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected key "abc" to be /^[a-z]$/',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('fails for invalid objects', () => {
     const mapSchema = schema(map('string', 'number'));
 
-    assert.exception(() => {
-      mapSchema({ foo: true });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "foo" to be number but got true',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        mapSchema({ foo: true });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "foo" to be number but got true',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('validates value object', () => {
     const mapSchema = schema(map('string', { index: 'number' }));
 
-    assert.exception(() => {
-      mapSchema({ foo: { index: 'invalid' } });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "foo.index" to be number but got "invalid"',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        mapSchema({ foo: { index: 'invalid' } });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "foo.index" to be number but got "invalid"',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('works within `opt`', () => {
@@ -108,13 +134,16 @@ describe('map', () => {
       mapSchema({});
       mapSchema({ foo: 0 });
     });
-    assert.exception(() => {
-      mapSchema({ foo: '' });
-    }, {
-      name: 'TypeError',
-      message: 'Expected opt(map(string, number)) but got {"foo":""}',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        mapSchema({ foo: '' });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected opt(map(string, number)) but got {"foo":""}',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('works within `one`', () => {
@@ -126,22 +155,28 @@ describe('map', () => {
       mapSchema({});
       mapSchema({ foo: 0 });
     });
-    assert.exception(() => {
-      mapSchema('something');
-    }, {
-      name: 'TypeError',
-      message: 'Expected one(boolean, map(string, number)) but got '
-        + '"something"',
-      code: 'SCHEMA_VALIDATION'
-    });
-    assert.exception(() => {
-      mapSchema({ foo: '' });
-    }, {
-      name: 'TypeError',
-      message: 'Expected one(boolean, map(string, number)) but got '
-        + '{"foo":""}',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        mapSchema('something');
+      },
+      {
+        name: 'TypeError',
+        message:
+          'Expected one(boolean, map(string, number)) but got "something"',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
+    assert.exception(
+      () => {
+        mapSchema({ foo: '' });
+      },
+      {
+        name: 'TypeError',
+        message:
+          'Expected one(boolean, map(string, number)) but got {"foo":""}',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('works using `opt`', () => {
@@ -152,13 +187,16 @@ describe('map', () => {
       mapSchema({ foo: undefined });
       mapSchema({ foo: 1 });
     });
-    assert.exception(() => {
-      mapSchema({ foo: null });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "foo" to be opt(number) but got null',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        mapSchema({ foo: null });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "foo" to be opt(number) but got null',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('works using `one`', () => {
@@ -170,13 +208,17 @@ describe('map', () => {
       mapSchema({ foo: true });
       mapSchema({ foo: false });
     });
-    assert.exception(() => {
-      mapSchema({ foo: '' });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "foo" to be one(boolean, number) but got ""',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        mapSchema({ foo: '' });
+      },
+      {
+        name: 'TypeError',
+        message:
+          'Expected property "foo" to be one(boolean, number) but got ""',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   context('reader', () => {

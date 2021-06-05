@@ -5,7 +5,6 @@ const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
 const { schema, array, opt } = require('..');
 
 describe('opt', () => {
-
   it('works with undefined or string', () => {
     const optSchema = schema(opt('string'));
 
@@ -73,15 +72,17 @@ describe('opt', () => {
 
     refute.exception(() => {
       optSchema({ yesno: false });
-    }, {
-    });
-    assert.exception(() => {
-      optSchema({ yesno: 42 });
-    }, {
-      name: 'TypeError',
-      message: 'Expected opt({yesno:boolean}) but got {"yesno":42}',
-      code: 'SCHEMA_VALIDATION'
-    });
+    }, {});
+    assert.exception(
+      () => {
+        optSchema({ yesno: 42 });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected opt({yesno:boolean}) but got {"yesno":42}',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('with array of strings', () => {
@@ -89,15 +90,17 @@ describe('opt', () => {
 
     refute.exception(() => {
       optSchema([]);
-    }, {
-    });
-    assert.exception(() => {
-      optSchema([42]);
-    }, {
-      name: 'TypeError',
-      message: 'Expected opt([string]) but got [42]',
-      code: 'SCHEMA_VALIDATION'
-    });
+    }, {});
+    assert.exception(
+      () => {
+        optSchema([42]);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected opt([string]) but got [42]',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('with array of strings (with [] instead of array())', () => {
@@ -109,13 +112,16 @@ describe('opt', () => {
     refute.exception(() => {
       optSchema(['test']);
     });
-    assert.exception(() => {
-      optSchema([42]);
-    }, {
-      name: 'TypeError',
-      message: 'Expected opt([string]) but got [42]',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        optSchema([42]);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected opt([string]) but got [42]',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('does not throw if given schema is valid', () => {
@@ -139,34 +145,46 @@ describe('opt', () => {
   it('fails if value is invalid', () => {
     const optSchema = schema(opt('string'));
 
-    assert.exception(() => {
-      optSchema(123);
-    }, {
-      name: 'TypeError',
-      message: 'Expected opt(string) but got 123',
-      code: 'SCHEMA_VALIDATION'
-    });
-    assert.exception(() => {
-      optSchema(0);
-    }, {
-      name: 'TypeError',
-      message: 'Expected opt(string) but got 0',
-      code: 'SCHEMA_VALIDATION'
-    });
-    assert.exception(() => {
-      optSchema(false);
-    }, {
-      name: 'TypeError',
-      message: 'Expected opt(string) but got false',
-      code: 'SCHEMA_VALIDATION'
-    });
-    assert.exception(() => {
-      optSchema(true);
-    }, {
-      name: 'TypeError',
-      message: 'Expected opt(string) but got true',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        optSchema(123);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected opt(string) but got 123',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
+    assert.exception(
+      () => {
+        optSchema(0);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected opt(string) but got 0',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
+    assert.exception(
+      () => {
+        optSchema(false);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected opt(string) but got false',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
+    assert.exception(
+      () => {
+        optSchema(true);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected opt(string) but got true',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('does not fail to JSON.stringify a schema with a missing optional', () => {
@@ -199,13 +217,16 @@ describe('opt', () => {
 
     const json = optSchema.write({ age: 41 });
 
-    assert.exception(() => {
-      json.age = '';
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "age" to be opt(integer) but got ""',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        json.age = '';
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "age" to be opt(integer) but got ""',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('fails to initialize writer with undefined', () => {
@@ -213,13 +234,16 @@ describe('opt', () => {
       age: opt('integer')
     });
 
-    assert.exception(() => {
-      optSchema.write({ age: NaN });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "age" to be opt(integer) but got NaN',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        optSchema.write({ age: NaN });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "age" to be opt(integer) but got NaN',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('fails to initialize reader with undefined', () => {
@@ -227,13 +251,16 @@ describe('opt', () => {
       age: opt('integer')
     });
 
-    assert.exception(() => {
-      optSchema.read({ age: false });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "age" to be opt(integer) but got false',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        optSchema.read({ age: false });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "age" to be opt(integer) but got false',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('fails validator with undefined', () => {
@@ -241,27 +268,32 @@ describe('opt', () => {
       age: opt('integer')
     });
 
-    assert.exception(() => {
-      optSchema({ age: true });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "age" to be opt(integer) but got true',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        optSchema({ age: true });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "age" to be opt(integer) but got true',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('fails validator with custom function', () => {
     const optSchema = schema(opt(() => false));
 
-    assert.exception(() => {
-      optSchema(1);
-    }, {
-      name: 'TypeError',
-      message: 'Expected opt(custom value) but got 1',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        optSchema(1);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected opt(custom value) but got 1',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
-
 
   it('does not add `verify` or specName to given function', () => {
     const fn = () => true;

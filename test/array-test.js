@@ -5,14 +5,16 @@ const { assert, refute } = require('@sinonjs/referee-sinon');
 const { schema, array, object, one } = require('..');
 
 describe('array', () => {
-
   it('requires valid spec argument', () => {
-    assert.exception(() => {
-      array('unknown');
-    }, {
-      name: 'TypeError',
-      message: 'Invalid spec "unknown"'
-    });
+    assert.exception(
+      () => {
+        array('unknown');
+      },
+      {
+        name: 'TypeError',
+        message: 'Invalid spec "unknown"'
+      }
+    );
   });
 
   it('returns array validator', () => {
@@ -32,13 +34,16 @@ describe('array', () => {
     refute.exception(() => {
       verify([]);
     });
-    assert.exception(() => {
-      verify({});
-    }, {
-      name: 'TypeError',
-      message: 'Expected array but got {}',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        verify({});
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected array but got {}',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('verifies array as object property', () => {
@@ -47,13 +52,16 @@ describe('array', () => {
     refute.exception(() => {
       verify({ test: [] });
     });
-    assert.exception(() => {
-      verify({ test: 42 });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "test" to be array but got 42',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        verify({ test: 42 });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "test" to be array but got 42',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('validates array', () => {
@@ -76,13 +84,16 @@ describe('array', () => {
     refute.exception(() => {
       verify([{ test: 1 }]);
     });
-    assert.exception(() => {
-      verify([{ test: 1.2 }]);
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "[0].test" to be integer but got 1.2',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        verify([{ test: 1.2 }]);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "[0].test" to be integer but got 1.2',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('can be used as child validator', () => {
@@ -93,13 +104,16 @@ describe('array', () => {
     refute.exception(() => {
       verify({ children: [{ name: 'foo' }, { name: 'bar' }] });
     });
-    assert.exception(() => {
-      verify({ children: [{ name: 'foo' }, { name: 42 }] });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "children[1].name" to be string but got 42',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        verify({ children: [{ name: 'foo' }, { name: 42 }] });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "children[1].name" to be string but got 42',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('can create array(object({}))', () => {
@@ -117,13 +131,16 @@ describe('array', () => {
     refute.exception(() => {
       arrayOfStrings(['foo', '', 'bar', '123']);
     });
-    assert.exception(() => {
-      arrayOfStrings(['foo', 1]);
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "[1]" to be string but got 1',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        arrayOfStrings(['foo', 1]);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "[1]" to be string but got 1',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('can create array(one({ foo: true }, { bar: true }))', () => {
@@ -135,14 +152,18 @@ describe('array', () => {
     refute.exception(() => {
       arrayOfFooOrBar([{ foo: 1 }, { bar: '!' }, { foo: true }, { bar: null }]);
     });
-    assert.exception(() => {
-      arrayOfFooOrBar([{ foo: 1 }, { doo: '!' }]);
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "[1]" to be one({foo:true}, {bar:true}) '
-        + 'but got {"doo":"!"}',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        arrayOfFooOrBar([{ foo: 1 }, { doo: '!' }]);
+      },
+      {
+        name: 'TypeError',
+        message:
+          'Expected property "[1]" to be one({foo:true}, {bar:true}) ' +
+          'but got {"doo":"!"}',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('returns validated array', () => {

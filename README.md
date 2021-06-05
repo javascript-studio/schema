@@ -128,18 +128,18 @@ argument:
 
 - `null`: Requires a null value.
 - `boolean`: Defines whether the property must be present:
-    - `true`: The property must be present.
-    - `false`: The property is optional.
+  - `true`: The property must be present.
+  - `false`: The property is optional.
 - `string`: Defines a built-in type. These types are defined:
-    - `"null"`: Same as the `null` spec.
-    - `"defined"`: Same as the `true` spec.
-    - `"optional"`: Same as the `false` spec.
-    - `"boolean"`: Requires a boolean primitive.
-    - `"number"`: Requires a number primitive.
-    - `"integer"`: Requires a number primitive that has no fractions.
-    - `"string"`: Requires a string primitive.
-    - `"object"`: Requires an object.
-    - `"array"`: Requires an array.
+  - `"null"`: Same as the `null` spec.
+  - `"defined"`: Same as the `true` spec.
+  - `"optional"`: Same as the `false` spec.
+  - `"boolean"`: Requires a boolean primitive.
+  - `"number"`: Requires a number primitive.
+  - `"integer"`: Requires a number primitive that has no fractions.
+  - `"string"`: Requires a string primitive.
+  - `"object"`: Requires an object.
+  - `"array"`: Requires an array.
 - `regexp`: Requires the value to be a string and match the regular expression.
 - `function`: Defines a custom specification. The function is expected to
   return `false` if the value is not considered valid.
@@ -164,13 +164,13 @@ objects that validate reading from the object and assigning values:
   read an undefined property. When using the writer with `JSON.stringify` or
   `my_schema.verify(writer)` it will throw if non-optional values are missing.
   If `emitter` is specified, these events will be emitted:
-    - `set` when a property is assigned a new value
-    - `delete` when a property is deleted
-    - `push` when `push` is called on an array
-    - `pop` when `pop` is called on an array
-    - `unshift` when `unshift` is called on an array
-    - `shift` when `shift` is called on an array
-    - `splice` when `splice` is called on an array
+  - `set` when a property is assigned a new value
+  - `delete` when a property is deleted
+  - `push` when `push` is called on an array
+  - `pop` when `pop` is called on an array
+  - `unshift` when `unshift` is called on an array
+  - `shift` when `shift` is called on an array
+  - `splice` when `splice` is called on an array
 - `data = my_schema.verify(writer)`: Checks if any properties are missing in
   the given writer and returns the unwrapped data. Throws if the given object
   is not a schema writer.

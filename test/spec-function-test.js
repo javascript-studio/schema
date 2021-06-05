@@ -5,7 +5,6 @@ const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
 const { schema } = require('..');
 
 describe('spec function', () => {
-
   it('calls function with argument', () => {
     const fn = sinon.fake();
 
@@ -28,25 +27,31 @@ describe('spec function', () => {
   it('throws if function returns `false`', () => {
     const funcSchema = schema(() => false);
 
-    assert.exception(() => {
-      funcSchema(false);
-    }, {
-      name: 'TypeError',
-      message: 'Expected custom value but got false',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        funcSchema(false);
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected custom value but got false',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('throws if function returns `false` in object schema', () => {
     const funcSchema = schema({ test: () => false });
 
-    assert.exception(() => {
-      funcSchema({ test: false });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "test" to be custom value but got false',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        funcSchema({ test: false });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "test" to be custom value but got false',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('does not add `verify` or specName to given function', () => {
@@ -75,5 +80,4 @@ describe('spec function', () => {
 
     assert.same(returned, object);
   });
-
 });

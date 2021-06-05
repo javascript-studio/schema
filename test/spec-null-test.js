@@ -5,27 +5,32 @@ const { assert, refute } = require('@sinonjs/referee-sinon');
 const { schema } = require('..');
 
 describe('spec null', () => {
-
   it('validates null', () => {
     const nullSchema = schema({ test: null });
 
     refute.exception(() => {
       nullSchema({ test: null });
     });
-    assert.exception(() => {
-      nullSchema({ test: undefined });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "test" to be null but got undefined',
-      code: 'SCHEMA_VALIDATION'
-    });
-    assert.exception(() => {
-      nullSchema({ test: 'test' });
-    }, {
-      name: 'TypeError',
-      message: 'Expected property "test" to be null but got "test"',
-      code: 'SCHEMA_VALIDATION'
-    });
+    assert.exception(
+      () => {
+        nullSchema({ test: undefined });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "test" to be null but got undefined',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
+    assert.exception(
+      () => {
+        nullSchema({ test: 'test' });
+      },
+      {
+        name: 'TypeError',
+        message: 'Expected property "test" to be null but got "test"',
+        code: 'SCHEMA_VALIDATION'
+      }
+    );
   });
 
   it('returns given object', () => {
@@ -36,5 +41,4 @@ describe('spec null', () => {
 
     assert.same(returned, object);
   });
-
 });
