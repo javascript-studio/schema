@@ -1,4 +1,3 @@
-/*eslint-env mocha*/
 'use strict';
 
 const { assert, refute } = require('@sinonjs/referee-sinon');
