@@ -8,37 +8,57 @@ with [Proxy][1] support.
 Defining a schema:
 
 ```js
-const schema = require('@studio/schema');
+const { schema, string, integer, opt } = require('@studio/schema');
 
-const personSchema = schema({
-  name: 'string',
-  age: spec.opt('integer')
+const person = schema({
+  name: string,
+  age: opt(integer)
 });
 ```
 
 ### Schema Validation
 
-The schema is a function that can be used to validate a given data structure.
-It throws if non optional properties are missing, a value has the wrong type,
-or undeclared properties are present.
+The schema is a function that can be used to validate a given object. It throws
+if non-optional properties are missing, a value has the wrong type, or
+undeclared properties are present.
 
 ```js
-personSchema({ name: 123 }); // throws
-personSchema({ name: 'Test', customer: true }); // throws
-personSchema({ name: 'Test', age: true }); // throws
-personSchema({ name: 'Test', age: 7.5 }); // throws
+person({ name: 123 }); // throws
+person({ name: 'Test', customer: true }); // throws
+person({ name: 'Test', age: true }); // throws
+person({ name: 'Test', age: 7.5 }); // throws
 
-personSchema({ name: 'Test' }); // ok
-personSchema({ name: 'Test', age: 7 }); // ok
+person({ name: 'Test' }); // ok
+person({ name: 'Test', age: 7 }); // ok
+```
+
+### Validators
+
+Validators are functions that verify values and objects. A validator function
+returns `false` if a value doesn't meet the expectation. Studio Schema comes
+with a set of pre-defined validators for primitive types, enums, objects,
+arrays and maps. Validators can be nested and reused:
+
+```js
+const { schema, literal, string, object, array } = require('@studio/schema');
+
+const status = literal('LOADING', 'LOADED', 'SAVING', 'SAVED');
+const person = object({
+  first_name: string,
+  last_name: string,
+  tags: array(string)
+});
+
+const personModel = schema({ status, person });
 ```
 
 ### Readers
 
-A reader validates a given data structure and returns a `Proxy` that makes the
-data read-only and verifies that only defined properties are accessed.
+A reader validates a given object and returns a `Proxy` that makes the object
+read-only and verifies that only defined properties are accessed.
 
 ```js
-const person = personSchema.read({ name: 'Test', age: 7 });
+const person = person.read({ name: 'Test', age: 7 });
 
 const name = person.name; // ok
 const age = person.age; // ok
@@ -48,122 +68,98 @@ person.name = 'Changed'; // throws
 
 ### Writers
 
-A writer accepts an empty or partial data structure and returns a `Proxy` that
-validates any accessed, assigned or deleted properties. To verify that no non
-optional properties are missing, use `schema.verify(writer)` or
-`JSON.stringify(proxy)`.
+A writer accepts an empty or partial object and returns a `Proxy` that
+validates any accessed, assigned or deleted properties. To verify that no
+non-optional properties are missing, use `mySchema.verify(writer)`.
 
 ```js
-const person = person_schema.write({ name: 'Test' });
+const alice = person.write({ name: 'Alice' });
 
-person.customer = true; // throws
-person.name = 'Changed'; // ok
-person.age = 7; // ok
+alice.customer = true; // throws
+alice.name = 'Changed'; // ok
+alice.age = 7; // ok
 ```
 
 ### Errors
-
-These schema validation errors are thrown:
-
-- `TypeError: Expected ${name} but got ${actual}`: Thrown when a value does not
-  match the expectation.
-- `TypeError: Expected property "${property}" to be ${name} but got ${actual}`:
-  Thrown when a value does not match the expectation, showing the path to the
-  invalid property.
-- `ReferenceError: Invalid property "${property}"`: Thrown when an unspecified
-  property is accessed, showing the path to the invalid property.
-- `Error: Invalid assignment on read-only object`: Thrown when assigning a
-  property on a reader.
-- `Error: Invalid delete on read-only object`: Thrown when deleting a property
-  on a reader.
 
 All schema validation errors have a `code` property with the value
 `SCHEMA_VALIDATION`.
 
 ## API
 
-This module exports the `schema` function exposing the API, so you can require
-it in two ways:
+This module exports the `schema` function which carries the entire API, so you
+can require it in two ways:
 
 ```js
 const schema = require('@studio/schema');
+
+const person = schema({ name: schema.string });
 ```
 
 With [destructuring][2]:
 
 ```js
-const { schema, opt, one } = require('@studio/schema');
+const { schema, string } = require('@studio/schema');
+
+const person = schema({ name: string });
 ```
 
-- `my_schema = schema(spec)`: Defines a specification. `spec` must be an object
-  defining a data structure, or a validator. See below for possible values.
-- `validator = literal(value_1, value_2, ...)`: Defines a validator that
-  matches against a list of primitive values. Can be used to define constants
-  or enumerations.
-- `validator = all(spec_1, spec_2, ...)`: Defines a validator where all of
-  the given specifications have to match.
-- `validator = one(spec_1, spec_2, ...)`: Defines a validator where one of
-  the given specifications has to match.
-- `validator = opt(spec[, default])`: Defines an optional validator. If the
-  value is not defined, `default` is returned as the value. It is invalid to
-  initialize or assign `undefined` to an optional value.
-- `validator = object(spec)`: Defines an object validator. Can be used to
-  declare reusable object validators that can be referenced from multiple
-  schemas.
-- `validator = array(spec)`: Defines an array. Each element in the array has to
-  match the given `spec` Can be used to declare reusable array validators that
-  can be referenced from multiple schemas.
-- `validator = map(key_spec, value_spec)`: Defines a map specification for
-  key-value pairs where `key_spec` and `value_spec` are the specifications for
-  the object key and value pairs.
+- `schema(spec)`: Returns a new schema with the given specification. `spec` can
+  be an object, array, or a validator. See below for possible values.
+- `defined`: Is a validator that accepts any value other than `undefined`.
+- `boolean`: Is a validator that accepts `true` and `false`.
+- `number`: Is a validator that accepts number values.
+- `integer`: Is a validator that accepts integer values.
+- `string`: Is a validator that accepts string values.
+- `literal(value_1, value_2, ...)`: Returns a validator that matches against a
+  list of primitive values. Can be used to define constants or enumerations.
+- `all(spec_1, spec_2, ...)`: Returns a validator where all of the given
+  specifications have to match.
+- `one(spec_1, spec_2, ...)`: Returns a validator where one of the given
+  specifications has to match.
+- `opt(spec[, default])`: Returns an optional validator. If the value is not
+  defined, `default` is returned as the value. It is invalid to initialize or
+  assign `undefined` to an optional value.
+- `object(spec)`: Returns an object validator. Can be used to declare reusable
+  object validators that can be referenced from multiple schemas.
+- `array(spec)`: Returns an array. Each element in the array has to match the
+  given `spec` Can be used to declare reusable array validators that can be
+  referenced from multiple schemas.
+- `map(key_spec, value_spec)`: Returns a map specification for key-value pairs
+  where `key_spec` and `value_spec` are the specifications for the object key
+  and value pairs.
 - `SCHEMA_VALIDATION`: The `code` property exposed on schema validation errors.
 
-Note that `all`, `one`, `opt`, `object`, `array` and `map` are also exposed on
-`spec`.
+Note that all validator functions are also exposed on `schema`.
 
 ## Spec
 
-The kind of specification being built depends on the type of the `spec`
-argument:
+The `spec` argument for `schema(spec)` accepts these argument types:
 
-- `null`: Requires a null value.
-- `boolean`: Defines whether the property must be present:
-  - `true`: The property must be present.
-  - `false`: The property is optional.
-- `string`: Defines a built-in type. These types are defined:
-  - `"null"`: Same as the `null` spec.
-  - `"defined"`: Same as the `true` spec.
-  - `"optional"`: Same as the `false` spec.
-  - `"boolean"`: Requires a boolean primitive.
-  - `"number"`: Requires a number primitive.
-  - `"integer"`: Requires a number primitive that has no fractions.
-  - `"string"`: Requires a string primitive.
-  - `"object"`: Requires an object.
-  - `"array"`: Requires an array.
+- `null`: Requires a null value. This is a shorthand for `literal(null)`.
 - `regexp`: Requires the value to be a string and match the regular expression.
-- `function`: Defines a custom specification. The function is expected to
-  return `false` if the value is not considered valid.
-- `object`: Defines a nested object specification.
-- `array`: Defines a nested array specification.
+- `object`: Defines a (nested) object specification.
+- `array`: Defines a (nested) array specification.
+- `function`: Either an existing validator, or defines a custom validator. The
+  function must return `false` if the value is considered invalid.
 
 ## Schema API
 
-The schema created by `spec` is a function that validates the given value,
-throwing a `TypeError` if invalid or returning the given object if valid. For
-`object` and `array` specifications, the schema also allows to create proxy
-objects that validate reading from the object and assigning values:
+The schema created by `schema(spec)` is a function that validates the given
+value. It throws a `TypeError` if invalid, and returns the given value if
+valid. For `object` and `array`, the schema also allows to create proxy objects
+that validate reading from the object and assigning values:
 
-- `reader = smy_chema.read(data)`: Creates a schema compliant reader for the
+- `reader = mySchema.read(data)`: Creates a schema compliant reader for the
   given data. If the given data does not match the schema, an exception is
   thrown. The returned reader throws on any property modification or on an
   attempt to read an undefined property.
-- `writer = smy_chema.write([data[, emitter]])`: Creates a writer with optional
+- `writer = mySchema.write([data[, emitter]])`: Creates a writer with optional
   initial data and an event emitter. If the given data does not match the
   schema, an exception is thrown. The returned writer throws on undefined
   property modification, if an assigned value is invalid, or on an attempt to
-  read an undefined property. When using the writer with `JSON.stringify` or
-  `my_schema.verify(writer)` it will throw if non-optional values are missing.
-  If `emitter` is specified, these events will be emitted:
+  read an undefined property. If `emitter` is specified, these events will be
+  emitted:
   - `set` when a property is assigned a new value
   - `delete` when a property is deleted
   - `push` when `push` is called on an array
@@ -171,12 +167,13 @@ objects that validate reading from the object and assigning values:
   - `unshift` when `unshift` is called on an array
   - `shift` when `shift` is called on an array
   - `splice` when `splice` is called on an array
-- `data = my_schema.verify(writer)`: Checks if any properties are missing in
-  the given writer and returns the unwrapped data. Throws if the given object
-  is not a schema writer.
-- `data = my_schema.raw(reader_or_writer)`: returns the unwrapped data without
-  checking if any properties are missing in the given writer. Throws if the
-  given object is not a schema reader or writer.
+- `data = mySchema.verify(writer)`: Checks if any properties are missing in the
+  given writer and returns the unwrapped data. Throws if the given object is
+  not a schema writer.
+- `data = mySchema.raw(reader_or_writer)`: returns the original object. Throws
+  if the given object is not a schema reader or writer.
+
+Not that schema readers and writers can be safely used with `JSON.stringify`.
 
 ## License
 
