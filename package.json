@@ -18,12 +18,9 @@
   },
   "keywords": [
     "schema",
-    "json",
-    "object",
-    "types",
-    "validate",
     "validation",
-    "proxy"
+    "type-checking",
+    "json"
   ],
   "author": "Maximilian Antoni <max@javascript.studio>",
   "homepage": "https://github.com/javascript-studio/schema",
