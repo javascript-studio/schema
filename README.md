@@ -128,6 +128,8 @@ const person = schema({ name: string });
 - `map(key_spec, value_spec)`: Returns a map specification for key-value pairs
   where `key_spec` and `value_spec` are the specifications for the object key
   and value pairs.
+- `validator(test[, spec_name])`: Creates a custom validator for the given
+  `test` function. The optional `spec_name` defaults to `<custom validator>`.
 - `SCHEMA_VALIDATION`: The `code` property exposed on schema validation errors.
 
 Note that all validator functions are also exposed on `schema`.
