@@ -111,6 +111,8 @@ const person = schema({ name: string });
 - `number`: Is a validator that accepts number values.
 - `integer`: Is a validator that accepts integer values.
 - `string`: Is a validator that accepts string values.
+- `object`: Is a validator that accepts object values.
+- `array`: Is a validator that accepts array values.
 - `literal(value_1, value_2, ...)`: Returns a validator that matches against a
   list of primitive values. Can be used to define constants or enumerations.
 - `all(spec_1, spec_2, ...)`: Returns a validator where all of the given
