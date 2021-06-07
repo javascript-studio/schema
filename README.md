@@ -122,8 +122,8 @@ const person = schema({ name: string });
   be an object, array, or a validator. See below for possible values.
 - `defined`: Is a validator that accepts any value other than `undefined`.
 - `boolean`: Is a validator that accepts `true` and `false`.
-- `number`: Is a validator that accepts number values.
-- `integer`: Is a validator that accepts integer values.
+- `number`: Is a validator that accepts finite number values.
+- `integer`: Is a validator that accepts finite integer values.
 - `string`: Is a validator that accepts string values.
 - `object`: Is a validator that accepts object values.
 - `array`: Is a validator that accepts array values.
