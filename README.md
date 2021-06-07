@@ -190,7 +190,7 @@ reading, assigning and deleting properties:
   not a schema writer.
 - `data = reader_or_writer.toJSON()`: returns the original object.
 
-Not that schema readers and writers can be safely used with `JSON.stringify`.
+Note that schema readers and writers can be safely used with `JSON.stringify`.
 
 ## License
 
