@@ -174,8 +174,7 @@ reading, assigning and deleting properties:
 - `data = mySchema.verify(writer)`: Checks if any properties are missing in the
   given writer and returns the unwrapped data. Throws if the given object is
   not a schema writer.
-- `data = mySchema.raw(reader_or_writer)`: returns the original object. Throws
-  if the given object is not a schema reader or writer.
+- `data = reader_or_writer.toJSON()`: returns the original object.
 
 Not that schema readers and writers can be safely used with `JSON.stringify`.
 
