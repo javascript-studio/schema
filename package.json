@@ -50,7 +50,7 @@
     "CHANGES.md",
     "**/*.js",
     "!lib/*.test.js",
-    "!test/**"
+    "!lint-staged-config"
   ],
   "license": "MIT"
 }
