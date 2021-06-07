@@ -138,7 +138,7 @@ Note that all validator functions are also exposed on `schema`.
 
 ## Spec
 
-The `spec` argument for `schema(spec)` accepts these argument types:
+The `spec` arguments in all of the above can be of these types:
 
 - `null`: Requires a null value. This is a shorthand for `literal(null)`.
 - `regexp`: Requires the value to be a string and match the regular expression.
@@ -149,10 +149,10 @@ The `spec` argument for `schema(spec)` accepts these argument types:
 
 ## Schema API
 
-The schema created by `schema(spec)` is a function that validates the given
-value. It throws a `TypeError` if invalid, and returns the given value if
-valid. For `object` and `array`, the schema also allows to create proxy objects
-that validate reading from the object and assigning values:
+The schema created by `schema(spec)` is a function that throws a `TypeError` if
+the given value does not match, and returns the value otherwise. For `object`
+and `array`, the schema also allows to create proxy objects that validate
+reading, assigning and deleting properties:
 
 - `reader = mySchema.read(data)`: Creates a schema compliant reader for the
   given data. If the given data does not match the schema, an exception is
