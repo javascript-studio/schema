@@ -1117,11 +1117,34 @@ describe('spec object', () => {
     });
 
     it('emits "set" event for nested map property assign', () => {
-      const proxy = objectSchema.write({ some: { map: {} } }, emitter);
+      const original = {};
+      const proxy = objectSchema.write({ some: { map: original } }, emitter);
 
       proxy.some.map.key = 42;
 
-      assert.calledOnceWith(onSet, 'some.map.key', 42);
+      assert.calledOnceWith(onSet, {
+        type: 'object',
+        object: original,
+        key: 'key',
+        base: 'some.map',
+        path: 'some.map.key',
+        value: 42
+      });
+    });
+
+    it('emits "delete" event for nested map property delete', () => {
+      const original = { key: 42 };
+      const proxy = objectSchema.write({ some: { map: original } }, emitter);
+
+      delete proxy.some.map.key;
+
+      assert.calledOnceWith(onDelete, {
+        type: 'object',
+        object: original,
+        key: 'key',
+        base: 'some.map',
+        path: 'some.map.key'
+      });
     });
   });
 
