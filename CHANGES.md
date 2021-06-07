@@ -1,5 +1,12 @@
 # Changes
 
+## 3.4.1
+
+- 🐛 [`ca8a2b4`](https://github.com/javascript-studio/studio-schema/commit/ca8a2b4d5fd0b72c0241f5ab665502e33e24f6cd)
+  Fix map events
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-06-07._
+
 ## 3.4.0
 
 - 🍏 [`b6485e9`](https://github.com/javascript-studio/studio-schema/commit/b6485e9d421184cf82afcd0d0d2641da8c43c45e)
