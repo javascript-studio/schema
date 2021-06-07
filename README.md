@@ -1,7 +1,21 @@
-# Studio Schema
-
-Plain JavaScript objects with runtime type guarantees. For node and browsers
-with [Proxy][1] support.
+<h1 align="center">
+  Studio Schema
+</h1>
+<p align="center">
+  🧩 Plain JavaScript objects with runtime type guarantees. For node and
+  browsers.
+</p>
+<p align="center">
+  <a href="https://github.com/javascript-studio/schema/actions">
+    <img src="https://github.com/javascript-studio/schema/workflows/Build/badge.svg" alt="Build Status">
+  </a>
+  <a href="https://www.npmjs.com/package/@studio/schema">
+    <img src="https://img.shields.io/npm/v/@studio/schema.svg" alt="npm Version">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License">
+  </a>
+</p>
 
 ## Usage
 
@@ -54,8 +68,8 @@ const personModel = schema({ status, person });
 
 ### Readers
 
-A reader validates a given object and returns a `Proxy` that makes the object
-read-only and verifies that only defined properties are accessed.
+A reader validates a given object and returns a [Proxy][1] that makes the
+object read-only and verifies that only defined properties are accessed.
 
 ```js
 const person = person.read({ name: 'Test', age: 7 });
@@ -68,7 +82,7 @@ person.name = 'Changed'; // throws
 
 ### Writers
 
-A writer accepts an empty or partial object and returns a `Proxy` that
+A writer accepts an empty or partial object and returns a [Proxy][1] that
 validates any accessed, assigned or deleted properties. To verify that no
 non-optional properties are missing, use `mySchema.verify(writer)`.
 
@@ -181,6 +195,8 @@ Not that schema readers and writers can be safely used with `JSON.stringify`.
 ## License
 
 MIT
+
+<p align="center">Made with ❤️ on 🌍<p>
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
 [2]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
