@@ -1,5 +1,126 @@
 # Changes
 
+## 4.0.0
+
+- 💥 [`7267301`](https://github.com/javascript-studio/schema/commit/726730199813622e5dcf366c510964521363e4cb)
+  Remove magic string validators
+- 💥 [`665a603`](https://github.com/javascript-studio/schema/commit/665a603b16acff64cd255c7947a723e69a44f206)
+  Remove `raw` from API and document `toJSON`
+- 💥 [`b9212b1`](https://github.com/javascript-studio/schema/commit/b9212b1aeb32136ffbabf9fbe4d781e1b4d61c24)
+  Replace `SPEC_NAME` with `toString`
+- 💥 [`734fdb4`](https://github.com/javascript-studio/schema/commit/734fdb45a7f3ac4a0ca74ebdab51869236738672)
+  Rename `"custom value"` to `"<custom validator>"`
+- 🍏 [`27186a3`](https://github.com/javascript-studio/schema/commit/27186a39f2271ebc74a5631167fb0291a8d2af6e)
+  Add `integer.{min,max,range}`
+- 🍏 [`799e5bf`](https://github.com/javascript-studio/schema/commit/799e5bfa2e0a3a524b6bcee3a620159883d91ba7)
+  Add `number.{min,max,range}` validators
+- 🍏 [`b283151`](https://github.com/javascript-studio/schema/commit/b2831512688c170cc7fc1a40412b1a6b54e73373)
+  Implement `all` validator
+- 🍏 [`4e819a6`](https://github.com/javascript-studio/schema/commit/4e819a696fc490179ce21b45186d75887a675c61)
+  Support object and array with any values
+- 🍏 [`3ce3ce6`](https://github.com/javascript-studio/schema/commit/3ce3ce6894ead5aff8456afc4f959504a1fa56f5)
+  Expose `validator`
+- 🍏 [`5fd506e`](https://github.com/javascript-studio/schema/commit/5fd506eeae36fb4d35646cb6754eb9291f21c273)
+  Add `defined`, `boolean`, `number`, `integer` and `string`
+- 🍏 [`3527107`](https://github.com/javascript-studio/schema/commit/3527107b3501f56c0ed9168054f384536b68422a)
+  Create a validator for a function spec
+- 🐛 [`65e0994`](https://github.com/javascript-studio/schema/commit/65e0994682fb397a8285bce2e0d7422656d33e08)
+  Fix repository url
+- 🐛 [`31944df`](https://github.com/javascript-studio/schema/commit/31944df37062ef85170a42882db38e51b55bb5fd)
+  Fix map events
+- 📚 [`f148a2c`](https://github.com/javascript-studio/schema/commit/f148a2c9e2df429c963f9210f1d72b4d95fe730e)
+  Document number and integer min, max and range
+- 📚 [`d39cfbe`](https://github.com/javascript-studio/schema/commit/d39cfbedab61ec8dab0f065387ce1ce08facb470)
+  Fix documentation for opt
+- 📚 [`d698109`](https://github.com/javascript-studio/schema/commit/d6981096149e66568ff35dd56bbd89144c8ffbfd)
+  State that number and integer must be finite
+- 📚 [`15a882e`](https://github.com/javascript-studio/schema/commit/15a882e6e82d89501d6c4adc67e3739ba8198328)
+  Fix typo
+- 📚 [`e07612e`](https://github.com/javascript-studio/schema/commit/e07612e55db549ae5ef5156a2a4fbac9ce3f9814)
+  Adjust keywords
+- 📚 [`3561c71`](https://github.com/javascript-studio/schema/commit/3561c71510a4116e49ed321f25a57f97c42c2e02)
+  Polish readme
+- 📚 [`6ea85ae`](https://github.com/javascript-studio/schema/commit/6ea85aee66f7a376f397255b059123e4c2c28723)
+  Improve API documentation
+- 📚 [`3ef106f`](https://github.com/javascript-studio/schema/commit/3ef106f394380a97d334b1036d43bc4dc0be68e3)
+  Adjust documentation
+- ✨ [`2e0fd31`](https://github.com/javascript-studio/schema/commit/2e0fd312af7a13a5b68b0cfe8753f7e0727ee821)
+  Move `{min,max,range}` into generic numeric factory
+- ✨ [`a8808f3`](https://github.com/javascript-studio/schema/commit/a8808f32e12663de95ea2e1426244828c0cc463c)
+  Adjust npm files
+- ✨ [`41222e1`](https://github.com/javascript-studio/schema/commit/41222e19c1d6ca1fbd4e4129d7488671efdd3e5a)
+  Move `createItemSetter` to own function
+- ✨ [`826cc79`](https://github.com/javascript-studio/schema/commit/826cc7973bfc197244d5998b89309e75e3b3af0d)
+  Move `createPropertySetter` to own function
+- ✨ [`d00c7b3`](https://github.com/javascript-studio/schema/commit/d00c7b390c1f0fa9310fdabd8610b451363f46fe)
+  Use for-of
+- ✨ [`40a95ec`](https://github.com/javascript-studio/schema/commit/40a95ec9a330ebca12f129e4fc727bea39d2de6d)
+  Rename `spec-test` to `registry`
+- ✨ [`6a54af7`](https://github.com/javascript-studio/schema/commit/6a54af7d1bbb8c0528590f91c753daf347d7d18a)
+  Rename `registerSpecType` to `register`
+- ✨ [`842bf46`](https://github.com/javascript-studio/schema/commit/842bf46238f0405aed9ad6de45dd9c3802afaff7)
+  Rename `specTest` to `lookup`
+- ✨ [`e4ab723`](https://github.com/javascript-studio/schema/commit/e4ab7237cc72c0cd5b2b964952b573f261d80476)
+  Inline regexp tester
+- ✨ [`546cc4b`](https://github.com/javascript-studio/schema/commit/546cc4b6ac3d9a5220dc4df9129c8c41fbfe04c4)
+  Move `specTests` into object
+- ✨ [`934dd39`](https://github.com/javascript-studio/schema/commit/934dd399f1f7b22f526251a9e4da474e003e13aa)
+  Simplify schema
+- ✨ [`0e34f12`](https://github.com/javascript-studio/schema/commit/0e34f12e1ac1100b1643600cf9ffda0d6f47773c)
+  Move `fail`, `stringify` and `typeOf` into `util`
+- ✨ [`3a89171`](https://github.com/javascript-studio/schema/commit/3a89171bafcfa0e2c25831c0c16e9bf2d431f772)
+  Move `specName` into `util`
+- ✨ [`68f5033`](https://github.com/javascript-studio/schema/commit/68f5033fde59dc3909c23f1a70186d97199563bb)
+  Move `SPEC_NAME` into `constants`
+- ✨ [`81e357c`](https://github.com/javascript-studio/schema/commit/81e357c72b7b0dcdf09aff2e4924ab7adbf9f26f)
+  Move `lazy` into `util`
+- ✨ [`7efa56c`](https://github.com/javascript-studio/schema/commit/7efa56c64081e490c79fbee0c1576e5ebf772093)
+  Move `assertType` into `util`
+- ✨ [`ce103df`](https://github.com/javascript-studio/schema/commit/ce103df2645f8187f87bc3528231313f657d1581)
+  Move `raw` into `util`
+- ✨ [`668d8c7`](https://github.com/javascript-studio/schema/commit/668d8c714dd31a1ad7d36bcd9bfc334b3b6eb902)
+  Rename `path` to `util`
+- ✨ [`02f3394`](https://github.com/javascript-studio/schema/commit/02f3394b7705ee030c31feddb8a9ce3d51edb9f9)
+  Improve `specName`
+- ✨ [`c327e4f`](https://github.com/javascript-studio/schema/commit/c327e4f9783b78db97e14aef403a5d97dccf2589)
+  Prefer parameter default value
+- ✨ [`61e8017`](https://github.com/javascript-studio/schema/commit/61e801789263196bca39e09b5b59f7e11815c373)
+  Refactor `spec-test`
+- ✨ [`5c0a5d6`](https://github.com/javascript-studio/schema/commit/5c0a5d6c4a766a02d760ce054cbd1b0bf30e8749)
+  Define file endings for prettier
+- ✨ [`d3c3eb4`](https://github.com/javascript-studio/schema/commit/d3c3eb4546235a51ca2d76284775c12ef9acb25a)
+  Replace obsolete type validators with `assertType`
+- ✨ [`206b018`](https://github.com/javascript-studio/schema/commit/206b018ecb928e88fa3664115c630354a6ec2fb0)
+  Introduce `assertType` helper
+- ✨ [`fec83b2`](https://github.com/javascript-studio/schema/commit/fec83b25192324861a5af3e589af00b226c57281)
+  Add validator helper
+- ✨ [`a8d96a4`](https://github.com/javascript-studio/schema/commit/a8d96a4015db62d2520bb669f18b5911e7c06977)
+  Fix watch script
+- ✨ [`4c09142`](https://github.com/javascript-studio/schema/commit/4c09142858def8471492c78f4a0ec12c776dea74)
+  Remove "studio-" prefix from project name
+- ✨ [`2588d26`](https://github.com/javascript-studio/schema/commit/2588d26e41f636d70484fa6b0f34b19baddf61e0)
+  Use pre installed chrome in GitHub action
+- ✨ [`24173f0`](https://github.com/javascript-studio/schema/commit/24173f069a9192999fa7d32efc12eba8f0300f69)
+  Change default branch name to `main`
+- ✨ [`aabfa9c`](https://github.com/javascript-studio/schema/commit/aabfa9c6b5b1576866ee3a23550c6b96616ab60b)
+  Configure npm files
+- ✨ [`5f52041`](https://github.com/javascript-studio/schema/commit/5f52041d500738ecab9a548869b6bb4882dd6297)
+  Add Studio Related Tests
+- ✨ [`0c4acc9`](https://github.com/javascript-studio/schema/commit/0c4acc917c5ea04c629ef7c8dcad0d31216493b6)
+  Move tests next to implementation
+- ✨ [`899122b`](https://github.com/javascript-studio/schema/commit/899122b903a78e3298e5c936c4c05d159ff9ae6e)
+  Setup `husky` and `lint-staged`
+- ✨ [`3fa0875`](https://github.com/javascript-studio/schema/commit/3fa0875b6bcd2d710d60eab6ad815a1998a672a2)
+  Remove obsolete mocha env comments
+- ✨ [`a1d9eea`](https://github.com/javascript-studio/schema/commit/a1d9eea5ce39e4a3d561c7aae8ee79319f224e08)
+  Setup `prettier`
+- ✨ [`2062827`](https://github.com/javascript-studio/schema/commit/2062827598a39e5330685fdd17e2d37725ac7ab5)
+  Update `eslint`
+- ✨ [`4ff13de`](https://github.com/javascript-studio/schema/commit/4ff13ded2b916f8e6b7410d0d7db51a264856c37)
+  Upgrade `eslint-config`
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-06-08._
+
 ## 3.4.0
 
 - 🍏 [`b6485e9`](https://github.com/javascript-studio/schema/commit/b6485e9d421184cf82afcd0d0d2641da8c43c45e)
