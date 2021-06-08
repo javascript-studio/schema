@@ -123,7 +123,17 @@ const person = schema({ name: string });
 - `defined`: Is a validator that accepts any value other than `undefined`.
 - `boolean`: Is a validator that accepts `true` and `false`.
 - `number`: Is a validator that accepts finite number values.
+- `number.min(min)`: Is a validator that accepts finite number values >= `min`.
+- `number.max(max)`: Is a validator that accepts finite number values <= `max`.
+- `number.range(min, max)`: Is a validator that accepts finite number values >=
+  `min` and <= `max`.
 - `integer`: Is a validator that accepts finite integer values.
+- `integer.min(min)`: Is a validator that accepts finite integer values >=
+  `min`.
+- `integer.max(max)`: Is a validator that accepts finite integer values <=
+  `max`.
+- `integer.range(min, max)`: Is a validator that accepts finite integer values
+  > = `min` and <= `max`.
 - `string`: Is a validator that accepts string values.
 - `object`: Is a validator that accepts object values.
 - `array`: Is a validator that accepts array values.
