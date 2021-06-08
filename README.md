@@ -133,9 +133,7 @@ const person = schema({ name: string });
   specifications have to match.
 - `one(spec_1, spec_2, ...)`: Returns a validator where one of the given
   specifications has to match.
-- `opt(spec[, default])`: Returns an optional validator. If the value is not
-  defined, `default` is returned as the value. It is invalid to initialize or
-  assign `undefined` to an optional value.
+- `opt(spec)`: Returns an optional validator.
 - `object(spec)`: Returns an object validator. Can be used to declare reusable
   object validators that can be referenced from multiple schemas.
 - `array(spec)`: Returns an array. Each element in the array has to match the
