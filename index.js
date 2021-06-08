@@ -9,6 +9,7 @@ const { string } = require('./lib/string');
 const { literal } = require('./lib/literal');
 const { opt } = require('./lib/opt');
 const { one } = require('./lib/one');
+const { all } = require('./lib/all');
 const { object } = require('./lib/object');
 const { array } = require('./lib/array');
 const { map } = require('./lib/map');
@@ -32,6 +33,8 @@ schema.literal = literal;
 schema.opt = opt;
 
 schema.one = one;
+
+schema.all = all;
 
 schema.object = object;
 
