@@ -1,5 +1,14 @@
 # Changes
 
+## 4.0.1
+
+- 🐛 [`4d6885d`](https://github.com/javascript-studio/schema/commit/4d6885dfe3e029bf6e8ef902a8de92dc3ae58066)
+  Improve message for undefined property values
+- 🐛 [`105a67d`](https://github.com/javascript-studio/schema/commit/105a67d9bd6bacffacbcd8aaec27af1430bea734)
+  Improve literal stringification
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-06-10._
+
 ## 4.0.0
 
 - 💥 [`7267301`](https://github.com/javascript-studio/schema/commit/726730199813622e5dcf366c510964521363e4cb)
