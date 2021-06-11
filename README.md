@@ -97,7 +97,7 @@ alice.age = 7; // ok
 ### Errors
 
 All schema validation errors have a `code` property with the value
-`SCHEMA_VALIDATION`.
+`E_SCHEMA`.
 
 ## API
 
@@ -118,8 +118,11 @@ const { schema, string } = require('@studio/schema');
 const person = schema({ name: string });
 ```
 
-- `schema(spec)`: Returns a new schema with the given specification. `spec` can
-  be an object, array, or a validator. See below for possible values.
+- `schema(spec[, options])`: Returns a new schema with the given specification.
+  `spec` can be an object, array, or a validator. See below for possible
+  values. These options are supported:
+  - `error_code`: The `code` property to define on errors. Defaults to
+    `E_SCHEMA`.
 - `defined`: Is a validator that accepts any value other than `undefined`.
 - `boolean`: Is a validator that accepts `true` and `false`.
 - `number`: Is a validator that accepts finite number values.
@@ -154,7 +157,7 @@ const person = schema({ name: string });
   and value pairs.
 - `validator(test[, spec_name])`: Creates a custom validator for the given
   `test` function. The optional `spec_name` defaults to `<custom validator>`.
-- `SCHEMA_VALIDATION`: The `code` property exposed on schema validation errors.
+- `E_SCHEMA`: The `code` property exposed on schema validation errors.
 
 Note that all validator functions are also exposed on `schema`.
 
@@ -176,23 +179,27 @@ the given value does not match, and returns the value otherwise. For `object`
 and `array`, the schema also allows to create proxy objects that validate
 reading, assigning and deleting properties:
 
-- `reader = mySchema.read(data)`: Creates a schema compliant reader for the
-  given data. If the given data does not match the schema, an exception is
-  thrown. The returned reader throws on any property modification or on an
-  attempt to read an undefined property.
-- `writer = mySchema.write([data[, emitter]])`: Creates a writer with optional
+- `reader = mySchema.read(data[, options])`: Creates a schema compliant reader
+  for the given data. If the given data does not match the schema, an exception
+  is thrown. The returned reader throws on any property modification or on an
+  attempt to read an undefined property. These options are supported:
+  - `error_code`: The `code` property to define on errors. Defaults to
+    `E_SCHEMA`.
+- `writer = mySchema.write([data[, options]])`: Creates a writer with optional
   initial data and an event emitter. If the given data does not match the
   schema, an exception is thrown. The returned writer throws on undefined
   property modification, if an assigned value is invalid, or on an attempt to
-  read an undefined property. If `emitter` is specified, these events will be
-  emitted:
-  - `set` when a property is assigned a new value
-  - `delete` when a property is deleted
-  - `push` when `push` is called on an array
-  - `pop` when `pop` is called on an array
-  - `unshift` when `unshift` is called on an array
-  - `shift` when `shift` is called on an array
-  - `splice` when `splice` is called on an array
+  read an undefined property. These options are supported:
+  - `error_code`: The `code` property to define on errors. Defaults to
+    `E_SCHEMA`.
+  - `emitter`: If specified, these events will be emitted:
+    - `set` when a property is assigned a new value
+    - `delete` when a property is deleted
+    - `push` when `push` is called on an array
+    - `pop` when `pop` is called on an array
+    - `unshift` when `unshift` is called on an array
+    - `shift` when `shift` is called on an array
+    - `splice` when `splice` is called on an array
 - `data = mySchema.verify(writer)`: Checks if any properties are missing in the
   given writer and returns the unwrapped data. Throws if the given object is
   not a schema writer.

@@ -1,6 +1,6 @@
 'use strict';
 
-const { SCHEMA_VALIDATION } = require('./lib/constants');
+const { E_SCHEMA } = require('./lib/constants');
 const { defined } = require('./lib/defined');
 const { boolean } = require('./lib/boolean');
 const { number } = require('./lib/number');
@@ -44,6 +44,6 @@ schema.map = map;
 
 schema.validator = validator;
 
-schema.SCHEMA_VALIDATION = SCHEMA_VALIDATION;
+schema.E_SCHEMA = E_SCHEMA;
 
 module.exports = schema;
