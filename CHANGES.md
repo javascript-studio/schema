@@ -1,5 +1,16 @@
 # Changes
 
+## 5.0.0
+
+- 💥 [`50396a4`](https://github.com/javascript-studio/schema/commit/50396a4f0e240cfd6e74d304b045fe860e17d4b6)
+  Change error code to `E_SCHEMA` and allow override
+- 🍏 [`6a15185`](https://github.com/javascript-studio/schema/commit/6a15185f6864472222e31e6d9e528ec3cfe65b4a)
+  Change `toString` for `opt`
+- 🍏 [`5672937`](https://github.com/javascript-studio/schema/commit/56729378913803de2fd33d2f4cf274c31e85e292)
+  Change `toString` for `map`
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-06-14._
+
 ## 4.0.1
 
 - 🐛 [`4d6885d`](https://github.com/javascript-studio/schema/commit/4d6885dfe3e029bf6e8ef902a8de92dc3ae58066)
