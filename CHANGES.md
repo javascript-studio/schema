@@ -1,5 +1,12 @@
 # Changes
 
+## 5.1.1
+
+- 🐛 [`b48163b`](https://github.com/javascript-studio/schema/commit/b48163be22bbaf228eae52d483ac2447bf012920)
+  Fix use custom error code for invalid properties
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-06-14._
+
 ## 5.1.0
 
 - 🍏 [`ef635af`](https://github.com/javascript-studio/schema/commit/ef635af586b61c825ec13f6a2e2e66e6fe48011a)
