@@ -1,5 +1,12 @@
 # Changes
 
+## 5.1.0
+
+- 🍏 [`ef635af`](https://github.com/javascript-studio/schema/commit/ef635af586b61c825ec13f6a2e2e66e6fe48011a)
+  Add `string.length` validators
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-06-14._
+
 ## 5.0.0
 
 - 💥 [`50396a4`](https://github.com/javascript-studio/schema/commit/50396a4f0e240cfd6e74d304b045fe860e17d4b6)
