@@ -1,5 +1,12 @@
 # Changes
 
+## 5.1.2
+
+- 🐛 [`73b9fe7`](https://github.com/javascript-studio/schema/commit/73b9fe763b7d8e54d07384e614f1029d65a76b5f)
+  Pass schema options to readers and writers
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-06-15._
+
 ## 5.1.1
 
 - 🐛 [`b48163b`](https://github.com/javascript-studio/schema/commit/b48163be22bbaf228eae52d483ac2447bf012920)
