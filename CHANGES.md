@@ -1,5 +1,14 @@
 # Changes
 
+## 5.1.3
+
+- 🐛 [`dc2d8ad`](https://github.com/javascript-studio/schema/commit/dc2d8add945ee0c6c1632a41703eca034239e627)
+  Unwrap nested objects and arrays
+- ✨ [`4ad8f90`](https://github.com/javascript-studio/schema/commit/4ad8f90ef88c620894a023986748a5a27c0b562d)
+  Use `Object.entries`
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-07-02._
+
 ## 5.1.2
 
 - 🐛 [`73b9fe7`](https://github.com/javascript-studio/schema/commit/73b9fe763b7d8e54d07384e614f1029d65a76b5f)
