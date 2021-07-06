@@ -32,7 +32,7 @@
     "extends": "@studio"
   },
   "devDependencies": {
-    "@sinonjs/referee-sinon": "^9.0.2",
+    "@sinonjs/referee-sinon": "^10.0.0",
     "@studio/changes": "^2.2.0",
     "@studio/eslint-config": "^2.0.0",
     "@studio/related-tests": "^0.2.0",
