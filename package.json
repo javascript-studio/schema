@@ -37,7 +37,7 @@
     "@studio/eslint-config": "^2.0.0",
     "@studio/related-tests": "^0.2.0",
     "eslint": "^7.28.0",
-    "husky": "^6.0.0",
+    "husky": "^7.0.1",
     "lint-staged": "^11.0.0",
     "mocha": "^8.4.0",
     "mochify": "^8.1.0",
