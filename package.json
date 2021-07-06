@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "test": "npm run test:node && npm run test:browser",
-    "test:node": "mocha './{,!(node_modules)/**}/*.test.js'",
-    "test:browser": "mochify './{,!(node_modules)/**}/*.test.js'",
+    "test:node": "mocha '**/*.test.js'",
+    "test:browser": "mochify -R dot './{,!(node_modules)/**}/*.test.js'",
     "watch": "npm run test:node -- --watch",
     "preversion": "npm run lint && npm run prettier:check && npm test",
     "version": "changes --commits --footer",
@@ -30,6 +30,10 @@
   },
   "eslintConfig": {
     "extends": "@studio"
+  },
+  "mocha": {
+    "reporter": "dot",
+    "ignore": "node_modules/**"
   },
   "devDependencies": {
     "@sinonjs/referee-sinon": "^10.0.0",
