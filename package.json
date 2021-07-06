@@ -8,6 +8,7 @@
     "test": "npm run test:node && npm run test:browser",
     "test:node": "mocha '**/*.test.js'",
     "test:browser": "mochify -R dot './{,!(node_modules)/**}/*.test.js'",
+    "test:coverage": "nyc npm run test:node",
     "watch": "npm run test:node -- --watch",
     "preversion": "npm run lint && npm run prettier:check && npm test",
     "version": "changes --commits --footer",
@@ -45,6 +46,7 @@
     "lint-staged": "^11.0.0",
     "mocha": "^8.4.0",
     "mochify": "^8.1.0",
+    "nyc": "^15.1.0",
     "prettier": "^2.3.0"
   },
   "files": [
