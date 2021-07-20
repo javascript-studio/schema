@@ -1,5 +1,24 @@
 # Changes
 
+## 5.1.4
+
+- 🐛 [`de5569a`](https://github.com/javascript-studio/schema/commit/de5569a8e1fabdf208e5da166836c1d21062eb30)
+  Add read and write to opt
+- ✨ [`ae6c618`](https://github.com/javascript-studio/schema/commit/ae6c6189a1f88f2582d3abb78d75d80893b82bca)
+  Move `copyPropertyDescriptor` helper into util
+- ✨ [`283466e`](https://github.com/javascript-studio/schema/commit/283466e94b8ace52804ece08190c1fd389c81853)
+  Add nyc test coverage
+- ✨ [`d2d3650`](https://github.com/javascript-studio/schema/commit/d2d36505d54c635170f9ec26261074f789b43c2a)
+  Add mocha config
+- ✨ [`ecedaab`](https://github.com/javascript-studio/schema/commit/ecedaabcea0b03d43e004f89236f92e29f7e6a1d)
+  Upgrade husky
+- ✨ [`24aace9`](https://github.com/javascript-studio/schema/commit/24aace9b0f19c4f24981961775aad63f4019d67c)
+  Update mochify
+- ✨ [`ac77b50`](https://github.com/javascript-studio/schema/commit/ac77b50806ab36ecdcab34f35ead2166bfb3e5b8)
+  Update referee-sinon
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-07-20._
+
 ## 5.1.3
 
 - 🐛 [`dc2d8ad`](https://github.com/javascript-studio/schema/commit/dc2d8add945ee0c6c1632a41703eca034239e627)
