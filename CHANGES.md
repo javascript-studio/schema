@@ -1,5 +1,18 @@
 # Changes
 
+## 5.1.5
+
+- 🐛 [`afd7239`](https://github.com/javascript-studio/schema/commit/afd72393aa6a435c3f8beb57363936cec97530de)
+  Fix custom `error_code` with objects
+- 🐛 [`42fe9f4`](https://github.com/javascript-studio/schema/commit/42fe9f4cdff4039d9e0c4b62579acbce67e84dc8)
+  Fix npm files
+- ✨ [`5dad2c0`](https://github.com/javascript-studio/schema/commit/5dad2c01a768b2c6970a7b10c4753c2737420994)
+  Update referee-sinon
+- ✨ [`0ddedd3`](https://github.com/javascript-studio/schema/commit/0ddedd3b12f1dbe1679e7bc0b2b03c37604ba96c)
+  Rename lint-staged config file
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-07-29._
+
 ## 5.1.4
 
 - 🐛 [`de5569a`](https://github.com/javascript-studio/schema/commit/de5569a8e1fabdf208e5da166836c1d21062eb30)
