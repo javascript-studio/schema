@@ -1,5 +1,12 @@
 # Changes
 
+## 5.1.6
+
+- 🐛 [`1b6ab1d`](https://github.com/javascript-studio/schema/commit/1b6ab1db66a20c8ea4a5129b939ef396029fc665)
+  Fix paths in events for objects in arrays
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-07-30._
+
 ## 5.1.5
 
 - 🐛 [`afd7239`](https://github.com/javascript-studio/schema/commit/afd72393aa6a435c3f8beb57363936cec97530de)
