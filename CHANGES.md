@@ -1,5 +1,12 @@
 # Changes
 
+## 5.1.7
+
+- 🐛 [`a4b9255`](https://github.com/javascript-studio/schema/commit/a4b9255aba31500b93ee99b908290c05f1fddbfb)
+  Do not throw when accessing `nodeType` for Sinon compatibility
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-08-02._
+
 ## 5.1.6
 
 - 🐛 [`1b6ab1d`](https://github.com/javascript-studio/schema/commit/1b6ab1db66a20c8ea4a5129b939ef396029fc665)
