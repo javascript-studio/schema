@@ -1,5 +1,12 @@
 # Changes
 
+## 5.1.9
+
+- 🐛 [`33c96e7`](https://github.com/javascript-studio/schema/commit/33c96e7d58e3598de3aaecc479cebe1aa6093edb)
+  Preserve cached instances
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-09-15._
+
 ## 5.1.8
 
 - 🐛 [`6b80e8b`](https://github.com/javascript-studio/schema/commit/6b80e8b156fa54d3738b3be6e8e65803b5d47f89)
