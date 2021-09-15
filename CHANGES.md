@@ -1,5 +1,12 @@
 # Changes
 
+## 5.1.8
+
+- 🐛 [`6b80e8b`](https://github.com/javascript-studio/schema/commit/6b80e8b156fa54d3738b3be6e8e65803b5d47f89)
+  Clear cache entries on modify
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-09-15._
+
 ## 5.1.7
 
 - 🐛 [`a4b9255`](https://github.com/javascript-studio/schema/commit/a4b9255aba31500b93ee99b908290c05f1fddbfb)
