@@ -1,5 +1,14 @@
 # Changes
 
+## 5.1.11
+
+- 🐛 [`25c318d`](https://github.com/javascript-studio/schema/commit/25c318dcb66832c4bdac4d83637812565ab4b8b9)
+  Fix `read` and `write` for `one` with custom validators
+- 🐛 [`084954e`](https://github.com/javascript-studio/schema/commit/084954ea354db4f1a7f489e1321a0dc8f65f9516)
+  Fix `read` and `write` for `all` with custom validators
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-11-01._
+
 ## 5.1.10
 
 - 🐛 [`5548669`](https://github.com/javascript-studio/schema/commit/55486690f05a765e780e3df4f787076417393c71)
