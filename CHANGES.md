@@ -1,5 +1,14 @@
 # Changes
 
+## 5.1.10
+
+- 🐛 [`5548669`](https://github.com/javascript-studio/schema/commit/55486690f05a765e780e3df4f787076417393c71)
+  Add `read` and `write` for `all`
+- 🐛 [`5d34329`](https://github.com/javascript-studio/schema/commit/5d3432928fe2c5beef51aa7f30d7fc83de0684e9)
+  Add `read` and `write` for `one`
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-11-01._
+
 ## 5.1.9
 
 - 🐛 [`33c96e7`](https://github.com/javascript-studio/schema/commit/33c96e7d58e3598de3aaecc479cebe1aa6093edb)
