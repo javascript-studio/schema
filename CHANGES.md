@@ -1,5 +1,14 @@
 # Changes
 
+## 5.1.12
+
+- 🐛 [`7c317e2`](https://github.com/javascript-studio/schema/commit/7c317e26e0247bdd6b3c01c863c012cbf0eb228d)
+  Fix usage of invalid `WeakMap` keys
+- ✨ [`e115084`](https://github.com/javascript-studio/schema/commit/e115084e29841f7694cf71d882946d5c3de98357)
+  Use existing verifyer in read / write of `one` and `all`
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2021-11-01._
+
 ## 5.1.11
 
 - 🐛 [`25c318d`](https://github.com/javascript-studio/schema/commit/25c318dcb66832c4bdac4d83637812565ab4b8b9)
