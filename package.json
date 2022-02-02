@@ -47,7 +47,7 @@
     "mocha": "^8.4.0",
     "mochify": "^8.1.0",
     "nyc": "^15.1.0",
-    "prettier": "^2.3.0"
+    "prettier": "^2.5.1"
   },
   "files": [
     "CHANGES.md",
