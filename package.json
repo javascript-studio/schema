@@ -39,9 +39,9 @@
   "devDependencies": {
     "@sinonjs/referee-sinon": "^10.1.0",
     "@studio/changes": "^2.2.0",
-    "@studio/eslint-config": "^2.0.0",
+    "@studio/eslint-config": "^2.3.0",
     "@studio/related-tests": "^0.2.0",
-    "eslint": "^7.28.0",
+    "eslint": "^8.8.0",
     "husky": "^7.0.1",
     "lint-staged": "^11.0.0",
     "mocha": "^8.4.0",
