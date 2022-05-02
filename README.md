@@ -138,6 +138,10 @@ const person = schema({ name: string });
 - `integer.range(min, max)`: Is a validator that accepts finite integer values
   > = `min` and <= `max`.
 - `string`: Is a validator that accepts string values.
+- `string.regexp(re)`: Is a validator that accepts string values matching the
+  given regular expression.
+- `string.length.{min,max,range}`: Verifies the string length with an integer
+  validator.
 - `object`: Is a validator that accepts object values.
 - `array`: Is a validator that accepts array values.
 - `literal(value_1, value_2, ...)`: Returns a validator that matches against a
