@@ -1,5 +1,30 @@
 # Changes
 
+## 5.2.0
+
+- 🍏 [`984b480`](https://github.com/javascript-studio/schema/commit/984b480450539c077dff55153716e5e19372f932)
+  Expose regexp validator creation on `string.regexp`
+- 📚 [`27b4ea0`](https://github.com/javascript-studio/schema/commit/27b4ea0445e33a3a404d0990da551a7d94fe8ade)
+  Document string.regexp and string.length validators
+- ✨ [`3e99dd2`](https://github.com/javascript-studio/schema/commit/3e99dd2d6fe332ec9c37946ec1a42a35933228a7)
+  Reinstall dependencies
+- ✨ [`992b23e`](https://github.com/javascript-studio/schema/commit/992b23e284c4ef8c29a349406e2cfabbe378dc01)
+  Update husky
+- ✨ [`3a4bd0b`](https://github.com/javascript-studio/schema/commit/3a4bd0b764e5d2e78d655304135c690ae42b7089)
+  Upgrade mocha and mochify
+- ✨ [`470535a`](https://github.com/javascript-studio/schema/commit/470535aba84d9a6c57d6aac031a8a908020ca6a3)
+  Update prettier
+- ✨ [`dd61131`](https://github.com/javascript-studio/schema/commit/dd61131245c8cc1df9b16c5c8c65bd8e6c064dbf)
+  Upgrade lint-staged
+- ✨ [`cfd198c`](https://github.com/javascript-studio/schema/commit/cfd198c51032f1ec0b32eb79f05f0117ddf8c210)
+  Update eslint and eslint-config
+- 🛡 [`c136bcc`](https://github.com/javascript-studio/schema/commit/c136bcc53bf6be5597351069fac3f035aa6362ee)
+  npm audit
+- 🛡 [`f3f05f3`](https://github.com/javascript-studio/schema/commit/f3f05f36f164b128bc026669f8db79074ca88c45)
+  Bump cached-path-relative from 1.0.2 to 1.1.0 (dependabot[bot])
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2022-05-02._
+
 ## 5.1.12
 
 - 🐛 [`7c317e2`](https://github.com/javascript-studio/schema/commit/7c317e26e0247bdd6b3c01c863c012cbf0eb228d)
