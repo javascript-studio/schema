@@ -1,5 +1,12 @@
 # Changes
 
+## 5.2.1
+
+- ✨ [`f60ece4`](https://github.com/javascript-studio/schema/commit/f60ece437952cc08d7f07ac1449e0d983d7d5736)
+  Improve validation error message for regexp
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2022-05-03._
+
 ## 5.2.0
 
 - 🍏 [`984b480`](https://github.com/javascript-studio/schema/commit/984b480450539c077dff55153716e5e19372f932)
