@@ -1,5 +1,12 @@
 # Changes
 
+## 5.2.2
+
+- 🐛 [`f2fa1d2`](https://github.com/javascript-studio/schema/commit/f2fa1d237d58ee2b1c6b0ce21bbe582097d831ee)
+  Unwrap array function arguments
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2022-07-14._
+
 ## 5.2.1
 
 - ✨ [`f60ece4`](https://github.com/javascript-studio/schema/commit/f60ece437952cc08d7f07ac1449e0d983d7d5736)
