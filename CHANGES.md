@@ -1,5 +1,24 @@
 # Changes
 
+## 5.4.0
+
+- 🍏 [`5f425de`](https://github.com/javascript-studio/schema/commit/5f425de3537d2b2b32e30709cb407b91ad8d4b97)
+  Expose literal type and values
+- 🍏 [`b97b0bc`](https://github.com/javascript-studio/schema/commit/b97b0bce842970dc2ed2be2dc4f28fd259fe4124)
+  Expose map type with processed `keys` and `values`
+- 🍏 [`e6db2ef`](https://github.com/javascript-studio/schema/commit/e6db2efcbdf1fdcfd62c006c4c04a9626196ea4d)
+  Expose type of schema spec and the corresponding validators
+- 🍏 [`c844775`](https://github.com/javascript-studio/schema/commit/c844775dcb7829affa6c52d2a8f3e85d0499d4b9)
+  Expose type of optional spec and the corresponding validators
+- 🍏 [`8b0bf97`](https://github.com/javascript-studio/schema/commit/8b0bf97d89f2db8bffc4fc9dc46bb0c0b399df8b)
+  Expose object property validators as `properties`
+- 🍏 [`fa6151c`](https://github.com/javascript-studio/schema/commit/fa6151cb4aef0ac7eb8a9bebb60c564ac394d0ba)
+  Expose array item validator as `items`
+- ✨ [`a92d0c0`](https://github.com/javascript-studio/schema/commit/a92d0c05b95c6701dd5764b04a1af9ecd126849d)
+  Add `copyTypeAndProperties` util
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2022-07-21._
+
 ## 5.3.0
 
 - 🍏 [`9ed6a2b`](https://github.com/javascript-studio/schema/commit/9ed6a2b7c87931cfcac7a76ed2bb461cea90938f)
