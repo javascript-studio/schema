@@ -1,5 +1,24 @@
 # Changes
 
+## 5.3.0
+
+- 🍏 [`9ed6a2b`](https://github.com/javascript-studio/schema/commit/9ed6a2b7c87931cfcac7a76ed2bb461cea90938f)
+  Add support for integer validators as map keys
+- 🍏 [`7aa83f0`](https://github.com/javascript-studio/schema/commit/7aa83f06053321d78cc4deed278a659eec32a7ec)
+  Expose type string on validators
+- 🛡 [`bbb300c`](https://github.com/javascript-studio/schema/commit/bbb300cf00692d1c2b4aeae54b650fe2fbd9476d)
+  npm audit
+- ✨ [`895f570`](https://github.com/javascript-studio/schema/commit/895f570d4f47dd1f8f02de2189df556baf57e66a)
+  Upgrade husky and lint-staged
+- ✨ [`ae06585`](https://github.com/javascript-studio/schema/commit/ae06585238f9ba15d64a63816effd84b7a1daeed)
+  Update mocha and mochify
+- ✨ [`f04f6b7`](https://github.com/javascript-studio/schema/commit/f04f6b71d6b056dd261a6103a7cdd3db379fa9a8)
+  Update prettier
+- ✨ [`c1b3c6f`](https://github.com/javascript-studio/schema/commit/c1b3c6f28737339aa33cc77ee1c0a0682ff24ca2)
+  Update eslint
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2022-07-21._
+
 ## 5.2.2
 
 - 🐛 [`f2fa1d2`](https://github.com/javascript-studio/schema/commit/f2fa1d237d58ee2b1c6b0ce21bbe582097d831ee)

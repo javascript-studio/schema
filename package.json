@@ -1,6 +1,6 @@
 {
   "name": "@studio/schema",
-  "version": "5.2.2",
+  "version": "5.3.0",
   "description": "Plain JavaScript objects with runtime type guarantees",
   "main": "index.js",
   "scripts": {
