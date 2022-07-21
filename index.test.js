@@ -1,7 +1,7 @@
 'use strict';
 
 const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
-const { schema } = require('./schema');
+const { schema } = require('./index');
 
 describe('schema', () => {
   afterEach(() => {

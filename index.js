@@ -14,7 +14,23 @@ const { object } = require('./lib/object');
 const { array } = require('./lib/array');
 const { map } = require('./lib/map');
 const { validator } = require('./lib/validator');
-const { schema } = require('./lib/schema');
+const { lookup } = require('./lib/registry');
+const { copyPropertyDescriptor, copyTypeAndProperties } = require('./lib/util');
+
+function schema(spec, spec_options = {}) {
+  const test = lookup(spec, spec_options);
+  /** @type {Object} */
+  const verifyer = createVerifyer(test, spec_options);
+  copyPropertyDescriptor(test.verify, 'read', verifyer);
+  copyPropertyDescriptor(test.verify, 'write', verifyer);
+  copyTypeAndProperties(test, verifyer);
+  verifyer.verify = test.verify.verify;
+  return verifyer;
+}
+
+function createVerifyer(test, spec_options) {
+  return (value, options = spec_options) => test.verify(value, options);
+}
 
 module.exports = schema;
 
