@@ -1,5 +1,12 @@
 # Changes
 
+## 5.4.1
+
+- 🐛 [`3a0e73f`](https://github.com/javascript-studio/schema/commit/3a0e73f540de918d275e0fd3aacadd50b392110a)
+  Fix integer map key validator
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2022-09-19._
+
 ## 5.4.0
 
 - 🍏 [`5f425de`](https://github.com/javascript-studio/schema/commit/5f425de3537d2b2b32e30709cb407b91ad8d4b97)
