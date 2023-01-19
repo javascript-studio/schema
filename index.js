@@ -16,34 +16,34 @@ const { map } = require('./lib/map');
 const { validator } = require('./lib/validator');
 const { schema } = require('./lib/schema');
 
-schema.schema = schema;
-
-schema.defined = defined;
-
-schema.boolean = boolean;
-
-schema.number = number;
-
-schema.integer = integer;
-
-schema.string = string;
-
-schema.literal = literal;
-
-schema.opt = opt;
-
-schema.one = one;
-
-schema.all = all;
-
-schema.object = object;
-
-schema.array = array;
-
-schema.map = map;
-
-schema.validator = validator;
-
-schema.E_SCHEMA = E_SCHEMA;
-
 module.exports = schema;
+
+module.exports.schema = schema;
+
+module.exports.defined = defined;
+
+module.exports.boolean = boolean;
+
+module.exports.number = number;
+
+module.exports.integer = integer;
+
+module.exports.string = string;
+
+module.exports.literal = literal;
+
+module.exports.opt = opt;
+
+module.exports.one = one;
+
+module.exports.all = all;
+
+module.exports.object = object;
+
+module.exports.array = array;
+
+module.exports.map = map;
+
+module.exports.validator = validator;
+
+module.exports.E_SCHEMA = E_SCHEMA;
