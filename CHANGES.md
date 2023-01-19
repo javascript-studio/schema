@@ -1,5 +1,14 @@
 # Changes
 
+## 5.4.2
+
+- 🐛 [`5b44823`](https://github.com/javascript-studio/schema/commit/5b44823b032bbe987c620fb4914c8596de375e49)
+  Support loading this module with import
+- 🛡 [`ea28219`](https://github.com/javascript-studio/schema/commit/ea282192231a85befcd9fa07535ad9602ccc44c9)
+  Bump minimatch from 3.0.4 to 3.1.2 (dependabot[bot])
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2023-01-19._
+
 ## 5.4.1
 
 - 🐛 [`3a0e73f`](https://github.com/javascript-studio/schema/commit/3a0e73f540de918d275e0fd3aacadd50b392110a)
