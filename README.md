@@ -22,12 +22,17 @@
 Defining a schema:
 
 ```js
-const { schema, string, integer, opt } = require('@studio/schema');
+const { schema, object, string, integer, opt } = require('@studio/schema');
 
-const person = schema({
-  name: string,
-  age: opt(integer)
-});
+/**
+ * @typedef {ReturnType<typeof person>} Person
+ */
+const person = schema(
+  object({
+    name: string, // mandatory
+    age: opt(integer) // optional
+  })
+);
 ```
 
 ### Schema Validation
@@ -63,7 +68,10 @@ const person = object({
   tags: array(string)
 });
 
-const personModel = schema({ status, person });
+/**
+ * @typedef {ReturnType<typeof personModel>} PersonModel
+ */
+const personModel = schema(object({ status, person }));
 ```
 
 ### Readers
@@ -99,6 +107,14 @@ alice.age = 7; // ok
 All schema validation errors have a `code` property with the value
 `E_SCHEMA`.
 
+### Types
+
+Validators and schemas creates TypeScript types from the given structure.
+Resolve the types like this:
+
+- `const mySchema = schema(someValidator)`: `ReturnType<typeof mySchema>`
+- `const myLiteral = literal('foo', 'bar')`: `Parameters<typeof myLiteral>[0]`
+
 ## API
 
 This module exports the `schema` function which carries the entire API, so you
@@ -118,9 +134,8 @@ const { schema, string } = require('@studio/schema');
 const person = schema({ name: string });
 ```
 
-- `schema(spec[, options])`: Returns a new schema with the given specification.
-  `spec` can be an object, array, or a validator. See below for possible
-  values. These options are supported:
+- `schema(validator[, options])`: Returns a new schema with the given validator.
+  `validator` The validator to use for the schema. These options are supported:
   - `error_code`: The `code` property to define on errors. Defaults to
     `E_SCHEMA`.
 - `defined`: Is a validator that accepts any value other than `undefined`.
@@ -142,46 +157,36 @@ const person = schema({ name: string });
   given regular expression.
 - `string.length.{min,max,range}`: Verifies the string length with an integer
   validator.
-- `object`: Is a validator that accepts object values.
-- `array`: Is a validator that accepts array values.
 - `literal(value_1, value_2, ...)`: Returns a validator that matches against a
   list of primitive values. Can be used to define constants or enumerations.
-- `all(spec_1, spec_2, ...)`: Returns a validator where all of the given
-  specifications have to match.
-- `one(spec_1, spec_2, ...)`: Returns a validator where one of the given
-  specifications has to match.
-- `opt(spec)`: Returns an optional validator.
-- `object(spec)`: Returns an object validator. Can be used to declare reusable
-  object validators that can be referenced from multiple schemas.
-- `array(spec)`: Returns an array. Each element in the array has to match the
-  given `spec` Can be used to declare reusable array validators that can be
-  referenced from multiple schemas.
-- `map(key_spec, value_spec)`: Returns a map specification for key-value pairs
-  where `key_spec` and `value_spec` are the specifications for the object key
-  and value pairs.
-- `validator(test[, spec_name])`: Creates a custom validator for the given
-  `test` function. The optional `spec_name` defaults to `<custom validator>`.
+- `all(validator_1, validator_2, ...)`: Returns a validator where all of the
+  given validators have to match.
+- `one(validator_1, validator_2, ...)`: Returns a validator where one of the
+  given validators has to match.
+- `opt(validator)`: Returns an optional validator.
+- `object(properties)`: Returns an object validator. The given object maps
+  object keys to validators.
+- `object.any`: Is a validator that accepts arbitrary object values.
+- `array(itemValidator)`: Returns an array. Each element in the array has to
+  match the given validator..
+- `array.any`: Is a validator that accepts arbitrary array values.
+- `map(keyValidator, valueValidator)`: Returns a map validator for key-value
+  pairs where `keyValidator` and `valueValidator` are the validators for the
+  object key and value pairs.
+- `validator(test[, toString])`: Creates a custom validator for the given
+  `test` function. The optional `toString` argument can be a function that
+  returns a string, or a string defining the validator name used in error
+  messages. Defaults to `<custom validator>`.
 - `E_SCHEMA`: The `code` property exposed on schema validation errors.
 
 Note that all validator functions are also exposed on `schema`.
 
-## Spec
-
-The `spec` arguments in all of the above can be of these types:
-
-- `null`: Requires a null value. This is a shorthand for `literal(null)`.
-- `regexp`: Requires the value to be a string and match the regular expression.
-- `object`: Defines a (nested) object specification.
-- `array`: Defines a (nested) array specification.
-- `function`: Either an existing validator, or defines a custom validator. The
-  function must return `false` if the value is considered invalid.
-
 ## Schema API
 
-The schema created by `schema(spec)` is a function that throws a `TypeError` if
-the given value does not match, and returns the value otherwise. For `object`
-and `array`, the schema also allows to create proxy objects that validate
-reading, assigning and deleting properties:
+The schema created by `schema(validator)` is a function that throws a
+`TypeError` if the given value does not match the validator, and returns the
+value otherwise. For `object` and `array`, the schema also allows to create
+proxy objects that validate reading, assigning and deleting properties:
 
 - `reader = mySchema.read(data[, options])`: Creates a schema compliant reader
   for the given data. If the given data does not match the schema, an exception
