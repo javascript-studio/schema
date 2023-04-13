@@ -14,23 +14,46 @@ const { object } = require('./lib/object');
 const { array } = require('./lib/array');
 const { map } = require('./lib/map');
 const { validator } = require('./lib/validator');
-const { lookup } = require('./lib/registry');
-const { copyPropertyDescriptor, copyTypeAndProperties } = require('./lib/util');
+const {
+  copyPropertyDescriptor,
+  copyTypeAndProperties,
+  assertValidator
+} = require('./lib/util');
 
-function schema(spec, spec_options = {}) {
-  const test = lookup(spec, spec_options);
-  /** @type {Object} */
-  const verifyer = createVerifyer(test, spec_options);
-  copyPropertyDescriptor(test.verify, 'read', verifyer);
-  copyPropertyDescriptor(test.verify, 'write', verifyer);
-  copyTypeAndProperties(test, verifyer);
-  verifyer.verify = test.verify.verify;
-  return verifyer;
-}
-
-function createVerifyer(test, spec_options) {
-  return (value, options = spec_options) => test.verify(value, options);
-}
+/**
+ * @typedef {import('./lib/verifyer').SchemaOptions} SchemaOptions
+ * @typedef {import('./lib/verifyer').SchemaValue} SchemaValue
+ * @typedef {import('./lib/verifyer').SchemaObjectValue} SchemaObjectValue
+ * @typedef {import('./lib/object').ObjectProperties} ObjectProperties
+ */
+/**
+ * @template {SchemaValue} V
+ * @typedef {import('./lib/verifyer').SchemaReader<V>} SchemaReader
+ */
+/**
+ * @template {SchemaValue} V
+ * @typedef {import('./lib/verifyer').SchemaWriter<V>} SchemaWriter
+ */
+/**
+ * @template {SchemaValue} V
+ * @typedef {import('./lib/verifyer').SchemaRead<V>} SchemaRead
+ */
+/**
+ * @template {SchemaValue} V
+ * @typedef {import('./lib/verifyer').SchemaWrite<V>} SchemaWrite
+ */
+/**
+ * @template {SchemaValue} V
+ * @typedef {import('./lib/verifyer').RecursivePartial<V>} RecursivePartial
+ */
+/**
+ * @template {ObjectProperties} P
+ * @typedef {import('./lib/object').ObjectValidator<P>} ObjectValidator
+ */
+/**
+ * @template {SchemaValue} V
+ * @typedef {import('./lib/validator').Validator<V>} Validator
+ */
 
 module.exports = schema;
 
@@ -63,3 +86,68 @@ module.exports.map = map;
 module.exports.validator = validator;
 
 module.exports.E_SCHEMA = E_SCHEMA;
+
+/**
+ * @template {SchemaValue} V
+ * @typedef SchemaProps
+ * @property {string} type
+ * @property {(value: SchemaReader<V> | SchemaWriter<V>) => V} verify
+ * @property {SchemaRead<V>} read
+ * @property {SchemaWrite<V>} write
+ */
+/**
+ * @template {SchemaValue} V
+ * @callback SchemaFunc
+ * @param {V} value
+ * @param {SchemaOptions} [options]
+ * @returns {V}
+ */
+/**
+ * @template {SchemaValue} V
+ * @typedef {SchemaFunc<V> & SchemaProps<V>} ValueSchema
+ */
+/**
+ * @template {Validator<*>} V
+ * @typedef {ValueSchema<Parameters<V>[0]> & V} Schema
+ */
+
+/**
+ * @template {Validator<*>} V
+ * @param {V} test
+ * @param {SchemaOptions} [schema_options]
+ * @returns {Schema<V>}
+ */
+function schema(test, schema_options = {}) {
+  assertValidator(test);
+
+  const schemaTest =
+    'type' in test && test.type === 'Object'
+      ? object(test['properties'], schema_options)
+      : test;
+
+  const verifyer = /** @type {Schema<V>} */ (
+    createVerifyer(schemaTest, schema_options)
+  );
+  copyPropertyDescriptor(schemaTest.verify, 'read', verifyer);
+  copyPropertyDescriptor(schemaTest.verify, 'write', verifyer);
+  copyTypeAndProperties(schemaTest, verifyer);
+  verifyer.verify = schemaTest.verify['verify'];
+  return verifyer;
+}
+
+/**
+ * @template {SchemaValue} V
+ * @callback SchemaVerifyer
+ * @param {V} value
+ * @param {SchemaOptions} options
+ */
+
+/**
+ * @template {SchemaValue} V
+ * @param {Validator<V>} test
+ * @param {SchemaOptions} schema_options
+ * @returns {SchemaVerifyer<V>}
+ */
+function createVerifyer(test, schema_options) {
+  return (value, options = schema_options) => test.verify(value, options);
+}
