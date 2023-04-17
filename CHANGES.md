@@ -1,5 +1,26 @@
 # Changes
 
+## 6.0.0
+
+- 💥 [`af0dc6f`](https://github.com/javascript-studio/schema/commit/af0dc6f666b19c3f8bb4f8ae816128a8be39de8a)
+  Make API strict and add types
+- 💥 [`7356f14`](https://github.com/javascript-studio/schema/commit/7356f1443e3b7d1bb5a53e46972b54b1051b06f6)
+  Drop node 12 and 14, add node 18
+- 📚 [`9e8e76d`](https://github.com/javascript-studio/schema/commit/9e8e76d46c3ba5a5438e7c52a00b3cfeb519a643)
+  Adjust documentation
+- 🛡 [`e00d6e0`](https://github.com/javascript-studio/schema/commit/e00d6e0f248869345ac1d4e65013dab04e3d23c5)
+  npm audit
+- ✨ [`b53a986`](https://github.com/javascript-studio/schema/commit/b53a9863743261997c85d13a26e225bfd303f633)
+  Inline additional property type definitions
+- ✨ [`237d012`](https://github.com/javascript-studio/schema/commit/237d012b511597690d0c2623f60a6da361b193ea)
+  Setup typescript and jsdoc
+- ✨ [`1a41ad8`](https://github.com/javascript-studio/schema/commit/1a41ad820b146613a7366b5e70f3d44cd87487e3)
+  Remove superfluous parameter
+- ✨ [`dfffe83`](https://github.com/javascript-studio/schema/commit/dfffe839f1f60b8f1a63cc61edcaf46c8c82c07b)
+  Move schema implementation into index.js
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2023-04-17._
+
 ## 5.4.2
 
 - 🐛 [`5b44823`](https://github.com/javascript-studio/schema/commit/5b44823b032bbe987c620fb4914c8596de375e49)
