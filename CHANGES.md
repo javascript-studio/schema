@@ -1,5 +1,12 @@
 # Changes
 
+## 6.0.1
+
+- 🐛 [`78038d0`](https://github.com/javascript-studio/schema/commit/78038d02e9c18a0e244fcd846cb2527a220dd0cf)
+  Fix invalid property not verified in combination with opt
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2023-06-20._
+
 ## 6.0.0
 
 - 💥 [`af0dc6f`](https://github.com/javascript-studio/schema/commit/af0dc6f666b19c3f8bb4f8ae816128a8be39de8a)
