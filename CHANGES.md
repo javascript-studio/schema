@@ -1,5 +1,12 @@
 # Changes
 
+## 6.1.1
+
+- 🐛 [`ea3de52`](https://github.com/javascript-studio/schema/commit/ea3de524f46102ebb207ad22d92006b8eb69850d)
+  Remove node type dependency
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2024-03-20._
+
 ## 6.1.0
 
 - ✨ [`3b301ed`](https://github.com/javascript-studio/schema/commit/3b301ed37a0fc0d5211a4d382d07bcd0e2d5d67a)
