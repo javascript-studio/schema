@@ -51,7 +51,7 @@
     "@studio/tsconfig": "^1.3.0",
     "eslint": "^8.57.0",
     "husky": "^9.0.11",
-    "lint-staged": "^13.0.3",
+    "lint-staged": "^15.2.2",
     "mocha": "^10.0.0",
     "mochify": "^9.2.0",
     "nyc": "^15.1.0",
