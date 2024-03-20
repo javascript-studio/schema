@@ -137,6 +137,13 @@ module.exports.E_SCHEMA = E_SCHEMA;
  * @typedef {ValueSchema<VParameter<V>> & V} Schema
  */
 
+/* eslint-disable jsdoc/valid-types */
+/**
+ * @template I
+ * @typedef {I extends Validator<infer V> ? V : I extends Schema<infer V> ? V : never} Infer
+ */
+/** eslint-enable jsdoc/valid-types */
+
 /**
  * @template {Validator<*>} V
  * @param {V} test

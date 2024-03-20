@@ -3,6 +3,11 @@
 const { assert, refute, sinon } = require('@sinonjs/referee-sinon');
 const { schema, object, boolean } = require('./index');
 
+/**
+ * @template I
+ * @typedef {import('./index').Infer<I>} Infer
+ */
+
 describe('schema', () => {
   afterEach(() => {
     sinon.restore();
@@ -131,5 +136,39 @@ describe('schema', () => {
       },
       { code: 'INVALID' }
     );
+  });
+
+  context('Infer', () => {
+    it('creates a type with Infer for a validator', () => {
+      /* eslint-disable-next-line jsdoc/no-undefined-types */
+      /** @typedef {Infer<validate>} Test */
+      const validate = object({ test: boolean });
+
+      assert.isTrue(validate(/** @type {Test} */ ({ test: true })));
+      assert.isFalse(
+        validate(
+          // @ts-expect-error
+          /** @type {Test} */ ({
+            test: 'test'
+          })
+        )
+      );
+    });
+
+    it('creates a type with Infer for a schema', () => {
+      /* eslint-disable-next-line jsdoc/no-undefined-types */
+      /** @typedef {Infer<validate>} Test */
+      const validate = schema(object({ test: boolean }));
+
+      assert.equals(validate({ test: true }), { test: true });
+      assert.exception(() =>
+        validate(
+          // @ts-expect-error
+          /** @type {Test} */ ({
+            test: 'test'
+          })
+        )
+      );
+    });
   });
 });
