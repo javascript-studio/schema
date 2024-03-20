@@ -1,7 +1,7 @@
 {
   "extends": "@studio/tsconfig",
   "compilerOptions": {
-    "types": ["node"],
+    "types": [],
     "declaration": true,
     "noEmit": false,
     "emitDeclarationOnly": true
