@@ -1,5 +1,40 @@
 # Changes
 
+## 6.1.0
+
+- ✨ [`3b301ed`](https://github.com/javascript-studio/schema/commit/3b301ed37a0fc0d5211a4d382d07bcd0e2d5d67a)
+  Update GitHub action
+- ✨ [`5929519`](https://github.com/javascript-studio/schema/commit/5929519b61d51d10b3c6217c8fefb9c1c4915d5e)
+  Add node 20.x to build matrix
+- ✨ [`18e0b05`](https://github.com/javascript-studio/schema/commit/18e0b059fb03e3f3a57fcb6494c6efa82ccfec44)
+  Fix match.same in browser tests
+- ✨ [`227e879`](https://github.com/javascript-studio/schema/commit/227e879feece57441765d584f6b572cf7a1994c1)
+  Use new mochify with esbuild
+- ✨ [`a42af98`](https://github.com/javascript-studio/schema/commit/a42af9826d52278905acc04d47b9f159ec8bf74c)
+  Do not require events, only import type
+- ✨ [`a8b9716`](https://github.com/javascript-studio/schema/commit/a8b97167f277d8df5b1c8e3ae69313817a77a5b2)
+  npm audit
+- ✨ [`9f34d56`](https://github.com/javascript-studio/schema/commit/9f34d56dc8d24053c72f8ce81fdb635ef7af6b38)
+  Upgrade prettier to v3
+- ✨ [`7676458`](https://github.com/javascript-studio/schema/commit/76764580665915d5d4ee30ad79dcc009ce68b0a7)
+  Update rimraf
+- ✨ [`488f324`](https://github.com/javascript-studio/schema/commit/488f3240fa1a8ed4f1ad13ff1baada34324a8152)
+  Update mocha
+- ✨ [`230e511`](https://github.com/javascript-studio/schema/commit/230e5112898a645c9d01b5c868b751aa9d48f4c2)
+  Upgrade lint-staged
+- ✨ [`9a4bb3d`](https://github.com/javascript-studio/schema/commit/9a4bb3d9ac01e8ef26b822cf5c821c0d6fcc206f)
+  Upgrade husky
+- ✨ [`9dcdfaa`](https://github.com/javascript-studio/schema/commit/9dcdfaacb433b49372c8fd13484670f7f69a2fd3)
+  Update typescript
+- ✨ [`13b863e`](https://github.com/javascript-studio/schema/commit/13b863eda0cc90a3a4f6ef28839ae7b27f8edbb4)
+  Upgrade eslint-config and eslint
+- ✨ [`13cd132`](https://github.com/javascript-studio/schema/commit/13cd13295112a6c00fdc6c16ba12ef5d837eade8)
+  Upgrade Studio Changes
+- ✨ [`976d543`](https://github.com/javascript-studio/schema/commit/976d5431b6394a441c6a5a1995f1a74e997acef6)
+  Upgrade referee-sinon
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2024-03-20._
+
 ## 6.0.1
 
 - 🐛 [`78038d0`](https://github.com/javascript-studio/schema/commit/78038d02e9c18a0e244fcd846cb2527a220dd0cf)
