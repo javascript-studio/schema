@@ -34,6 +34,10 @@ const {
  * @template {Value} V
  * @typedef {import('./lib/validator').Validator<V>} Validator
  */
+/**
+ * @template {Validator<*>} V
+ * @typedef {import('./lib/validator').VParameter<V>} VParameter
+ */
 
 module.exports = schema;
 
@@ -130,7 +134,7 @@ module.exports.E_SCHEMA = E_SCHEMA;
  */
 /**
  * @template {Validator<*>} V
- * @typedef {ValueSchema<Parameters<V>[0]> & V} Schema
+ * @typedef {ValueSchema<VParameter<V>> & V} Schema
  */
 
 /**
