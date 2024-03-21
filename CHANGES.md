@@ -1,5 +1,12 @@
 # Changes
 
+## 6.2.1
+
+- ✨ [`f1aa7ae`](https://github.com/javascript-studio/schema/commit/f1aa7ae8afd0396bb8140c195e9ac7b70877e26a)
+  Update typescript
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2024-03-21._
+
 ## 6.2.0
 
 - 🍏 [`5381bb8`](https://github.com/javascript-studio/schema/commit/5381bb8853720cfcae7dba38bdbd709bd1fdcd8d)
