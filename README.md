@@ -69,7 +69,7 @@ const person = object({
 });
 
 /**
- * @typedef {ReturnType<typeof personModel>} PersonModel
+ * @typedef {import('@studio/schema').Infer<typeof personModel>} PersonModel
  */
 const personModel = schema(object({ status, person }));
 ```
@@ -112,8 +112,17 @@ All schema validation errors have a `code` property with the value
 Validators and schemas creates TypeScript types from the given structure.
 Resolve the types like this:
 
-- `const mySchema = schema(someValidator)`: `ReturnType<typeof mySchema>`
-- `const myLiteral = literal('foo', 'bar')`: `Parameters<typeof myLiteral>[0]`
+```js
+/**
+ * @typedef {import('@studio/schema').Infer<typeof mySchema>} MySchema
+ */
+const mySchema = schema(someValidator);
+
+/**
+ * @typedef {import('@studio/schema').Infer<typeof myLiteral>} MyLiteral
+ */
+const myLiteral = literal('foo', 'bar');
+```
 
 ## API
 
