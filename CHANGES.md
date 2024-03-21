@@ -1,5 +1,24 @@
 # Changes
 
+## 6.2.0
+
+- 🍏 [`5381bb8`](https://github.com/javascript-studio/schema/commit/5381bb8853720cfcae7dba38bdbd709bd1fdcd8d)
+  Add Infer<T> type
+- 📚 [`5ffe090`](https://github.com/javascript-studio/schema/commit/5ffe0905a511068b15715096af0501f0540b9a94)
+  Document Infer
+- 📚 [`3fe744c`](https://github.com/javascript-studio/schema/commit/3fe744c20c96c584ae6e3c8de34700e496cfe474)
+  Rename internal types
+- ✨ [`caff931`](https://github.com/javascript-studio/schema/commit/caff931047193eb215e57c9bb78e660792402f2d)
+  Function type declarations
+- ✨ [`50a67cb`](https://github.com/javascript-studio/schema/commit/50a67cbd2997dd066a8b4f21762569d45e088ea9)
+  Use new helper to extract validator argument type
+- ✨ [`5a61116`](https://github.com/javascript-studio/schema/commit/5a611163c6ebcf21ae3d7cecab8ac528c0183a7a)
+  Improve ts-expect-error testing
+- ✨ [`066ecb9`](https://github.com/javascript-studio/schema/commit/066ecb913cc55c5d30a68c96f1209db8cac22a46)
+  Add test to verify array item with custom error code
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2024-03-21._
+
 ## 6.1.1
 
 - 🐛 [`ea3de52`](https://github.com/javascript-studio/schema/commit/ea3de524f46102ebb207ad22d92006b8eb69850d)
