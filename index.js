@@ -22,36 +22,16 @@ const {
 
 /**
  * @typedef {import('./lib/verifyer').SchemaOptions} SchemaOptions
- * @typedef {import('./lib/verifyer').SchemaValue} SchemaValue
- * @typedef {import('./lib/verifyer').SchemaObjectValue} SchemaObjectValue
+ * @typedef {import('./lib/verifyer').Value} Value
+ * @typedef {import('./lib/verifyer').ObjectValue} ObjectValue
  * @typedef {import('./lib/object').ObjectProperties} ObjectProperties
  */
 /**
- * @template {SchemaValue} V
- * @typedef {import('./lib/verifyer').SchemaReader<V>} SchemaReader
- */
-/**
- * @template {SchemaValue} V
- * @typedef {import('./lib/verifyer').SchemaWriter<V>} SchemaWriter
- */
-/**
- * @template {SchemaValue} V
- * @typedef {import('./lib/verifyer').SchemaRead<V>} SchemaRead
- */
-/**
- * @template {SchemaValue} V
- * @typedef {import('./lib/verifyer').SchemaWrite<V>} SchemaWrite
- */
-/**
- * @template {SchemaValue} V
- * @typedef {import('./lib/verifyer').RecursivePartial<V>} RecursivePartial
- */
-/**
  * @template {ObjectProperties} P
- * @typedef {import('./lib/object').ObjectValidator<P>} ObjectValidator
+ * @typedef {import('./lib/object').VObject<P>} VObject
  */
 /**
- * @template {SchemaValue} V
+ * @template {Value} V
  * @typedef {import('./lib/validator').Validator<V>} Validator
  */
 
@@ -88,7 +68,49 @@ module.exports.validator = validator;
 module.exports.E_SCHEMA = E_SCHEMA;
 
 /**
- * @template {SchemaValue} V
+ * @typedef {Object} Emitter
+ * @property {function(string, *): boolean | void} emit
+ */
+/**
+ * @template {Value} V
+ * @typedef WithToJSON
+ * @property {() => V} toJSON
+ */
+/**
+ * @template {Value} V
+ * @typedef {V & WithToJSON<V>} SchemaReader
+ */
+/**
+ * @template {Value} V
+ * @typedef {V & WithToJSON<V>} SchemaWriter
+ */
+/**
+ * @template {Value} V
+ * @typedef WriterOptions
+ * @property {Emitter} [emitter]
+ */
+/**
+ * @template {Value} V
+ * @callback SchemaRead
+ * @param {V} value
+ * @returns {SchemaReader<V>}
+ */
+/* eslint-disable jsdoc/valid-types */
+/**
+ * @template {Value} V
+ * @typedef {V extends ObjectValue ? { [K in keyof V]?: RecursivePartial<V[K]> } : V} RecursivePartial
+ */
+/* eslint-enable */
+/**
+ * @template {Value} V
+ * @callback SchemaWrite
+ * @param {RecursivePartial<V>} value
+ * @param {WriterOptions<V>} [options]
+ * @returns {SchemaWriter<V>}
+ */
+
+/**
+ * @template {Value} V
  * @typedef SchemaProps
  * @property {string} type
  * @property {(value: SchemaReader<V> | SchemaWriter<V>) => V} verify
@@ -96,14 +118,14 @@ module.exports.E_SCHEMA = E_SCHEMA;
  * @property {SchemaWrite<V>} write
  */
 /**
- * @template {SchemaValue} V
+ * @template {Value} V
  * @callback SchemaFunc
  * @param {V} value
  * @param {SchemaOptions} [options]
  * @returns {V}
  */
 /**
- * @template {SchemaValue} V
+ * @template {Value} V
  * @typedef {SchemaFunc<V> & SchemaProps<V>} ValueSchema
  */
 /**
@@ -136,14 +158,14 @@ function schema(test, schema_options = {}) {
 }
 
 /**
- * @template {SchemaValue} V
+ * @template {Value} V
  * @callback SchemaVerifyer
  * @param {V} value
  * @param {SchemaOptions} options
  */
 
 /**
- * @template {SchemaValue} V
+ * @template {Value} V
  * @param {Validator<V>} test
  * @param {SchemaOptions} schema_options
  * @returns {SchemaVerifyer<V>}
