@@ -204,20 +204,12 @@ proxy objects that validate reading, assigning and deleting properties:
   - `error_code`: The `code` property to define on errors. Defaults to
     `E_SCHEMA`.
 - `writer = mySchema.write([data[, options]])`: Creates a writer with optional
-  initial data and an event emitter. If the given data does not match the
-  schema, an exception is thrown. The returned writer throws on undefined
-  property modification, if an assigned value is invalid, or on an attempt to
-  read an undefined property. These options are supported:
+  initial data. If the given data does not match the schema, an exception is
+  thrown. The returned writer throws on undefined property modification, if an
+  assigned value is invalid, or on an attempt to read an undefined property.
+  These options are supported:
   - `error_code`: The `code` property to define on errors. Defaults to
     `E_SCHEMA`.
-  - `emitter`: If specified, these events will be emitted:
-    - `set` when a property is assigned a new value
-    - `delete` when a property is deleted
-    - `push` when `push` is called on an array
-    - `pop` when `pop` is called on an array
-    - `unshift` when `unshift` is called on an array
-    - `shift` when `shift` is called on an array
-    - `splice` when `splice` is called on an array
 - `data = mySchema.verify(writer)`: Checks if any properties are missing in the
   given writer and returns the unwrapped data. Throws if the given object is
   not a schema writer.

@@ -72,10 +72,6 @@ module.exports.validator = validator;
 module.exports.E_SCHEMA = E_SCHEMA;
 
 /**
- * @typedef {Object} Emitter
- * @property {function(string, *): boolean | void} emit
- */
-/**
  * @template {Value} V
  * @typedef WithToJSON
  * @property {() => V} toJSON
@@ -90,13 +86,9 @@ module.exports.E_SCHEMA = E_SCHEMA;
  */
 /**
  * @template {Value} V
- * @typedef WriterOptions
- * @property {Emitter} [emitter]
- */
-/**
- * @template {Value} V
  * @callback SchemaRead
  * @param {V} value
+ * @param {SchemaOptions} [options]
  * @returns {SchemaReader<V>}
  */
 /* eslint-disable jsdoc/valid-types */
@@ -109,7 +101,7 @@ module.exports.E_SCHEMA = E_SCHEMA;
  * @template {Value} V
  * @callback SchemaWrite
  * @param {RecursivePartial<V>} value
- * @param {WriterOptions<V>} [options]
+ * @param {SchemaOptions} [options]
  * @returns {SchemaWriter<V>}
  */
 
