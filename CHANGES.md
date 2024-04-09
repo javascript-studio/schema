@@ -1,5 +1,12 @@
 # Changes
 
+## 7.0.0
+
+- 💥 [`4315324`](https://github.com/javascript-studio/schema/commit/43153247761734c413c76624197a09f15bc88425)
+  BREAKING: Remove event emitter
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2024-04-09._
+
 ## 6.2.1
 
 - ✨ [`f1aa7ae`](https://github.com/javascript-studio/schema/commit/f1aa7ae8afd0396bb8140c195e9ac7b70877e26a)
