@@ -1,5 +1,14 @@
 # Changes
 
+## 7.0.1
+
+- 🐛 [`7a46272`](https://github.com/javascript-studio/schema/commit/7a462721002105503626bfe1ae1747285af1365b)
+  Fix all with custom error code
+- 🐛 [`2b67320`](https://github.com/javascript-studio/schema/commit/2b67320f281689f6426e8374a28c2d2d74c8ad0e)
+  Fix one with custom error code
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2024-05-14._
+
 ## 7.0.0
 
 - 💥 [`4315324`](https://github.com/javascript-studio/schema/commit/43153247761734c413c76624197a09f15bc88425)
