@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@mochify/cli": "^0.4.1",
-    "@mochify/driver-puppeteer": "^0.3.1",
+    "@mochify/driver-puppeteer": "^0.4.0",
     "@sinonjs/referee-sinon": "^12.0.0",
     "@studio/changes": "^3.0.0",
     "@studio/eslint-config": "^6.0.0",
