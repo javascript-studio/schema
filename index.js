@@ -150,7 +150,7 @@ function schema(test, schema_options = {}) {
       ? object(test['properties'], schema_options)
       : test;
 
-  const verifyer = /** @type {Schema<V>} */ (
+  const verifyer = /** @type {Schema<*>} */ (
     createVerifyer(schemaTest, schema_options)
   );
   copyPropertyDescriptor(schemaTest.verify, 'read', verifyer);
