@@ -1,5 +1,16 @@
 # Changes
 
+## 7.0.2
+
+- 🛡️ [`cb5c0c7`](https://github.com/javascript-studio/schema/commit/cb5c0c751a4073ac7a2da2d3eadf2189dc7d5874)
+  npm audit
+- ✨ [`dadddf2`](https://github.com/javascript-studio/schema/commit/dadddf2b0f70dc8d59718c67963e5bff89d7c077)
+  Upgrade @mochify/driver-puppeteer
+- ✨ [`06aa7b9`](https://github.com/javascript-studio/schema/commit/06aa7b960ccde13099155cf8dcc511d671aef6a8)
+  Update typescript and enable `exactOptionalPropertyTypes`
+
+_Released by [Maximilian Antoni](https://github.com/mantoni) on 2025-01-23._
+
 ## 7.0.1
 
 - 🐛 [`7a46272`](https://github.com/javascript-studio/schema/commit/7a462721002105503626bfe1ae1747285af1365b)
